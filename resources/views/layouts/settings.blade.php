@@ -20,6 +20,8 @@
 		<link rel="stylesheet" href="{{ URL::to('assets/css/select2.min.css') }}">
 		<!-- Main CSS -->
         <link rel="stylesheet" href="{{ URL::to('assets/css/style.css') }}">
+		<link rel="stylesheet" href="{{ URL::to('assets/css/bootstrap-datetimepicker.min.css') }}">
+
 		{{-- message toastr --}}
 		<link rel="stylesheet" href="{{ URL::to('assets/css/toastr.min.css') }}">
 		<script src="{{ URL::to('assets/js/toastr_jquery.min.js') }}"></script>
@@ -313,6 +315,8 @@
 		<script src="{{ URL::to('assets/js/select2.min.js') }}"></script>
 		<!-- Custom JS -->
 		<script src="{{ URL::to('assets/js/app.js') }}"></script>
+		<script src="{{ URL::to('assets/js/moment.min.js') }}"></script>
+		<script src="{{ URL::to('assets/js/bootstrap-datetimepicker.min.js') }}"></script>
 		@yield('script')
     </body>
 </html>

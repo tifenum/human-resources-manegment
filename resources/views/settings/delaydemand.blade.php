@@ -11,7 +11,8 @@
         </div>
     </div>
     <!-- Sidebar -->
-    
+    {{-- message --}}
+    {!! Toastr::message() !!}
     <!-- Page Wrapper -->
     <div class="page-wrapper">
         <!-- Page Content -->
@@ -27,7 +28,7 @@
                         </div>
                     </div>
                     <!-- /Page Header -->
-                    <form method="POST">
+                    <form method="POST" action="{{ route('delay.store') }}">
                         @csrf
                         <input type="hidden" name="user_id" value="{{ auth()->id() }}">
 
@@ -56,14 +57,20 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-sm-12">
+                            <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label>Number of Hours</label>
-                                    <input class="form-control" id="number_of_hours" type="text" disabled>
+                                    <label>Day <span class="text-danger">*</span></label>
+                                    <input class="form-control" name="day" type="date" id="day" required>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Amount of Time</label>
+                                    <input class="form-control" id="amount_of_time" type="text" disabled>
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="form-group">
@@ -96,11 +103,10 @@
             var hours = Math.floor(difference / (1000 * 3600));
             var minutes = Math.floor((difference % (1000 * 3600)) / (1000 * 60));
 
-            document.getElementById('number_of_hours').value = `${hours} hours ${minutes} minutes`;
+            document.getElementById('amount_of_time').value = `${hours} hours ${minutes} minutes`;
         } else {
-            document.getElementById('number_of_hours').value = '0 hours 0 minutes';
+            document.getElementById('amount_of_time').value = '0 hours 0 minutes';
         }
     }
-</script>
-
+    </script>
 @endsection

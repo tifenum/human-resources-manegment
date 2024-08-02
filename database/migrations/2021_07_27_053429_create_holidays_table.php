@@ -15,9 +15,20 @@ class CreateHolidaysTable extends Migration
     {
         Schema::create('holidays', function (Blueprint $table) {
             $table->id();
-            $table->string('name_holiday')->nullable();
-            $table->string('date_holiday')->nullable();
+            $table->unsignedBigInteger('user_id'); // Adding user_id as unsignedBigInteger
+            $table->string('type'); // Type as string
+            $table->date('from_date'); // From date as date
+            $table->date('to_date'); // To date as date
+            $table->string('number_of_days'); // Number of days as string
+            $table->boolean('status_MD')->default(false); // Status MD as boolean
+            $table->boolean('status_HD')->default(false); // Status HD as boolean
+            $table->boolean('status_FD')->default(false); // Status FD as boolean
+            $table->boolean('status_Ch5')->default(false); // Status Ch5 as boolean
+            $table->boolean('confirmed')->default(false); // Confirmed as boolean
             $table->timestamps();
+
+            // Adding foreign key constraint if needed
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

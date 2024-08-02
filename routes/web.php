@@ -12,6 +12,12 @@ use App\Http\Controllers\LockScreen;
 use App\Http\Controllers\PayrollController;
 use App\Http\Controllers\ExpenseReportsController;
 use App\Http\Controllers\PerformanceController;
+use App\Http\Controllers\AdvanceController;
+use App\Http\Controllers\DelayController;
+use App\Http\Controllers\ExitDemandController;
+use App\Http\Controllers\CertificateController;
+
+
 
 
 /*
@@ -53,6 +59,25 @@ Route::get('company/settings/page1', [App\Http\Controllers\SettingController::cl
 Route::get('company/settings/page2', [App\Http\Controllers\SettingController::class, 'companySettings2'])->middleware('auth')->name('company/settings/page2');
 Route::get('company/settings/page3', [App\Http\Controllers\SettingController::class, 'companySettings3'])->middleware('auth')->name('company/settings/page3');
 Route::get('company/settings/page4', [App\Http\Controllers\SettingController::class, 'companySettings4'])->middleware('auth')->name('company/settings/page4');
+
+Route::post('/advance/store', [App\Http\Controllers\AdvanceController::class, 'store'])->name('advance.store');
+Route::get('/advance/create', [App\Http\Controllers\AdvanceController::class, 'create'])->name('advance.create');
+Route::get('/holiday-request', [App\Http\Controllers\HolidayController::class, 'create'])->name('holiday.create');
+Route::post('/holiday-request/store', [App\Http\Controllers\HolidayController::class, 'store'])->name('holiday.store');
+Route::get('/delay/create', [App\Http\Controllers\DelayController::class, 'create'])->name('delay.create');
+Route::post('/delay/store', [App\Http\Controllers\DelayController::class, 'store'])->name('delay.store');
+Route::get('/exit-demand/create', [App\Http\Controllers\ExitDemandController::class, 'create'])->name('exit_demand.create');
+Route::post('/exit-demand', [App\Http\Controllers\ExitDemandController::class, 'store'])->name('exit_demand.store');
+Route::get('certificate/create', [CertificateController::class, 'create'])->name('certificate.create');
+Route::post('certificate', [CertificateController::class, 'store'])->name('certificate.store');
+Route::get('advances', [App\Http\Controllers\AdvanceController::class, 'index'])->middleware('auth')->name('advance.index');
+Route::get('certificate', [App\Http\Controllers\CertificateController::class, 'index'])->name('certificate.index');
+Route::get('holiday', [App\Http\Controllers\HolidayController::class, 'index'])->name('holiday.index');
+Route::get('delay', [App\Http\Controllers\DelayController::class, 'index'])->name('delay.index');
+Route::get('exit', [App\Http\Controllers\ExitDemandController::class, 'index'])->name('exit.index');
+Route::delete('/advances/{id}', [App\Http\Controllers\AdvanceController::class, 'destroy'])->name('advance.destroy');
+Route::get('/advances/{id}/edit', [App\Http\Controllers\AdvanceController::class, 'edit'])->name('advance.edit');
+Route::put('/advances/{id}', [App\Http\Controllers\AdvanceController::class, 'update'])->name('advance.update');
 
 Route::get('roles/permissions/page', [App\Http\Controllers\SettingController::class, 'rolesPermissions'])->middleware('auth')->name('roles/permissions/page');
 Route::post('roles/permissions/save', [App\Http\Controllers\SettingController::class, 'addRecord'])->middleware('auth')->name('roles/permissions/save');
@@ -105,7 +130,7 @@ Route::get('form/job/list', [App\Http\Controllers\JobController::class, 'jobList
 Route::get('form/job/view', [App\Http\Controllers\JobController::class, 'jobView'])->name('form/job/view');
 
 // ----------------------------- form employee ------------------------------//
-Route::get('all/employee/card', [App\Http\Controllers\EmployeeController::class, 'cardAllEmployee'])->middleware('auth')->name('all/employee/card');
+Route::get('all/employee/card', [App\Http\Controllers\AdvanceController::class, 'index'])->middleware('auth')->name('all/employee/card');
 Route::get('all/employee/list', [App\Http\Controllers\EmployeeController::class, 'listAllEmployee'])->middleware('auth')->name('all/employee/list');
 Route::post('all/employee/save', [App\Http\Controllers\EmployeeController::class, 'saveRecord'])->middleware('auth')->name('all/employee/save');
 Route::get('all/employee/view/edit/{employee_id}', [App\Http\Controllers\EmployeeController::class, 'viewRecord'])->middleware('auth');

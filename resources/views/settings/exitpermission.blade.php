@@ -11,7 +11,8 @@
         </div>
     </div>
     <!-- Sidebar -->
-    
+    {{-- message --}}
+    {!! Toastr::message() !!}
     <!-- Page Wrapper -->
     <div class="page-wrapper">
         <!-- Page Content -->
@@ -27,7 +28,7 @@
                         </div>
                     </div>
                     <!-- /Page Header -->
-                    <form method="POST">
+                    <form method="POST" action="{{ route('exit_demand.store') }}">
                         @csrf
                         <input type="hidden" name="user_id" value="{{ auth()->id() }}">
 
@@ -41,25 +42,10 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label>Exit Time <span class="text-danger">*</span></label>
-                                    <input class="form-control" name="exit_time" type="date" id="exit_time" required onchange="calculateDays()">
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label>Return Time <span class="text-danger">*</span></label>
-                                    <input class="form-control" name="return_time" type="date" id="return_time" required onchange="calculateDays()">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
                             <div class="col-sm-12">
                                 <div class="form-group">
-                                    <label>Number of Days</label>
-                                    <input class="form-control" id="number_of_days" type="number" disabled>
+                                    <label>Exit Day <span class="text-danger">*</span></label>
+                                    <input class="form-control" name="exit_day" type="date" id="exit_time" required>
                                 </div>
                             </div>
                         </div>
@@ -69,12 +55,10 @@
                                 <div class="form-group">
                                     <label>Department</label>
                                     <input class="form-control" name="department" type="text" value="{{ auth()->user()->department }}" disabled>
+                                    <input class="form-control" name="department" type="hidden" value="{{ auth()->user()->department }}">
                                 </div>
                             </div>
                         </div>
-
-
-
 
                         <div class="submit-section text-center">
                             <button type="submit" class="btn btn-primary submit-btn">Submit Request</button>
@@ -85,20 +69,5 @@
         </div>
         <!-- /Page Content -->
     </div>
-    <!-- /Page Wrapper -->
-    <script>
-        function calculateDays() {
-            var exitTime = document.getElementById('exit_time').value;
-            var returnTime = document.getElementById('return_time').value;
-
-            if (exitTime && returnTime) {
-                var exit = new Date(exitTime);
-                var returnDate = new Date(returnTime);
-                var difference = (returnDate - exit) / (1000 * 3600 * 24);
-                document.getElementById('number_of_days').value = difference >= 0 ? Math.ceil(difference) : 0;
-            } else {
-                document.getElementById('number_of_days').value = 0;
-            }
-        }
-    </script>
+    <!-- /Page Wrapper -->  
 @endsection

@@ -23,7 +23,7 @@ class SettingController extends Controller
     }
     public function companySettings3()
     {
-        return view('settings.delaypermission');
+        return view('settings.delaydemand');
     }
     public function companySettings4()
     {

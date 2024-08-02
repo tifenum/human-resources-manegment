@@ -11,7 +11,8 @@
         </div>
     </div>
     <!-- Sidebar -->
-    
+    {{-- message --}}
+    {!! Toastr::message() !!}
     <!-- Page Wrapper -->
     <div class="page-wrapper">
         <!-- Page Content -->
@@ -27,8 +28,8 @@
                         </div>
                     </div>
                     <!-- /Page Header -->
-                    <form method="POST">
-                        @csrf
+                    <form method="POST" action="{{ route('advance.store') }}">
+                    @csrf
                         <input type="hidden" name="user_id" value="{{ auth()->id() }}">
 
                         <div class="row">
@@ -56,6 +57,7 @@
                                 <div class="form-group">
                                     <label>Department</label>
                                     <input class="form-control" name="department" type="text" value="{{ auth()->user()->department }}" disabled>
+                                    <input type="hidden" name="department" value="{{ auth()->user()->department }}">
                                 </div>
                             </div>
                         </div>

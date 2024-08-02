@@ -7,16 +7,17 @@
                 <ul>
                     <li><a href="{{ route('home') }}"><i class="la la-home"></i> <span>Back to Home</span></a></li>
                     <li><a href="{{ route('company/settings/page') }}">advances</a></li>
-                            <li><a href="{{ route('company/settings/page1') }}">holiday</a></li>
-                            <li><a href="{{ route('company/settings/page2') }}">Epermission</a></li>
-                            <li><a href="{{ route('company/settings/page3') }}">Dpermission</a></li>
-                            <li><a href="{{ route('company/settings/page4') }}">certificate</a></li>
+                    <li><a href="{{ route('company/settings/page1') }}">holiday</a></li>
+                    <li><a href="{{ route('company/settings/page2') }}">Epermission</a></li>
+                    <li><a href="{{ route('company/settings/page3') }}">Dpermission</a></li>
+                    <li><a href="{{ route('certificate.create') }}">certificate</a></li>
                 </ul>
             </div>
         </div>
     </div>
     <!-- Sidebar -->
-    
+    {{-- message --}}
+    {!! Toastr::message() !!}
     <!-- Page Wrapper -->
     <div class="page-wrapper">
         <!-- Page Content -->
@@ -32,7 +33,7 @@
                         </div>
                     </div>
                     <!-- /Page Header -->
-                    <form method="POST">
+                    <form method="POST" action="{{ route('certificate.store') }}">
                         @csrf
                         <input type="hidden" name="user_id" value="{{ auth()->id() }}">
 
@@ -48,8 +49,8 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="form-group">
-                                    <label>Issued Type <span class="text-danger">*</span></label>
-                                    <input class="form-control" name="issued_type" type="text" required placeholder="Enter the issued type">
+                                    <label>Issued For <span class="text-danger">*</span></label>
+                                    <input class="form-control" name="issued_for" type="text" required placeholder="Enter the issued for">
                                 </div>
                             </div>
                         </div>
@@ -68,6 +69,7 @@
                                 <div class="form-group">
                                     <label>Department</label>
                                     <input class="form-control" name="department" type="text" value="{{ auth()->user()->department }}" disabled>
+                                    <input class="form-control" name="department" type="hidden" value="{{ auth()->user()->department }}">
                                 </div>
                             </div>
                         </div>

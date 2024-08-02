@@ -132,8 +132,7 @@
         </div>
     </div>
     <!-- /Sidebar -->
-    {{-- message --}}
-    {!! Toastr::message() !!}
+
     <!-- Page Wrapper -->
     <div class="page-wrapper">
         <!-- Page Content -->
@@ -142,14 +141,14 @@
             <div class="page-header">
                 <div class="row align-items-center">
                     <div class="col">
-                        <h3 class="page-title">Advances <span id="year"></span></h3>
+                        <h3 class="page-title">Leaves <span id="year"></span></h3>
                         <ul class="breadcrumb">
-                            <li class="breadcrumb-item">Home</a></li>
-                            <li class="breadcrumb-item active">Advances</li>
+                            <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
+                            <li class="breadcrumb-item active">Leaves</li>
                         </ul>
                     </div>
                     <div class="col-auto float-right ml-auto">
-                        <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_advance"><i class="fa fa-plus"></i> Request Advance</a>
+                        <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_leave"><i class="fa fa-plus"></i> Add Leave</a>
                     </div>
                 </div>
             </div>
@@ -184,317 +183,93 @@
             <!-- /Leave Statistics -->
             
             <div class="row">
-            <div class="col-md-12">
-    <div class="table-responsive">
-        <table class="table table-striped custom-table mb-0 ">
-            <thead>
-                <tr>
-                    <th>Amount</th>
-                    <th>Date</th>
-                    <th>Reason</th>
-                    <th>Chief</th>
-                    <th>Dept Head</th>
-                    <th>Fin Director</th>
-                    <th>Mngr Director</th>
-                    <th>status</th>
-                    <th class="text-right">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($advances as $advance)
-                <tr>
-                    <td>{{ $advance->amount }} dt</td>
-                    <td>{{ $advance->date_wish }}</td>
-                    <td class="text-center">
-    <button class="btn btn-info btn-sm btn-rounded custom-btn-info" data-toggle="modal" data-target="#reasonModal" data-description="{{ $advance->description }}">
-        View
-    </button>
-</td>
-
-                    <td class="text-center">
-                        <div class="action-label">
-                            <a class="btn btn-white btn-sm btn-rounded" href="javascript:void(0);">
-                                @if($advance->chief_staff_status)
-                                    <i class="fa fa-dot-circle-o text-success"></i> Approved
-                                @else
-                                    <i class="fa fa-dot-circle-o text-danger"></i> Declined
-                                @endif
-                            </a>
-                        </div>
-                    </td>
-                    <td class="text-center">
-                        <div class="action-label">
-                            <a class="btn btn-white btn-sm btn-rounded" href="javascript:void(0);">
-                                @if($advance->head_department_status)
-                                    <i class="fa fa-dot-circle-o text-success"></i> Approved
-                                @else
-                                    <i class="fa fa-dot-circle-o text-danger"></i> Declined
-                                @endif
-                            </a>
-                        </div>
-                    </td>
-                    <td class="text-center">
-                        <div class="action-label">
-                            <a class="btn btn-white btn-sm btn-rounded" href="javascript:void(0);">
-                                @if($advance->financial_director_status)
-                                    <i class="fa fa-dot-circle-o text-success"></i> Approved
-                                @else
-                                    <i class="fa fa-dot-circle-o text-danger"></i> Declined
-                                @endif
-                            </a>
-                        </div>
-                    </td>
-                    <td class="text-center">
-                        <div class="action-label">
-                            <a class="btn btn-white btn-sm btn-rounded" href="javascript:void(0);">
-                                @if($advance->manager_director_status)
-                                    <i class="fa fa-dot-circle-o text-success"></i> Approved
-                                @else
-                                    <i class="fa fa-dot-circle-o text-danger"></i> Declined
-                                @endif
-                            </a>
-                        </div>
-                    </td>
-                    <td class="text-center">
-                        <div class="action-label">
-                            <a class="btn btn-white btn-sm btn-rounded" href="javascript:void(0);">
-                                @if($advance->accepted)
-                                    <i class="fa fa-dot-circle-o text-success"></i> Approved
-                                @else
-                                    <i class="fa fa-dot-circle-o text-danger"></i> Declined
-                                @endif
-                            </a>
-                        </div>
-                    </td>
-                    <td class="text-right">
-                    <a href="#" data-toggle="modal" data-target="#edit_advance" class="action-icon" data-id="{{ $advance->id }}">
-    <i class="fa fa-pencil" aria-hidden="true"></i>
-</a>
-
-
-    <form action="{{ route('advance.destroy', $advance->id) }}" method="POST" style="display:inline;">
-        @csrf
-        @method('DELETE')
-        <button type="submit" class="action-icon" style="border: none; background: none; cursor: pointer;">
-            <i class="fa fa-trash-o" aria-hidden="true"></i>
-        </button>
-    </form>
-</td>
-
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
+    <div class="col-md-12">
+        <div class="table-responsive">
+            <table class="table table-striped custom-table mb-0 datatable">
+                <thead>
+                    <tr>
+                        <th>Amount</th>
+                        <th>Date Wish</th>
+                        <th>Department</th>
+                        <th>Description</th>
+                        <th>Chief Staff Status</th>
+                        <th>Head Department Status</th>
+                        <th>Financial Director Status</th>
+                        <th>Manager Director Status</th>
+                        <th class="text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($advances as $advance)
+                    <tr>
+                        <td>{{ $advance->amount }}</td>
+                        <td>{{ $advance->date_wish }}</td>
+                        <td>{{ $advance->department }}</td>
+                        <td>{{ $advance->description }}</td>
+                        <td class="text-center">
+                            <div class="action-label">
+                                <a class="btn btn-white btn-sm btn-rounded" href="javascript:void(0);">
+                                    @if($advance->chief_staff_status)
+                                        <i class="fa fa-dot-circle-o text-success"></i> Approved
+                                    @else
+                                        <i class="fa fa-dot-circle-o text-danger"></i> Declined
+                                    @endif
+                                </a>
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            <div class="action-label">
+                                <a class="btn btn-white btn-sm btn-rounded" href="javascript:void(0);">
+                                    @if($advance->head_department_status)
+                                        <i class="fa fa-dot-circle-o text-success"></i> Approved
+                                    @else
+                                        <i class="fa fa-dot-circle-o text-danger"></i> Declined
+                                    @endif
+                                </a>
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            <div class="action-label">
+                                <a class="btn btn-white btn-sm btn-rounded" href="javascript:void(0);">
+                                    @if($advance->financial_director_status)
+                                        <i class="fa fa-dot-circle-o text-success"></i> Approved
+                                    @else
+                                        <i class="fa fa-dot-circle-o text-danger"></i> Declined
+                                    @endif
+                                </a>
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            <div class="action-label">
+                                <a class="btn btn-white btn-sm btn-rounded" href="javascript:void(0);">
+                                    @if($advance->manager_director_status)
+                                        <i class="fa fa-dot-circle-o text-success"></i> Approved
+                                    @else
+                                        <i class="fa fa-dot-circle-o text-danger"></i> Declined
+                                    @endif
+                                </a>
+                            </div>
+                        </td>
+                        <td class="text-right">
+                            <div class="dropdown dropdown-action">
+                                <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_advance"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_advance"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
-<!-- Reason Modal -->
 
-<style>
-.table-responsive {
-    overflow-x: auto;
-}
-
-.table {
-    width: 100%;
-    table-layout: fixed; /* Ensures table cells take up equal width */
-}
-
-.table th, .table td {
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap; /* Prevents text wrapping */
-}
-
-.table th:nth-child(1), .table td:nth-child(3) { /* For Date Wish */
-    width: 75px;
-}
-.table th:nth-child(2), .table td:nth-child(3) { /* For Date Wish */
-    width: 75px;
-}
-.table th:nth-child(3), .table td:nth-child(4) { /* For Date Wish */
-    width: 75px;
-}
-.table th:nth-child(4), .table td:nth-child(5) { /* For Date Wish */
-    width: 75px;
-}
-
-.table th:nth-child(5), .table td:nth-child(6) { /* For Description */
-    width: 100px; /* Increase for longer descriptions */
-}
-.table th:nth-child(6), .table td:nth-child(7) { /* For Description */
-    width: 100px; /* Increase for longer descriptions */
-}
-.table th:nth-child(7), .table td:nth-child(8) { /* For Description */
-    width: 104px; /* Increase for longer descriptions */
-}
-.table th:nth-child(8), .table td:nth-child(9) { /* For Description */
-    width: 75px; /* Increase for longer descriptions */
-}
-.table th:nth-child(9), .table td:nth-child(10) { /* For Description */
-    width: 75px; /* Increase for longer descriptions */
-}
-.action-icon {
-    color: #333; /* Adjust color as needed */
-    font-size: 20px; /* Adjust size as needed */
-    text-decoration: none;
-}
-
-.action-icon:hover {
-    color: #007bff; /* Change color on hover */
-}
-
-.ml-2 {
-    margin-left: 0.5rem; /* Adjust spacing between icons */
-}
-
-.table td {
-    max-width: 400px; /* Increase if needed */
-}
-
-.custom-btn-info {
-  background-color: #f43b48; /* Button background color */
-  border-color: #f43b48; /* Button border color */
-  color: white; /* Text color */
-}
-
-.custom-btn-info:hover,
-.custom-btn-info:focus,
-.custom-btn-info:active {
-  background-color: #e03a44; /* Darker color for hover and focus */
-  border-color: #e03a44; /* Border color for hover and focus */
-  color: white; /* Text color on hover and focus */
-  box-shadow: none; /* Remove any box shadow */
-}
-
-.custom-btn-info:active {
-  background-color: #d93a3e; /* Even darker color for active state */
-  border-color: #d93a3e; /* Border color for active state */
-}
-
-</style>
         <!-- /Page Content -->
-<!-- Reason Modal -->
-<div class="modal fade custom-modal" id="reasonModal" tabindex="-1" role="dialog" aria-labelledby="reasonModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="reasonModalLabel">Description</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body text-center">
-                <p id="modalDescription">Your description goes here.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary submit-btn" data-dismiss="modal">OK</button>
-            </div>
-        </div>
-    </div>
-</div>
-
+       
 		<!-- Add Leave Modal -->
-<!-- Add Advance Modal -->
-<div id="add_advance" class="modal custom-modal fade" role="dialog">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Demand of Advance</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form method="POST" action="{{ route('advance.store') }}">
-                    @csrf
-                    <input type="hidden" name="user_id" value="{{ auth()->id() }}">
-
-                    <div class="form-group">
-                        <label>Amount <span class="text-danger">*</span></label>
-                        <input class="form-control" name="amount" type="number" step="0.01" placeholder="Enter the amount" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Date Wish <span class="text-danger">*</span></label>
-                        <div class="cal-icon">
-                                    <input class="form-control datetimepicker" type="text" name="date_wish">
-                                </div>                    </div>
-
-                    <div class="form-group">
-                        <label>Department</label>
-                        <input class="form-control" name="department" type="text" value="{{ auth()->user()->department }}" disabled>
-                        <input type="hidden" name="department" value="{{ auth()->user()->department }}">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Description</label>
-                        <textarea class="form-control" name="description" rows="4" placeholder="Add a description"></textarea>
-                    </div>
-
-                    <div class="submit-section text-center">
-                        <button type="submit" class="btn btn-primary submit-btn">Save</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Edit Advance Modal -->
-<!-- Edit Advance Modal -->
-<div class="modal fade" id="edit_advance" tabindex="-1" role="dialog" aria-labelledby="editAdvanceModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editAdvanceModalLabel">Edit Advance</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form method="POST" action="{{ route('advance.update', $advance->id) }}">
-                    @csrf
-                    @method('PUT')
-                    <input type="hidden" name="id" value="{{ $advance->id }}">
-                    <input type="hidden" name="old_amount" value="{{ $advance->amount }}">
-                    <input type="hidden" name="old_date_wish" value="{{ $advance->date_wish }}">
-                    <input type="hidden" name="old_department" value="{{ $advance->department }}">
-                    <input type="hidden" name="old_description" value="{{ $advance->description }}">
-                    <!-- Add more hidden fields as needed -->
-
-                    <div class="form-group">
-                        <label for="amount">Amount</label>
-                        <input type="text" class="form-control" id="amount" name="amount" value="{{ old('amount', $advance->amount) }}" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="date_wish">Date</label>
-                        <input type="text" class="form-control" id="date_wish" name="date_wish" value="{{ old('date_wish', $advance->date_wish) }}" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="department">Department</label>
-                        <input type="text" class="form-control" id="department" name="department" value="{{ old('department', $advance->department) }}" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="description">Reason</label>
-                        <textarea class="form-control" id="description" name="description">{{ old('description', $advance->description) }}</textarea>
-                    </div>
-
-                    <!-- Add additional form fields as needed -->
-
-                    <div class="form-group text-right">
-                        <button type="submit" class="btn btn-primary">Save Changes</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-        <!-- /Add Leave Modal -->
         <div id="add_leave" class="modal custom-modal fade" role="dialog">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
@@ -547,6 +322,8 @@
                 </div>
             </div>
         </div>
+        <!-- /Add Leave Modal -->
+        
         <!-- Edit Leave Modal -->
         <div id="edit_leave" class="modal custom-modal fade" role="dialog">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -626,38 +403,5 @@
         <!-- /Delete Leave Modal -->
 
     </div>
-<script>
-    $(document).ready(function() {
-    // When a button is clicked
-    $('button[data-target="#reasonModal"]').on('click', function() {
-        // Get the description from the button's data attribute
-        var description = $(this).data('description');
-        
-        // Set the description in the modal
-        $('#modalDescription').text(description);
-    });
-    
-});
-document.querySelectorAll('.action-icon').forEach(button => {
-    button.addEventListener('click', function(event) {
-
-    });
-});
-$(document).on('click', '.edit-btn', function() {
-    var advanceId = $(this).data('id');
-    var url = '{{ route("advance.edit", ":id") }}'.replace(':id', advanceId);
-
-    $.get(url, function(data) {
-        $('#editAmount').val(data.amount);
-        $('#editDateWish').val(data.date_wish); // Ensure format matches your datetimepicker
-        $('#editDepartment').val(data.department);
-        $('#editDepartment').next('input[type=hidden]').val(data.department);
-        $('#editDescription').val(data.description);
-        $('#editAdvanceForm').attr('action', '{{ route("advance.update", ":id") }}'.replace(':id', advanceId));
-        $('#edit_advance').modal('show');
-    });
-});
-
-</script>
     <!-- /Page Wrapper -->
 @endsection
