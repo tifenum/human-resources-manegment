@@ -8,10 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Holiday extends Model
 {
     use HasFactory;
-    
+        
     protected $fillable = [
         'user_id',
-        'type',
         'from_date',
         'to_date',
         'number_of_days',
@@ -19,6 +18,7 @@ class Holiday extends Model
         'status_HD',
         'status_FD',
         'status_Ch5',
+        'reason',
         'confirmed'
     ];
 

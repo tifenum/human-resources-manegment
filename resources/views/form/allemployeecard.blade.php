@@ -186,7 +186,7 @@
             <div class="row">
             <div class="col-md-12">
     <div class="table-responsive">
-        <table class="table table-striped custom-table mb-0 ">
+        <table class="table table-striped custom-table mb-0">
             <thead>
                 <tr>
                     <th>Amount</th>
@@ -267,9 +267,14 @@
                         </div>
                     </td>
                     <td class="text-right">
-                    <a href="#" data-toggle="modal" data-target="#edit_advance" class="action-icon" data-id="{{ $advance->id }}">
-    <i class="fa fa-pencil" aria-hidden="true"></i>
-</a>
+                    <a href="#" data-toggle="modal" data-target="#edit_advance" class="action-icon edit-advance"
+       data-id="{{ $advance->id }}"
+       data-amount="{{ $advance->amount }}"
+       data-date_wish="{{ $advance->date_wish }}"
+       data-department="{{ $advance->department }}"
+       data-description="{{ $advance->description }}">
+        <i class="fa fa-pencil" aria-hidden="true"></i>
+    </a>
 
 
     <form action="{{ route('advance.destroy', $advance->id) }}" method="POST" style="display:inline;">
@@ -452,38 +457,26 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form method="POST" action="{{ route('advance.update', $advance->id) }}">
+                <form id="editAdvanceForm" method="POST" action="{{ route('advance.update', $advance->id) }}">
                     @csrf
                     @method('PUT')
-                    <input type="hidden" name="id" value="{{ $advance->id }}">
-                    <input type="hidden" name="old_amount" value="{{ $advance->amount }}">
-                    <input type="hidden" name="old_date_wish" value="{{ $advance->date_wish }}">
-                    <input type="hidden" name="old_department" value="{{ $advance->department }}">
-                    <input type="hidden" name="old_description" value="{{ $advance->description }}">
-                    <!-- Add more hidden fields as needed -->
-
+                    <input type="hidden" name="id" id="edit_id">
                     <div class="form-group">
-                        <label for="amount">Amount</label>
-                        <input type="text" class="form-control" id="amount" name="amount" value="{{ old('amount', $advance->amount) }}" required>
+                        <label for="edit_amount">Amount</label>
+                        <input type="text" class="form-control" id="edit_amount" name="amount" required>
                     </div>
-                    
                     <div class="form-group">
-                        <label for="date_wish">Date</label>
-                        <input type="text" class="form-control" id="date_wish" name="date_wish" value="{{ old('date_wish', $advance->date_wish) }}" required>
+                        <label for="edit_date_wish">Date</label>
+                        <input type="text" class="form-control" id="edit_date_wish" name="date_wish" required>
                     </div>
-                    
                     <div class="form-group">
-                        <label for="department">Department</label>
-                        <input type="text" class="form-control" id="department" name="department" value="{{ old('department', $advance->department) }}" required>
+                        <label for="edit_department">Department</label>
+                        <input type="text" class="form-control" id="edit_department" name="department" required>
                     </div>
-                    
                     <div class="form-group">
-                        <label for="description">Reason</label>
-                        <textarea class="form-control" id="description" name="description">{{ old('description', $advance->description) }}</textarea>
+                        <label for="edit_description">Reason</label>
+                        <textarea class="form-control" id="edit_description" name="description" required></textarea>
                     </div>
-
-                    <!-- Add additional form fields as needed -->
-
                     <div class="form-group text-right">
                         <button type="submit" class="btn btn-primary">Save Changes</button>
                     </div>
@@ -493,139 +486,6 @@
     </div>
 </div>
 
-
-        <!-- /Add Leave Modal -->
-        <div id="add_leave" class="modal custom-modal fade" role="dialog">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Add Leave</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form>
-                            <div class="form-group">
-                                <label>Leave Type <span class="text-danger">*</span></label>
-                                <select class="select">
-                                    <option>Select Leave Type</option>
-                                    <option>Casual Leave 12 Days</option>
-                                    <option>Medical Leave</option>
-                                    <option>Loss of Pay</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>From <span class="text-danger">*</span></label>
-                                <div class="cal-icon">
-                                    <input class="form-control datetimepicker" type="text">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label>To <span class="text-danger">*</span></label>
-                                <div class="cal-icon">
-                                    <input class="form-control datetimepicker" type="text">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label>Number of days <span class="text-danger">*</span></label>
-                                <input class="form-control" readonly type="text">
-                            </div>
-                            <div class="form-group">
-                                <label>Remaining Leaves <span class="text-danger">*</span></label>
-                                <input class="form-control" readonly value="12" type="text">
-                            </div>
-                            <div class="form-group">
-                                <label>Leave Reason <span class="text-danger">*</span></label>
-                                <textarea rows="4" class="form-control"></textarea>
-                            </div>
-                            <div class="submit-section">
-                                <button class="btn btn-primary submit-btn">Submit</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Edit Leave Modal -->
-        <div id="edit_leave" class="modal custom-modal fade" role="dialog">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Edit Leave</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form>
-                            <div class="form-group">
-                                <label>Leave Type <span class="text-danger">*</span></label>
-                                <select class="select">
-                                    <option>Select Leave Type</option>
-                                    <option>Casual Leave 12 Days</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>From <span class="text-danger">*</span></label>
-                                <div class="cal-icon">
-                                    <input class="form-control datetimepicker" value="01-01-2019" type="text">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label>To <span class="text-danger">*</span></label>
-                                <div class="cal-icon">
-                                    <input class="form-control datetimepicker" value="01-01-2019" type="text">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label>Number of days <span class="text-danger">*</span></label>
-                                <input class="form-control" readonly type="text" value="2">
-                            </div>
-                            <div class="form-group">
-                                <label>Remaining Leaves <span class="text-danger">*</span></label>
-                                <input class="form-control" readonly value="12" type="text">
-                            </div>
-                            <div class="form-group">
-                                <label>Leave Reason <span class="text-danger">*</span></label>
-                                <textarea rows="4" class="form-control">Going to hospital</textarea>
-                            </div>
-                            <div class="submit-section">
-                                <button class="btn btn-primary submit-btn">Save</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- /Edit Leave Modal -->
-        
-        <!-- Delete Leave Modal -->
-        <div class="modal custom-modal fade" id="delete_approve" role="dialog">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <div class="form-header">
-                            <h3>Delete Leave</h3>
-                            <p>Are you sure want to Cancel this leave?</p>
-                        </div>
-                        <div class="modal-btn delete-action">
-                            <div class="row">
-                                <div class="col-6">
-                                    <a href="javascript:void(0);" class="btn btn-primary continue-btn">Delete</a>
-                                </div>
-                                <div class="col-6">
-                                    <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- /Delete Leave Modal -->
-
-    </div>
 <script>
     $(document).ready(function() {
     // When a button is clicked
@@ -643,18 +503,28 @@ document.querySelectorAll('.action-icon').forEach(button => {
 
     });
 });
-$(document).on('click', '.edit-btn', function() {
-    var advanceId = $(this).data('id');
-    var url = '{{ route("advance.edit", ":id") }}'.replace(':id', advanceId);
+$(document).ready(function() {
+    // Event listener for Edit buttons
+    $('.edit-advance').on('click', function() {
+        var id = $(this).data('id');
+        var amount = $(this).data('amount');
+        var dateWish = $(this).data('date_wish');
+        var department = $(this).data('department');
+        var description = $(this).data('description');
 
-    $.get(url, function(data) {
-        $('#editAmount').val(data.amount);
-        $('#editDateWish').val(data.date_wish); // Ensure format matches your datetimepicker
-        $('#editDepartment').val(data.department);
-        $('#editDepartment').next('input[type=hidden]').val(data.department);
-        $('#editDescription').val(data.description);
-        $('#editAdvanceForm').attr('action', '{{ route("advance.update", ":id") }}'.replace(':id', advanceId));
-        $('#edit_advance').modal('show');
+        // Populate the modal fields
+        $('#editAdvanceForm').attr('action', '/advance/' + id);
+        $('#edit_id').val(id);
+        $('#edit_amount').val(amount);
+        $('#edit_date_wish').val(dateWish);
+        $('#edit_department').val(department);
+        $('#edit_description').val(description);
+    });
+
+    // Event listener for View Reason buttons
+    $('[data-toggle="modal"][data-target="#reasonModal"]').on('click', function(){
+        var description = $(this).data('description');
+        $('#reasonModalBody').text(description);
     });
 });
 

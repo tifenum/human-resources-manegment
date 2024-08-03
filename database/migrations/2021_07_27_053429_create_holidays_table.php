@@ -16,10 +16,10 @@ class CreateHolidaysTable extends Migration
         Schema::create('holidays', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id'); // Adding user_id as unsignedBigInteger
-            $table->string('type'); // Type as string
-            $table->date('from_date'); // From date as date
-            $table->date('to_date'); // To date as date
+            $table->string('from_date'); // From date as date
+            $table->string('to_date'); // To date as date
             $table->string('number_of_days'); // Number of days as string
+            $table->string('reason')->nullable(); // Reason as text
             $table->boolean('status_MD')->default(false); // Status MD as boolean
             $table->boolean('status_HD')->default(false); // Status HD as boolean
             $table->boolean('status_FD')->default(false); // Status FD as boolean

@@ -136,7 +136,7 @@
                             <span class="menu-arrow"></span>
                         </a>
                         <ul style="display: none;">
-                            <li><a href="{{ route('company/settings/page') }}">advances</a></li>
+                            <li><a href="{{ route('all/employee/card') }}">advances</a></li>
                             <li><a href="{{ route('company/settings/page1') }}">holiday</a></li>
                             <li><a href="{{ route('company/settings/page2') }}">Epermission</a></li>
                             <li><a href="{{ route('company/settings/page3') }}">Dpermission</a></li>
