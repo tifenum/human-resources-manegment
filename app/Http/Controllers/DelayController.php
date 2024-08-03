@@ -65,9 +65,89 @@ class DelayController extends Controller
             return redirect()->route('delay.create')->with('error', 'Failed to submit delay request.');
         }
     }
+
     public function index()
     {
-        $delay = Delay::all();
-        return $delay; // Update with your view name
+        $delays = Delay::all();
+        return view('settings.delaydemand', compact('delays')); // Update with your view name
+    }
+
+    // Add update function
+    public function update(Request $request, $id)
+    {
+        DB::beginTransaction();
+
+        try {
+            // Log incoming request data
+            Log::info('Updating delay with ID: ' . $id . ', Data: ' . json_encode($request->all()));
+
+            // Validate request data
+            $request->validate([
+                'reason' => 'required|string|max:255',
+                'exit_time' => 'required|date_format:H:i',
+                'return_time' => 'required|date_format:H:i',
+                'day' => 'required|string',
+            ]);
+
+            // Find the delay record
+            $delay = Delay::findOrFail($id);
+
+            // Log the old and new values for comparison
+            Log::info('Old Values: ' . json_encode($delay->toArray()));
+            Log::info('New Values: ' . json_encode([
+                'reason' => $request->input('reason', $delay->reason),
+                'exit_time' => $request->input('exit_time'),
+                'return_time' => $request->input('return_time'),
+                'day' => $request->input('day'),
+                'amount_of_time' => $request->input('amount_of_time', $delay->amount_of_time),
+                'status_MD' => $request->input('status_MD', $delay->status_MD),
+                'status_HD' => $request->input('status_HD', $delay->status_HD),
+                'status_FD' => $request->input('status_FD', $delay->status_FD),
+                'status_Ch5' => $request->input('status_Ch5', $delay->status_Ch5),
+                'confirmed' => $request->input('confirmed', $delay->confirmed),
+            ]));
+
+            // Update the record
+            $delay->update([
+                'reason' => $request->input('reason', $delay->reason),
+                'exit_time' => $request->input('exit_time'),
+                'return_time' => $request->input('return_time'),
+                'day' => $request->input('day'),
+                'amount_of_time' => $request->input('amount_of_time', $delay->amount_of_time),
+                'status_MD' => $request->input('status_MD', $delay->status_MD),
+                'status_HD' => $request->input('status_HD', $delay->status_HD),
+                'status_FD' => $request->input('status_FD', $delay->status_FD),
+                'status_Ch5' => $request->input('status_Ch5', $delay->status_Ch5),
+                'confirmed' => $request->input('confirmed', $delay->confirmed),
+            ]);
+
+            DB::commit();
+
+            // Log successful update
+            Log::info('Delay updated successfully.');
+
+            Toastr::success('Delay updated successfully.', 'Success');
+            return redirect()->route('delay.index')->with('success', 'Delay updated successfully.');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            DB::rollBack();
+            Log::error('Validation error: ' . json_encode($e->errors()));
+            Toastr::error('Validation error.', 'Error');
+            return redirect()->route('delay.index')->with('error', 'Validation error.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Error updating delay: ' . $e->getMessage());
+            Toastr::error('Failed to update delay.', 'Error');
+            return redirect()->route('delay.index')->with('error', 'Failed to update delay.');
+        }
+    }
+
+    // Add destroy function
+    public function destroy($id)
+    {
+        $delay = Delay::findOrFail($id);
+        $delay->delete();
+
+        Toastr::success('Delay request deleted successfully.', 'Success');
+        return redirect()->route('delay.index')->with('success', 'Delay request deleted successfully.');
     }
 }

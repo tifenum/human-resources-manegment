@@ -256,6 +256,7 @@
    <i class="fa fa-pencil" aria-hidden="true"></i>
 </a>
 
+
                                     <form action="{{ route('holiday.destroy', $holiday->id) }}" method="POST" style="display:inline;">
                                         @csrf
                                         @method('DELETE')

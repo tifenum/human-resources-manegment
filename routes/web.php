@@ -56,7 +56,7 @@ Route::get('em/dashboard', [App\Http\Controllers\HomeController::class, 'emDashb
 // -----------------------------settings----------------------------------------//
 Route::get('company/settings/page', [App\Http\Controllers\SettingController::class, 'companySettings'])->middleware('auth')->name('company/settings/page');
 Route::get('company/settings/page1', [App\Http\Controllers\HolidayController::class, 'index'])->middleware('auth')->name('company/settings/page1');
-Route::get('company/settings/page2', [App\Http\Controllers\SettingController::class, 'companySettings2'])->middleware('auth')->name('company/settings/page2');
+Route::get('company/settings/page2', [App\Http\Controllers\ExitDemandController::class, 'index'])->middleware('auth')->name('company/settings/page2');
 Route::get('company/settings/page3', [App\Http\Controllers\SettingController::class, 'companySettings3'])->middleware('auth')->name('company/settings/page3');
 Route::get('company/settings/page4', [App\Http\Controllers\SettingController::class, 'companySettings4'])->middleware('auth')->name('company/settings/page4');
 
@@ -72,8 +72,11 @@ Route::put('/holiday/{id}', [App\Http\Controllers\HolidayController::class, 'upd
 
 Route::get('/delay/create', [App\Http\Controllers\DelayController::class, 'create'])->name('delay.create');
 Route::post('/delay/store', [App\Http\Controllers\DelayController::class, 'store'])->name('delay.store');
-Route::get('/exit-demand/create', [App\Http\Controllers\ExitDemandController::class, 'create'])->name('exit_demand.create');
-Route::post('/exit-demand', [App\Http\Controllers\ExitDemandController::class, 'store'])->name('exit_demand.store');
+Route::get('/exit_demand/create', [App\Http\Controllers\ExitDemandController::class, 'create'])->name('exitdemand.create');
+Route::post('/exit_demand/store', [App\Http\Controllers\ExitDemandController::class, 'store'])->name('exitdemand.store');
+Route::get('/exit_demands', [App\Http\Controllers\ExitDemandController::class, 'index'])->middleware('auth')->name('exitdemand.index');
+Route::put('/exit_demand/update/{id}', [App\Http\Controllers\ExitDemandController::class, 'update'])->name('exitdemand.update');
+Route::delete('/exit_demand/destroy/{id}', [App\Http\Controllers\ExitDemandController::class, 'destroy'])->name('exitdemand.destroy');
 Route::get('certificate/create', [CertificateController::class, 'create'])->name('certificate.create');
 Route::post('certificate', [CertificateController::class, 'store'])->name('certificate.store');
 Route::get('advances', [App\Http\Controllers\AdvanceController::class, 'index'])->middleware('auth')->name('advance.index');

@@ -12,7 +12,7 @@ class CreateExitDemandsTable extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('reason');
-            $table->date('exit_day');
+            $table->string('exit_day');
             $table->string('department');
             $table->boolean('status_MD')->default(false);
             $table->boolean('status_HD')->default(false);

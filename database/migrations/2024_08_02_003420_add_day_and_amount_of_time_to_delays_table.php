@@ -10,7 +10,7 @@ class AddDayAndAmountOfTimeToDelaysTable extends Migration
     {
         Schema::table('delays', function (Blueprint $table) {
             // Add 'day' column allowing NULL values initially
-            $table->date('day')->nullable()->after('return_time');
+            $table->string('day')->nullable()->after('return_time');
             // Add 'amount_of_time' column allowing NULL values initially
             $table->string('amount_of_time')->nullable()->after('day');
         });
