@@ -57,7 +57,7 @@ Route::get('em/dashboard', [App\Http\Controllers\HomeController::class, 'emDashb
 Route::get('company/settings/page', [App\Http\Controllers\SettingController::class, 'companySettings'])->middleware('auth')->name('company/settings/page');
 Route::get('company/settings/page1', [App\Http\Controllers\HolidayController::class, 'index'])->middleware('auth')->name('company/settings/page1');
 Route::get('company/settings/page2', [App\Http\Controllers\ExitDemandController::class, 'index'])->middleware('auth')->name('company/settings/page2');
-Route::get('company/settings/page3', [App\Http\Controllers\SettingController::class, 'companySettings3'])->middleware('auth')->name('company/settings/page3');
+Route::get('company/settings/page3', [App\Http\Controllers\DelayController::class, 'index'])->middleware('auth')->name('company/settings/page3');
 Route::get('company/settings/page4', [App\Http\Controllers\SettingController::class, 'companySettings4'])->middleware('auth')->name('company/settings/page4');
 
 Route::post('/advance/store', [App\Http\Controllers\AdvanceController::class, 'store'])->name('advance.store');
@@ -86,6 +86,18 @@ Route::get('exit', [App\Http\Controllers\ExitDemandController::class, 'index'])-
 Route::delete('/advances/{id}', [App\Http\Controllers\AdvanceController::class, 'destroy'])->name('advance.destroy');
 Route::get('/advances/{id}/edit', [App\Http\Controllers\AdvanceController::class, 'edit'])->name('advance.edit');
 Route::put('/advance/{id}', [App\Http\Controllers\AdvanceController::class, 'update'])->name('advance.update');
+Route::get('delay/create', [App\Http\Controllers\DelayController::class, 'index'])->name('delay.create');
+
+// Route to store a new delay request
+Route::post('delay', [App\Http\Controllers\DelayController::class, 'store'])->name('delays.store');
+
+// Route to display all delay requests
+
+// Route to update an existing delay request
+Route::put('/delay/{id}', [DelayController::class, 'update'])->name('delays.update');
+
+// Route to delete a delay request
+Route::delete('delay/{id}', [App\Http\Controllers\DelayController::class, 'destroy'])->name('delays.destroy');
 
 Route::get('roles/permissions/page', [App\Http\Controllers\SettingController::class, 'rolesPermissions'])->middleware('auth')->name('roles/permissions/page');
 Route::post('roles/permissions/save', [App\Http\Controllers\SettingController::class, 'addRecord'])->middleware('auth')->name('roles/permissions/save');

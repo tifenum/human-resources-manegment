@@ -21,8 +21,8 @@ class DelayController extends Controller
         
         $request->validate([
             'reason' => 'required|string|max:255',
-            'exit_time' => 'required|date_format:H:i',
-            'return_time' => 'required|date_format:H:i',
+            'exit_time' => 'required|string',
+            'return_time' => 'required|string',
             'day' => 'required|date',
         ]);
 
@@ -69,7 +69,7 @@ class DelayController extends Controller
     public function index()
     {
         $delays = Delay::all();
-        return view('settings.delaydemand', compact('delays')); // Update with your view name
+        return view('settings.delaydemand', compact('delays'));
     }
 
     // Add update function
@@ -146,7 +146,6 @@ class DelayController extends Controller
     {
         $delay = Delay::findOrFail($id);
         $delay->delete();
-
         Toastr::success('Delay request deleted successfully.', 'Success');
         return redirect()->route('delay.index')->with('success', 'Delay request deleted successfully.');
     }
