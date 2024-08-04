@@ -213,12 +213,7 @@
                         <td>{{ $delay->exit_time }}</td>
                         <td>{{ $delay->return_time }}</td>
                         <td class="text-center">
-                            <button class="btn btn-info btn-sm btn-rounded custom-btn-info" 
-                                    data-toggle="modal" 
-                                    data-target="#reasonModal" 
-                                    data-description="{{ $delay->reason }}">
-                                View
-                            </button>
+  
                         </td>
                         <td>{{ $delay->amount_of_time }}</td>
 
@@ -227,7 +222,12 @@
                                 <a class="btn btn-white btn-sm btn-rounded" href="javascript:void(0);">
                                     @if($delay->status_MD)
                                         <i class="fa fa-dot-circle-o text-success"></i> Approved
-                                    @else
+                                    @                          <button class="btn btn-info btn-sm btn-rounded custom-btn-info" 
+                                    data-toggle="modal" 
+                                    data-target="#reasonModal" 
+                                    data-description="{{ $delay->reason }}">
+                                View
+                            </button>else
                                         <i class="fa fa-dot-circle-o text-danger"></i> Declined
                                     @endif
                                 </a>
@@ -384,8 +384,8 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="edit_delay_form" method="POST" action="">
-                    @csrf
+            <form id="edit_delay_form" method="POST" action="">
+            @csrf
                     @method('PUT')
                     
                     <input type="hidden" name="id" id="edit_id">
@@ -449,6 +449,10 @@ document.addEventListener('DOMContentLoaded', function() {
         modal.find('#edit_exit_time').val(exitTime);
         modal.find('#edit_return_time').val(returnTime);
         modal.find('#edit_reason').val(description);
+
+        // Set the form action URL dynamically
+        const formAction = `/delay/${id}`;
+        modal.find('#edit_delay_form').attr('action', formAction);
     });
 });
 

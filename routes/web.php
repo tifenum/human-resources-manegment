@@ -58,7 +58,7 @@ Route::get('company/settings/page', [App\Http\Controllers\SettingController::cla
 Route::get('company/settings/page1', [App\Http\Controllers\HolidayController::class, 'index'])->middleware('auth')->name('company/settings/page1');
 Route::get('company/settings/page2', [App\Http\Controllers\ExitDemandController::class, 'index'])->middleware('auth')->name('company/settings/page2');
 Route::get('company/settings/page3', [App\Http\Controllers\DelayController::class, 'index'])->middleware('auth')->name('company/settings/page3');
-Route::get('company/settings/page4', [App\Http\Controllers\SettingController::class, 'companySettings4'])->middleware('auth')->name('company/settings/page4');
+Route::get('company/settings/page4', [App\Http\Controllers\CertificateController::class, 'index'])->middleware('auth')->name('company/settings/page4');
 
 Route::post('/advance/store', [App\Http\Controllers\AdvanceController::class, 'store'])->name('advance.store');
 Route::get('/advance/create', [App\Http\Controllers\AdvanceController::class, 'create'])->name('advance.create');
@@ -87,14 +87,30 @@ Route::delete('/advances/{id}', [App\Http\Controllers\AdvanceController::class, 
 Route::get('/advances/{id}/edit', [App\Http\Controllers\AdvanceController::class, 'edit'])->name('advance.edit');
 Route::put('/advance/{id}', [App\Http\Controllers\AdvanceController::class, 'update'])->name('advance.update');
 Route::get('delay/create', [App\Http\Controllers\DelayController::class, 'index'])->name('delay.create');
+// Route for creating a certificate (shows the form)
+Route::get('/certificate/create', [CertificateController::class, 'create'])->name('certificate.create');
 
+// Route for storing a new certificate
+Route::post('/certificate/store', [CertificateController::class, 'store'])->name('certificate.store');
+
+// Route for listing all certificates
+Route::get('/certificate/index', [CertificateController::class, 'index'])->name('certificate.index');
+
+// Route for showing the form to edit a certificate
+Route::get('/certificate/{id}/edit', [CertificateController::class, 'edit'])->name('certificate.edit');
+
+// Route for updating a certificate
+Route::put('/certificate/{id}', [CertificateController::class, 'update'])->name('certificate.update');
+
+// Route for deleting a certificate
+Route::delete('/certificate/{id}', [CertificateController::class, 'destroy'])->name('certificate.destroy');
 // Route to store a new delay request
 Route::post('delay', [App\Http\Controllers\DelayController::class, 'store'])->name('delays.store');
 
 // Route to display all delay requests
 
 // Route to update an existing delay request
-Route::put('/delay/{id}', [DelayController::class, 'update'])->name('delays.update');
+Route::put('/delay/{id}', [App\Http\Controllers\DelayController::class, 'update'])->name('delays.update');
 
 // Route to delete a delay request
 Route::delete('delay/{id}', [App\Http\Controllers\DelayController::class, 'destroy'])->name('delays.destroy');

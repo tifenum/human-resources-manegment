@@ -84,8 +84,8 @@ class DelayController extends Controller
             // Validate request data
             $request->validate([
                 'reason' => 'required|string|max:255',
-                'exit_time' => 'required|date_format:H:i',
-                'return_time' => 'required|date_format:H:i',
+                'exit_time' => 'required|string',
+                'return_time' => 'required|string',
                 'day' => 'required|string',
             ]);
 
