@@ -205,12 +205,10 @@
                                     <th>Name</th>
                                     <th>User ID</th>
                                     <th>Email</th>
-                                    <th>Position</th>
+                                    <th>department</th>
                                     <th>Phone</th>
-                                    <th>Join Date</th>
                                     <th>Role</th>
                                     <th>Status</th>
-                                    <th>Departement</th>
                                     <th class="text-right">Action</th>
                                 </tr>
                             </thead>
@@ -218,18 +216,20 @@
                                 @foreach ($result as $key=>$user )
                                 <tr>
                                     <td>
-                                        <span hidden class="image">{{ $user->avatar}}</span>
+                                        <span hidden class="image">{{ $user->image}}</span>
                                         <h2 class="table-avatar">
-                                            <a href="{{ url('employee/profile/'.$user->rec_id) }}" class="avatar"><img src="{{ URL::to('/assets/images/'. $user->avatar) }}" alt="{{ $user->avatar }}"></a>
+                                        <a href="{{ url('employee/profile/'.$user->rec_id) }}" class="avatar">
+    <img src="{{ asset('images/profile/'.$user->image) }}" alt="{{ $user->name }}">
+</a>
+                                            </a>
                                             <a href="{{ url('employee/profile/'.$user->rec_id) }}" class="name">{{ $user->name }}</span></a>
                                         </h2>
                                     </td>
                                     <td hidden class="ids">{{ $user->id }}</td>
                                     <td class="id">{{ $user->rec_id }}</td>
                                     <td class="email">{{ $user->email }}</td>
-                                    <td class="position">{{ $user->position }}</td>
-                                    <td class="phone_number">{{ $user->phone_number }}</td>
-                                    <td>{{ $user->join_date }}</td>
+                                    <td class="position">{{ $user->department }}</td>
+                                    <td class="phone_number">{{ $user->phone }}</td>
                                     <td>
                                         @if ($user->role_name=='Admin')
                                             <span class="badge bg-inverse-danger role_name">{{ $user->role_name }}</span>
@@ -245,22 +245,22 @@
                                     </td>
                                     <td>
                                         <div class="dropdown action-label">
-                                            @if ($user->status=='Active')
+                                            @if ($user->department=='Active')
                                                 <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
                                                     <i class="fa fa-dot-circle-o text-success"></i>
-                                                    <span class="statuss">{{ $user->status }}</span>
+                                                    <span class="statuss">{{ $user->department }}</span>
                                                 </a>
-                                                @elseif ($user->status=='Inactive')
+                                                @elseif ($user->department=='Inactive')
                                                 <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
                                                     <i class="fa fa-dot-circle-o text-info"></i>
-                                                    <span class="statuss">{{ $user->status }}</span>
+                                                    <span class="statuss">{{ $user->department }}</span>
                                                 </a>
-                                                @elseif ($user->status=='Disable')
+                                                @elseif ($user->department=='Disable')
                                                 <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
                                                     <i class="fa fa-dot-circle-o text-danger"></i>
-                                                    <span class="statuss">{{ $user->status }}</span>
+                                                    <span class="statuss">{{ $user->department }}</span>
                                                 </a>
-                                                @elseif ($user->status=='')
+                                                @elseif ($user->department=='')
                                                 <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
                                                     <i class="fa fa-dot-circle-o text-dark"></i>
                                                     <span class="statuss">N/A</span>
@@ -280,7 +280,6 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="department">{{ $user->department }}</td>
                                     <td class="text-right">
                                         <div class="dropdown dropdown-action">
                                             <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>

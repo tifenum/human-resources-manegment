@@ -6,36 +6,43 @@
         <div class="sidebar-inner slimscroll">
             <div id="sidebar-menu" class="sidebar-menu">
                 <ul>
+                @if (Auth::user()->role_name=='Admin')
                     <li class="menu-title">
                         <span>Main</span>
                     </li>
                     <li class="submenu">
-                        <a href="#">
+                        <a href="#" class="noti-dot">
                             <i class="la la-dashboard"></i>
-                            <span> Dashboard</span>
-                            <span class="menu-arrow"></span>
+                            <span> Dashboard</span> <span class="menu-arrow"></span>
                         </a>
-                        <ul style="display: none;">
-                            <li><a href="{{ route('home') }}">Admin Dashboard</a></li>
+                        <ul style="display: block;">
+                            <li><a class="active" href="{{ route('home') }}">Admin Dashboard</a></li>
                             <li><a href="{{ route('em/dashboard') }}">Employee Dashboard</a></li>
                         </ul>
                     </li>
-                    <li class="menu-title">
-                        <span>Employees</span>
-                    </li>
+                        <li class="menu-title"> <span>Authentication</span> </li>
+                        <li class="submenu">
+                            <a href="#">
+                                <i class="la la-user-secret"></i> <span> User Controller</span> <span class="menu-arrow"></span>
+                            </a>
+                            <ul style="display: block;">
+                                <li><a href="{{ route('userManagement') }}">All User</a></li>
+                                <li><a href="{{ route('activity/log') }}">Activity Log</a></li>
+                                <li><a href="{{ route('activity/login/logout') }}">Activity User</a></li>
+                            </ul>
+                        </li>
+                    <li class="menu-title"> <span>Employees</span> </li>
                     <li class="submenu">
-                        <a href="#" class="noti-dot">
-                            <i class="la la-user"></i>
-                            <span> Employees</span>
-                            <span class="menu-arrow"></span>
+                        <a href="#">
+                            <i class="la la-user"></i> <span> Employees</span> <span class="menu-arrow"></span>
                         </a>
-                        <ul style="display: none;">
+                        <ul style="display: block;">
                             <li><a href="{{ route('all/employee/card') }}">All Employees</a></li>
                             <li><a href="{{ route('form/holidays/new') }}">Holidays</a></li>
                             <li><a href="{{ route('form/leaves/new') }}">Leaves (Admin) 
                                 <span class="badge badge-pill bg-primary float-right">1</span></a>
                             </li>
-                            <li><a class="active" href="{{route('form/leavesemployee/new')}}">Leaves (Employee)</a></li>
+                            <li><a href="{{route('form/leavesemployee/new')}}">Leaves (Employee)</a></li>
                             <li><a href="{{ route('form/leavesettings/page') }}">Leave Settings</a></li>
                             <li><a href="{{ route('attendance/page') }}">Attendance (Admin)</a></li>
                             <li><a href="{{ route('attendance/employee/page') }}">Attendance (Employee)</a></li>
@@ -53,7 +60,7 @@
                             <span> Sales </span> 
                             <span class="menu-arrow"></span>
                         </a>
-                        <ul style="display: none;">
+                        <ul style="display: block;">
                             <li><a href="estimates.html">Estimates</a></li>
                             <li><a href="{{ route('form/invoice/view/page') }}">Invoices</a></li>
                             <li><a href="payments.html">Payments</a></li>
@@ -64,7 +71,7 @@
                     </li>
                     <li class="submenu"> <a href="#"><i class="la la-money"></i>
                         <span> Payroll </span> <span class="menu-arrow"></span></a>
-                        <ul style="display: none;">
+                        <ul style="display: block;">
                             <li><a href="{{ route('form/salary/page') }}"> Employee Salary </a></li>
                             <li><a href="{{ url('form/salary/view') }}"> Payslip </a></li>
                             <li><a href="{{ route('form/payroll/items') }}"> Payroll Items </a></li>
@@ -72,7 +79,7 @@
                     </li>
                     <li class="submenu"> <a href="#"><i class="la la-pie-chart"></i>
                         <span> Reports </span> <span class="menu-arrow"></span></a>
-                        <ul style="display: none;">
+                        <ul style="display: block;">
                             <li><a href="{{ route('form/expense/reports/page') }}"> Expense Report </a></li>
                             <li><a href="{{ route('form/invoice/reports/page') }}"> Invoice Report </a></li>
                             <li><a href="payments-reports.html"> Payments Report </a></li>
@@ -86,7 +93,7 @@
                     <li class="menu-title"> <span>Performance</span> </li>
                     <li class="submenu"> <a href="#"><i class="la la-graduation-cap"></i>
                         <span> Performance </span> <span class="menu-arrow"></span></a>
-                        <ul style="display: none;">
+                        <ul style="display: block;">
                             <li><a href="{{ route('form/performance/indicator/page') }}"> Performance Indicator </a></li>
                             <li><a href="{{ route('form/performance/page') }}"> Performance Review </a></li>
                             <li><a href="{{ route('form/performance/appraisal/page') }}"> Performance Appraisal </a></li>
@@ -94,7 +101,7 @@
                     </li>
                     <li class="submenu"> <a href="#"><i class="la la-edit"></i>
                         <span> Training </span> <span class="menu-arrow"></span></a>
-                        <ul style="display: none;">
+                        <ul style="display: block;">
                             <li><a href="{{ route('form/training/list/page') }}"> Training List </a></li>
                             <li><a href="{{ route('form/trainers/list/page') }}"> Trainers</a></li>
                             <li><a href="{{ route('form/training/type/list/page') }}"> Training Type </a></li>
@@ -106,7 +113,7 @@
                     </li>
                     <li class="submenu"> <a href="#"><i class="la la-briefcase"></i>
                         <span> Jobs </span> <span class="menu-arrow"></span></a>
-                        <ul style="display: none;">
+                        <ul style="display: block;">
                             <li><a href="user-dashboard.html"> User Dasboard </a></li>
                             <li><a href="jobs-dashboard.html"> Jobs Dasboard </a></li>
                             <li><a href="jobs.html"> Manage Jobs </a></li>
@@ -120,13 +127,201 @@
                             <li><a href="apptitude-result.html"> Aptitude Results </a></li>
                         </ul>
                     </li>
+                    @elseif (Auth::user()->role_name=='Employee')
+                    <li class="menu-title"> <span>main</span> </li>
+                    <li class="submenu">
+                        <a href="#">
+                            <i class="la la-files-o"></i>
+                            <span> Demands </span> 
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <ul style="display: block;">
+                        <li><a href="{{ route('all/employee/card') }}">Demand Advance</a></li>
+                            <li><a href="{{ route('company/settings/page1') }}">Demand Holiday</a></li>
+                            <li><a href="{{ route('company/settings/page2') }}">Exit Permission</a></li>
+                            <li><a href="{{ route('company/settings/page3') }}">Delay Permission</a></li>
+                            <li><a href="{{ route('company/settings/page4') }}">Demand Certificate</a></li>
+                        </ul>
+                    </li>
                     <li class="menu-title"> <span>Pages</span> </li>
                     <li class="submenu"> <a href="#"><i class="la la-user"></i>
                         <span> Profile </span> <span class="menu-arrow"></span></a>
-                        <ul style="display: none;">
+                        <ul style="display: block;">
                             <li><a href="profile.html"> Employee Profile </a></li>
                         </ul>
                     </li>
+                    @elseif (Auth::user()->role_name=='Head of department')
+                    <li class="menu-title"> <span>main</span> </li>
+                    <li class="submenu">
+                        <a href="#">
+                            <i class="la la-files-o"></i>
+                            <span>advances demands Demands </span> 
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <ul style="display: block;">
+                        <li><a href="{{ route('all/employee/card') }}">Demand Advance</a></li>
+                            <li><a href="{{ route('company/settings/page1') }}">Demand Holiday</a></li>
+                            <li><a href="{{ route('company/settings/page2') }}">Exit Permission</a></li>
+                            <li><a href="{{ route('company/settings/page3') }}">Delay Permission</a></li>
+                            <li><a href="{{ route('company/settings/page4') }}">Demand Certificate</a></li>
+
+                        </ul>
+                    </li>
+                    <li class="submenu">
+                        <a href="#">
+                            <i class="la la-files-o"></i>
+                            <span> consult retard demands </span> 
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <ul style="display: block;">
+                        <li><a href="{{ route('all/employee/card') }}">Demand Advance</a></li>
+                            <li><a href="{{ route('company/settings/page1') }}">Demand Holiday</a></li>
+                            <li><a href="{{ route('company/settings/page2') }}">Exit Permission</a></li>
+                            <li><a href="{{ route('company/settings/page3') }}">Delay Permission</a></li>
+                            <li><a href="{{ route('company/settings/page4') }}">Demand Certificate</a></li>
+
+                        </ul>
+                    </li>
+                    <li class="submenu">
+                        <a href="#">
+                            <i class="la la-files-o"></i>
+                            <span> consult permission de sortie </span> 
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <ul style="display: block;">
+                        <li><a href="{{ route('all/employee/card') }}">Demand Advance</a></li>
+                            <li><a href="{{ route('company/settings/page1') }}">Demand Holiday</a></li>
+                            <li><a href="{{ route('company/settings/page2') }}">Exit Permission</a></li>
+                            <li><a href="{{ route('company/settings/page3') }}">Delay Permission</a></li>
+                            <li><a href="{{ route('company/settings/page4') }}">Demand Certificate</a></li>
+
+                        </ul>
+                    </li>
+                    <li class="menu-title"> <span>Pages</span> </li>
+                    <li class="submenu"> <a href="#"><i class="la la-user"></i>
+                        <span> Profile </span> <span class="menu-arrow"></span></a>
+                        <ul style="display: block;">
+                            <li><a href="profile.html"> Employee Profile </a></li>
+                        </ul>
+                    </li>
+                    @elseif (Auth::user()->role_name=='Chief of staff')
+                    <li class="menu-title"> <span>main</span> </li>
+                    <li class="submenu">
+                        <a href="#">
+                            <i class="la la-files-o"></i>
+                            <span> consult certificates </span> 
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <ul style="display: block;">
+                        <li><a href="{{ route('all/employee/card') }}">Demand Advance</a></li>
+                            <li><a href="{{ route('company/settings/page1') }}">Demand Holiday</a></li>
+                            <li><a href="{{ route('company/settings/page2') }}">Exit Permission</a></li>
+                            <li><a href="{{ route('company/settings/page3') }}">Delay Permission</a></li>
+                            <li><a href="{{ route('company/settings/page4') }}">Demand Certificate</a></li>
+
+                        </ul>
+                    </li>
+                    <li class="submenu">
+                        <a href="#">
+                            <i class="la la-files-o"></i>
+                            <span> consult retard demands</span> 
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <ul style="display: block;">
+                        <li><a href="{{ route('all/employee/card') }}">Demand Advance</a></li>
+                            <li><a href="{{ route('company/settings/page1') }}">Demand Holiday</a></li>
+                            <li><a href="{{ route('company/settings/page2') }}">Exit Permission</a></li>
+                            <li><a href="{{ route('company/settings/page3') }}">Delay Permission</a></li>
+                            <li><a href="{{ route('company/settings/page4') }}">Demand Certificate</a></li>
+
+                        </ul>
+                    </li>
+                    <li class="submenu">
+                        <a href="#">
+                            <i class="la la-files-o"></i>
+                            <span> consult advances demands </span> 
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <ul style="display: block;">
+                        <li><a href="{{ route('all/employee/card') }}">Demand Advance</a></li>
+                            <li><a href="{{ route('company/settings/page1') }}">Demand Holiday</a></li>
+                            <li><a href="{{ route('company/settings/page2') }}">Exit Permission</a></li>
+                            <li><a href="{{ route('company/settings/page3') }}">Delay Permission</a></li>
+                            <li><a href="{{ route('company/settings/page4') }}">Demand Certificate</a></li>
+
+                        </ul>
+                    </li>
+                    <li class="menu-title"> <span>Pages</span> </li>
+                    <li class="submenu"> <a href="#"><i class="la la-user"></i>
+                        <span> Profile </span> <span class="menu-arrow"></span></a>
+                        <ul style="display: block;">
+                            <li><a href="profile.html"> Employee Profile </a></li>
+                        </ul>
+                    </li>
+                    @elseif (Auth::user()->role_name=='Financial director')
+                    <li class="menu-title"> <span>main</span> </li>
+                    <li class="submenu">
+                        <a href="#">
+                            <i class="la la-files-o"></i>
+                            <span>consult advance demands</span> 
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <ul style="display: block;">
+                        <li><a href="{{ route('all/employee/card') }}">Demand Advance</a></li>
+                            <li><a href="{{ route('company/settings/page1') }}">Demand Holiday</a></li>
+                            <li><a href="{{ route('company/settings/page2') }}">Exit Permission</a></li>
+                            <li><a href="{{ route('company/settings/page3') }}">Delay Permission</a></li>
+                            <li><a href="{{ route('company/settings/page4') }}">Demand Certificate</a></li>
+
+                        </ul>
+                    </li>
+                    <li class="menu-title"> <span>Pages</span> </li>
+                    <li class="submenu"> <a href="#"><i class="la la-user"></i>
+                        <span> Profile </span> <span class="menu-arrow"></span></a>
+                        <ul style="display: block;">
+                            <li><a href="profile.html"> Employee Profile </a></li>
+                        </ul>
+                    </li>
+                    @elseif (Auth::user()->role_name=='Manager director')
+                    <li class="menu-title"> <span>main</span> </li>
+                    <li class="submenu">
+                        <a href="#">
+                            <i class="la la-files-o"></i>
+                            <span>consult advances Demands </span> 
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <ul style="display: block;">
+                        <li><a href="{{ route('all/employee/card') }}">Demand Advance</a></li>
+                            <li><a href="{{ route('company/settings/page1') }}">Demand Holiday</a></li>
+                            <li><a href="{{ route('company/settings/page2') }}">Exit Permission</a></li>
+                            <li><a href="{{ route('company/settings/page3') }}">Delay Permission</a></li>
+                            <li><a href="{{ route('company/settings/page4') }}">Demand Certificate</a></li>
+
+                        </ul>
+                    </li>
+                    <li class="submenu">
+                        <a href="#">
+                            <i class="la la-files-o"></i>
+                            <span> consult conges demands </span> 
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <ul style="display: block;">
+                        <li><a href="{{ route('all/employee/card') }}">Demand Advance</a></li>
+                            <li><a href="{{ route('company/settings/page1') }}">Demand Holiday</a></li>
+                            <li><a href="{{ route('company/settings/page2') }}">Exit Permission</a></li>
+                            <li><a href="{{ route('company/settings/page3') }}">Delay Permission</a></li>
+                            <li><a href="{{ route('company/settings/page4') }}">Demand Certificate</a></li>
+
+                        </ul>
+                    </li>
+                    <li class="menu-title"> <span>Pages</span> </li>
+                    <li class="submenu"> <a href="#"><i class="la la-user"></i>
+                        <span> Profile </span> <span class="menu-arrow"></span></a>
+                        <ul style="display: block;">
+                            <li><a href="profile.html"> Employee Profile </a></li>
+                        </ul>
+                    </li>
+                    @endif
                 </ul>
             </div>
         </div>
@@ -267,23 +462,35 @@
                         </div>
                     </td>
                     <td class="text-right">
-                    <a href="#" data-toggle="modal" data-target="#edit_advance" class="action-icon edit-advance"
-       data-id="{{ $advance->id }}"
-       data-amount="{{ $advance->amount }}"
-       data-date_wish="{{ $advance->date_wish }}"
-       data-department="{{ $advance->department }}"
-       data-description="{{ $advance->description }}">
-        <i class="fa fa-pencil" aria-hidden="true"></i>
-    </a>
+                    @if(auth()->user()->role_name == 'Employee')
+                        <a href="#" data-toggle="modal" data-target="#edit_advance" class="action-icon edit-advance"
+                           data-id="{{ $advance->id }}"
+                           data-amount="{{ $advance->amount }}"
+                           data-date_wish="{{ $advance->date_wish }}"
+                           data-department="{{ $advance->department }}"
+                           data-description="{{ $advance->description }}">
+                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                        </a>
+                        <form action="{{ route('advance.destroy', $advance->id) }}" method="POST" style="display:inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="action-icon" style="border: none; background: none; cursor: pointer;">
+                                <i class="fa fa-trash-o" aria-hidden="true"></i>
+                            </button>
+                        </form>
+                    @else
+                    <form action="{{ route('advance.updateStatus', $advance->id) }}" method="POST" style="display:inline;">
+    @csrf
+    @method('PATCH')
+    <button type="submit" name="status" value="approve" class="action-icon" style="border: none; background: none; cursor: pointer;">
+        <i class="fa fa-check" aria-hidden="true"></i>
+    </button>
+    <button type="submit" name="status" value="decline" class="action-icon" style="border: none; background: none; cursor: pointer;">
+        <i class="fa fa-times" aria-hidden="true"></i>
+    </button>
+</form>
 
-
-    <form action="{{ route('advance.destroy', $advance->id) }}" method="POST" style="display:inline;">
-        @csrf
-        @method('DELETE')
-        <button type="submit" class="action-icon" style="border: none; background: none; cursor: pointer;">
-            <i class="fa fa-trash-o" aria-hidden="true"></i>
-        </button>
-    </form>
+                    @endif
 </td>
 
                 </tr>
@@ -457,7 +664,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="editAdvanceForm" method="POST" action="{{ route('advance.update', $advance->id) }}">
+                <form id="editAdvanceForm" method="POST" action="">
                     @csrf
                     @method('PUT')
                     <input type="hidden" name="id" id="edit_id">

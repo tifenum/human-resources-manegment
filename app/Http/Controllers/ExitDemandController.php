@@ -40,7 +40,52 @@
             return redirect()->route('exit.index')->with('success', 'Holiday request submitted successfully.');
 
         }
-
+        public function updateStatus(Request $request, $id)
+        {
+            // Find the holiday record by ID
+            $holiday = ExitDemand::findOrFail($id);
+        
+            // Check user role and update the respective status
+            $userRole = auth()->user()->role_name;
+            $status = $request->input('status') === 'approve';
+        
+            Log::info('User role:', ['role' => $userRole]);
+            Log::info('Status:', ['status' => $status]);
+        
+            switch ($userRole) {
+                case 'Chief of staff':
+                    $holiday->status_Ch5 = $status;
+                    Log::info('Updating status_Ch5', ['status' => $status]);
+                    break;
+                case 'Head of department':
+                    $holiday->status_HD = $status;
+                    Log::info('Updating status_HD', ['status' => $status]);
+                    break;
+                case 'Financial director':
+                    $holiday->status_FD = $status;
+                    Log::info('Updating status_FD', ['status' => $status]);
+                    break;
+                case 'Manager director':
+                    $holiday->status_MD = $status;
+                    Log::info('Updating status_MD', ['status' => $status]);
+                    break;
+            }
+        
+            // Optionally, set 'confirmed' status if all other statuses are approved
+            if ($holiday->status_MD && $holiday->status_HD && $holiday->status_FD && $holiday->status_Ch5) {
+                $holiday    ->confirmed = true;
+                Log::info('All statuses approved. Setting confirmed to true');
+            } else {
+                $holiday->confirmed = false;
+                Log::info('Not all statuses approved. Setting confirmed to false');
+            }
+        
+            $holiday->save();
+            Log::info('Holiday status saved', ['holiday' => $holiday]);
+            Toastr::success('Holiday status updated successfully :)', 'Success');
+        
+            return redirect()->back()->with('status', 'Holiday status updated successfully');
+        }
         public function index()
         {
             $exitdemand = ExitDemand::all();

@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
+use Brian2694\Toastr\Facades\Toastr;
 
 use Illuminate\Http\Request;
-use Brian2694\Toastr\Facades\Toastr;
 use DB;
 use App\Models\User;
 use App\Models\Employee;
@@ -14,7 +14,7 @@ use Carbon\Carbon;
 use Session;
 use Auth;
 use Hash;
-
+use Illuminate\Support\Facades\Log;
 class UserManagementController extends Controller
 {
     public function index()
@@ -105,7 +105,104 @@ class UserManagementController extends Controller
         }
     
     }
+    // public function updateProfile(Request $request)
+    // {
+    //     $user = Auth::user();
+        
+    //     $validatedData = $request->validate([
+    //         'name' => 'required|string|max:255',
+    //         'email' => 'required|string|email|max:255',
+    //         'phone' => 'required|string|max:15',
+    //         'department' => 'required|string|max:255',
+    //         'role_name' => 'required|string|max:255',
+    //         'image' => 'nullable|image|max:2048',
+    //     ]);
+    
+    //     if ($request->hasFile('image')) {
+    //         $image = $request->file('image');
+    //         $filename = time() . '.' . $image->getClientOriginalExtension();
+    //         $image->move(public_path('images/profile'), $filename);
+    //         $user->image = $filename;
+    //     }
+    
+    //     $user->name = $validatedData['name'];
+    //     $user->email = $validatedData['email'];
+    //     $user->phone = $validatedData['phone'];
+    //     $user->department = $validatedData['department'];
+    //     $user->role_name = $validatedData['role_name'];
+        
+    //     $user->save();
+    
+    //     return redirect()->back()->with('success', 'Profile updated successfully.');
+    // }
 
+
+    
+    public function updateProfile(Request $request)
+    {
+        $user = Auth::user();
+    
+        // Log the start of the function
+        Log::info('Update profile requested for user ID: ' . $user->id);
+        Log::info('Request data: ', $request->all());
+    
+        try {
+            // Validate the incoming request data
+            $validatedData = $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|string|email|max:255',
+                'phone' => 'required|string|max:15',
+                'department' => 'required|string|max:255',
+                'entry_date' => 'required|date_format:d-m-Y', // Ensure correct date format validation
+                'salary' => 'required|numeric',
+                'image' => 'nullable|image|max:2048',
+            ]);
+        
+            Log::info('Validation successful for user ID: ' . $user->id);
+            Log::info('Validated data: ', $validatedData);
+    
+            // Handle the profile image upload
+            if ($request->hasFile('image')) {
+                Log::info('Profile image upload detected for user ID: ' . $user->id);
+                $image = $request->file('image');
+                $filename = time() . '.' . $image->getClientOriginalExtension();
+                $image->move(public_path('images/profile'), $filename);
+                $user->image = $filename;
+                Log::info('Profile image uploaded successfully for user ID: ' . $user->id . ' - Filename: ' . $filename);
+            }
+    
+            // Update user information
+            $user->name = $validatedData['name'];
+            $user->email = $validatedData['email'];
+            $user->phone = $validatedData['phone'];
+            $user->department = $validatedData['department'];
+    
+            // Convert entry_date from d-m-Y to a Carbon instance
+            $entryDate = Carbon::createFromFormat('d-m-Y', $validatedData['entry_date']);
+            $user->entry_date = $entryDate;
+            Log::info('Entry date converted and updated successfully for user ID: ' . $user->id . ' - Entry Date: ' . $user->entry_date);
+    
+            $user->salary = $validatedData['salary'];
+
+            $user->save();
+            Toastr::success('Profile Information updated successfully :)', 'Success');
+
+            Log::info('Profile updated successfully for user ID: ' . $user->id);
+    
+            return redirect()->back()->with('success', 'Profile updated successfully.');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            // Log validation errors
+            Log::error('Validation error: ' . json_encode($e->errors()));
+            Toastr::error('Profile Information update failed due to validation errors.', 'Error');
+            return redirect()->back()->withErrors($e->errors())->withInput();
+        } catch (\Exception $e) {
+            Toastr::error('Profile Information update failed :)', 'Error');
+            Log::error('Profile update failed for user ID: ' . $user->id . ' - ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Profile update failed. Please try again.');
+        }
+    }
+    
+    
     // use activity log
     public function activityLog()
     {

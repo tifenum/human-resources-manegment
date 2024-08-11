@@ -24,8 +24,8 @@ class CreateRoleTypeUsersTable extends Migration
             ['role_type' => 'Head of department'],
             ['role_type' => 'Financial director'],
             ['role_type' => 'Chief of staff'],
-            ['role_type' => 'Employee'],
-            ['role_type' => 'Manager director']
+            ['role_type' => 'Manager director'],
+            ['role_type' => 'Employee']
         ]);
     }
 

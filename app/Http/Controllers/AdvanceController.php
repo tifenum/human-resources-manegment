@@ -129,6 +129,47 @@ public function update(Request $request, $id)
 }
 
 
+    public function updateStatus(Request $request, Advance $advance)
+    {
+        // Check user role and update the respective status
+        $userRole = auth()->user()->role_name;
+        $status = $request->input('status') === 'approve';
 
+        Log::info('User role:', ['role' => $userRole]);
+        Log::info('Status:', ['status' => $status]);
 
+        switch ($userRole) {
+            case 'Chief of staff':
+                $advance->chief_staff_status = $status;
+                Log::info('Updating chief_staff_status', ['status' => $status]);
+                break;
+            case 'Head of department':
+                $advance->head_department_status = $status;
+                Log::info('Updating head_department_status', ['status' => $status]);
+                break;
+            case 'Financial director':
+                $advance->financial_director_status = $status;
+                Log::info('Updating financial_director_status', ['status' => $status]);
+                break;
+            case 'Manager director':
+                $advance->manager_director_status = $status;
+                Log::info('Updating manager_director_status', ['status' => $status]);
+                break;
+        }
+
+        // Optionally, set 'accepted' status if all other statuses are approved
+        if ($advance->chief_staff_status && $advance->head_department_status && $advance->financial_director_status || $advance->manager_director_status) {
+            $advance->accepted = true;
+            Log::info('All statuses approved. Setting accepted to true');
+        } else {
+            $advance->accepted = false;
+            Log::info('Not all statuses approved. Setting accepted to false');
+        }
+
+        $advance->save();
+        Log::info('Advance status saved', ['advance' => $advance]);
+        Toastr::success('Advance demand submitted successfully :)','Success');
+
+        return redirect()->back()->with('status', 'Advance status updated successfully');
+    }
 }

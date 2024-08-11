@@ -30,11 +30,11 @@
         <script src="{{ URL::to('assets/js/toastr.min.js') }}"></script>
     </head>
     <body class="account-page error-page">
-        <style>    
+        <!-- <style>    
             .invalid-feedback{
                 font-size: 14px;
             }
-        </style>
+        </style> -->
 		<!-- Main Wrapper -->
         @yield('content')
 		<!-- /Main Wrapper -->

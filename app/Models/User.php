@@ -6,12 +6,10 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use App\Traits\LockableTrait;
 
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
-    use LockableTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -20,20 +18,18 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
-        'rec_id',
         'email',
-        'join_date',
-        'phone_number',
-        'status',
-        'role_name',
-        'email',
-        'role_name',
-        'avatar',
-        'position',
-        'department',
+        'image',  // Profile Photo
+        'phone',  // Phone Number
+        'department',  // Department
+        'role_name',  // Role Name
+        'status',  // Status
+        'salary',  // Salary
+        'entry_date',  // Entry Date
+        'matricule',  // Matricule
         'password',
     ];
-    
+
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -51,13 +47,17 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'entry_date' => 'datetime',
     ];
-    // app/Models/User.php
 
-// User.php model
-public function hasRole($role) {
-    return $this->role === $role;
+    /**
+     * Check if the user has a specific role.
+     *
+     * @param string $role
+     * @return bool
+     */
+    public function hasRole($role) {
+        return $this->role_name === $role;
+    }
 }
 
-
-}

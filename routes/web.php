@@ -87,6 +87,15 @@ Route::delete('/advances/{id}', [App\Http\Controllers\AdvanceController::class, 
 Route::get('/advances/{id}/edit', [App\Http\Controllers\AdvanceController::class, 'edit'])->name('advance.edit');
 Route::put('/advance/{id}', [App\Http\Controllers\AdvanceController::class, 'update'])->name('advance.update');
 Route::get('delay/create', [App\Http\Controllers\DelayController::class, 'index'])->name('delay.create');
+// web.php
+
+// web.php
+Route::patch('advance/{advance}/updateStatus', [App\Http\Controllers\AdvanceController::class, 'updateStatus'])->name('advance.updateStatus');
+Route::patch('holiday/{holiday}/updateStatus', [App\Http\Controllers\HolidayController::class, 'updateStatus'])->name('holiday.updateStatus');
+Route::patch('exit/{demand}/updateStatus', [App\Http\Controllers\ExitDemandController::class, 'updateStatus'])->name('exitdemand.updateStatus');
+Route::patch('delay/{delay}/updateStatus', [App\Http\Controllers\DelayController::class, 'updateStatus'])->name('delays.updateStatus');
+Route::patch('certificate/{certificate}/updateStatus', [App\Http\Controllers\CertificateController::class, 'updateStatus'])->name('certificate.updateStatus');
+
 // Route for creating a certificate (shows the form)
 Route::get('/certificate/create', [CertificateController::class, 'create'])->name('certificate.create');
 
@@ -132,6 +141,7 @@ Route::post('unlock', [App\Http\Controllers\LockScreen::class, 'unlock'])->name(
 // ------------------------------ register ---------------------------------//
 Route::get('/register', [App\Http\Controllers\Auth\RegisterController::class, 'register'])->name('register');
 Route::post('/register', [App\Http\Controllers\Auth\RegisterController::class, 'storeUser'])->name('register');
+Route::put('/update-profile', [App\Http\Controllers\UserManagementController::class, 'updateProfile'])->name('updateProfile');
 
 // ----------------------------- forget password ----------------------------//
 Route::get('forget-password', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'getEmail'])->name('forget-password');
