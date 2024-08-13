@@ -167,7 +167,7 @@
                             <div class="profile-view">
                                 <div class="profile-img-wrap">
                                     <div class="profile-img">
-                                        <a href="#"><img alt="" src="{{ URL::to('/assets/images/'. $user[0]->avatar) }}" alt="{{ $user[0]->name }}"></a>
+                                        <a href="#"><img alt="" src="{{ URL::to('/assets/images/'. $user[0]->image) }}" alt="{{ $user[0]->name }}"></a>
                                     </div>
                                 </div>
                                 <div class="profile-basic">

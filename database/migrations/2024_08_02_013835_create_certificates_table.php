@@ -15,6 +15,7 @@ class CreateCertificatesTable extends Migration
             $table->string('issued_for');
             $table->float('salary');
             $table->string('department');
+            $table->string('certificate_name')->default("no certificate");
             $table->text('description')->nullable();
             $table->boolean('confirmed')->default(false);
             $table->boolean('status_MD')->default(false);

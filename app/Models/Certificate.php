@@ -21,6 +21,7 @@ class Certificate extends Model
         'status_HD',
         'status_FD',
         'status_Ch5',
+        'certificate_name',
     ];
 
     protected $casts = [

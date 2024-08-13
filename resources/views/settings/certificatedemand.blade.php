@@ -367,110 +367,11 @@
                                 <th>Salary</th>
                                 <th>discription</th>
                                 <th>Department</th>
-                                <th>Status MD</th>
-                                <th>Status HD</th>
-                                <th>Status FD</th>
-                                <th>Status Ch5</th>
                                 <th>Status</th>
                                 <th class="text-right">Actions</th>
                             </tr>
                         </thead>
-                        <!-- <tbody>
-                            @foreach($certificates as $certificate)
-                            <tr>      
-                                <td>{{ $certificate->type }}</td>
-                                <td>{{ $certificate->issued_for }}</td>
-                                <td>{{ $certificate->salary }}</td>
-                                <td>                                  
-                                      <button href="#" data-toggle="modal" data-target="#view_certificate" class=" view-certificate btn btn-info btn-sm btn-rounded custom-btn-info"
-                                       data-id="{{ $certificate->id }}"
-                                       data-type="{{ $certificate->type }}"
-                                       data-issued_for="{{ $certificate->issued_for }}"
-                                       data-salary="{{ $certificate->salary }}"
-                                       data-department="{{ $certificate->department }}"
-                                       data-description="{{ $certificate->description }}">
-                                       view
-</button></td>
 
-                                    
-                                <td>{{ $certificate->department }}</td>
-                                <td class="text-center">
-                                    <div class="action-label">
-                                        <a class="btn btn-white btn-sm btn-rounded" href="javascript:void(0);">
-                                            @if($certificate->status_MD)
-                                                <i class="fa fa-dot-circle-o text-success"></i> Approved
-                                            @else
-                                                <i class="fa fa-dot-circle-o text-danger"></i> Declined
-                                            @endif
-                                        </a>
-                                    </div>
-                                </td>
-                                <td class="text-center">
-                                    <div class="action-label">
-                                        <a class="btn btn-white btn-sm btn-rounded" href="javascript:void(0);">
-                                            @if($certificate->status_HD)
-                                                <i class="fa fa-dot-circle-o text-success"></i> Approved
-                                            @else
-                                                <i class="fa fa-dot-circle-o text-danger"></i> Declined
-                                            @endif
-                                        </a>
-                                    </div>
-                                </td>
-                                <td class="text-center">
-                                    <div class="action-label">
-                                        <a class="btn btn-white btn-sm btn-rounded" href="javascript:void(0);">
-                                            @if($certificate->status_FD)
-                                                <i class="fa fa-dot-circle-o text-success"></i> Approved
-                                            @else
-                                                <i class="fa fa-dot-circle-o text-danger"></i> Declined
-                                            @endif
-                                        </a>
-                                    </div>
-                                </td>
-                                <td class="text-center">
-                                    <div class="action-label">
-                                        <a class="btn btn-white btn-sm btn-rounded" href="javascript:void(0);">
-                                            @if($certificate->status_Ch5)
-                                                <i class="fa fa-dot-circle-o text-success"></i> Approved
-                                            @else
-                                                <i class="fa fa-dot-circle-o text-danger"></i> Declined
-                                            @endif
-                                        </a>
-                                    </div>
-                                </td>
-                                <td class="text-center">
-                                    <div class="action-label">
-                                        <a class="btn btn-white btn-sm btn-rounded" href="javascript:void(0);">
-                                            @if($certificate->confirmed)
-                                                <i class="fa fa-dot-circle-o text-success"></i> Approved
-                                            @else
-                                                <i class="fa fa-dot-circle-o text-danger"></i> Declined
-                                            @endif
-                                        </a>
-                                    </div>
-                                </td>
-                                <td class="text-right">
-
-                                    <a href="#" data-toggle="modal" data-target="#edit_certificate" class="action-icon edit-certificate"
-                                       data-id="{{ $certificate->id }}"
-                                       data-type="{{ $certificate->type }}"
-                                       data-issued_for="{{ $certificate->issued_for }}"
-                                       data-salary="{{ $certificate->salary }}"
-                                       data-department="{{ $certificate->department }}"
-                                       data-description="{{ $certificate->description }}">
-                                       <i class="fa fa-pencil" aria-hidden="true"></i>
-                                    </a>
-                                    <form action="{{ route('certificate.destroy', $certificate->id) }}" method="POST" style="display:inline;">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="action-icon" style="border: none; background: none; cursor: pointer;">
-                                            <i class="fa fa-trash-o" aria-hidden="true"></i>
-                                        </button>
-                                    </form>
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody> -->
                         <tbody>
     @foreach($certificates as $certificate)
     <tr>      
@@ -492,50 +393,6 @@
         <td class="text-center">
             <div class="action-label">
                 <a class="btn btn-white btn-sm btn-rounded" href="javascript:void(0);">
-                    @if($certificate->status_MD)
-                        <i class="fa fa-dot-circle-o text-success"></i> Approved
-                    @else
-                        <i class="fa fa-dot-circle-o text-danger"></i> Declined
-                    @endif
-                </a>
-            </div>
-        </td>
-        <td class="text-center">
-            <div class="action-label">
-                <a class="btn btn-white btn-sm btn-rounded" href="javascript:void(0);">
-                    @if($certificate->status_HD)
-                        <i class="fa fa-dot-circle-o text-success"></i> Approved
-                    @else
-                        <i class="fa fa-dot-circle-o text-danger"></i> Declined
-                    @endif
-                </a>
-            </div>
-        </td>
-        <td class="text-center">
-            <div class="action-label">
-                <a class="btn btn-white btn-sm btn-rounded" href="javascript:void(0);">
-                    @if($certificate->status_FD)
-                        <i class="fa fa-dot-circle-o text-success"></i> Approved
-                    @else
-                        <i class="fa fa-dot-circle-o text-danger"></i> Declined
-                    @endif
-                </a>
-            </div>
-        </td>
-        <td class="text-center">
-            <div class="action-label">
-                <a class="btn btn-white btn-sm btn-rounded" href="javascript:void(0);">
-                    @if($certificate->status_Ch5)
-                        <i class="fa fa-dot-circle-o text-success"></i> Approved
-                    @else
-                        <i class="fa fa-dot-circle-o text-danger"></i> Declined
-                    @endif
-                </a>
-            </div>
-        </td>
-        <td class="text-center">
-            <div class="action-label">
-                <a class="btn btn-white btn-sm btn-rounded" href="javascript:void(0);">
                     @if($certificate->confirmed)
                         <i class="fa fa-dot-circle-o text-success"></i> Approved
                     @else
@@ -544,6 +401,15 @@
                 </a>
             </div>
         </td>
+
+        <td class="text-center">
+    @if($certificate->confirmed)
+        <a href="{{ route('certificate.generateCertificate', $certificate->id) }}" class="btn btn-primary btn-sm btn-rounded" target="_blank">
+            See Certificate
+        </a>
+    @endif
+</td>
+
         <td class="text-right">
             @if(auth()->user()->role_name == 'Employee')
                 <a href="#" data-toggle="modal" data-target="#edit_certificate" class="action-icon edit-certificate"
@@ -563,16 +429,17 @@
                     </button>
                 </form>
             @else
-                <form action="{{ route('certificate.updateStatus', $certificate->id) }}" method="POST" style="display:inline;">
-                    @csrf
-                    @method('PATCH')
-                    <button type="submit" name="status" value="approve" class="action-icon" style="border: none; background: none; cursor: pointer;">
-                        <i class="fa fa-check" aria-hidden="true"></i>
-                    </button>
-                    <button type="submit" name="status" value="decline" class="action-icon" style="border: none; background: none; cursor: pointer;">
-                        <i class="fa fa-times" aria-hidden="true"></i>
-                    </button>
-                </form>
+            <form action="{{ route('certificate.updateStatus', $certificate->id) }}" method="POST" style="display:inline;">
+    @csrf
+    @method('PATCH')
+    <button type="submit" name="status" value="approve" class="action-icon" style="border: none; background: none; cursor: pointer;">
+        <i class="fa fa-check" aria-hidden="true"></i>
+    </button>
+    <button type="submit" name="status" value="decline" class="action-icon" style="border: none; background: none; cursor: pointer;">
+        <i class="fa fa-times" aria-hidden="true"></i>
+    </button>
+</form>
+    
             @endif
         </td>
     </tr>

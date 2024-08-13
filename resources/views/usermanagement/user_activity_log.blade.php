@@ -36,7 +36,7 @@
                             </ul>
                         </li>
                     @endif
-                    <li class="menu-title">
+                    <!-- <li class="menu-title">
                         <span>Employees</span>
                     </li>
                     <li class="submenu">
@@ -141,7 +141,7 @@
                         <ul style="display: none;">
                             <li><a href="profile.html"> Employee Profile </a></li>
                         </ul>
-                    </li>
+                    </li> -->
                 </ul>
             </div>
         </div>

@@ -2,7 +2,7 @@
 @section('content')
     <div class="main-wrapper">
         <div class="account-content">
-            <a href="{{ route('form/job/list') }}" class="btn btn-primary apply-btn">Apply Job</a>
+            <!-- <a href="{{ route('form/job/list') }}" class="btn btn-primary apply-btn">Apply Job</a> -->
             <div class="container">
                 <!-- Account Logo -->
                 <div class="account-logo">
@@ -14,7 +14,7 @@
                 <div class="account-box">
                     <div class="account-wrapper">
                         <h3 class="account-title">Login</h3>
-                        <p class="account-subtitle">Access to our dashboard</p>
+                        <p class="account-subtitle">Access to our platform</p>
                         <!-- Account Form -->
                         <form method="POST" action="{{ route('login') }}">
                             @csrf

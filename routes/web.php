@@ -94,7 +94,7 @@ Route::patch('advance/{advance}/updateStatus', [App\Http\Controllers\AdvanceCont
 Route::patch('holiday/{holiday}/updateStatus', [App\Http\Controllers\HolidayController::class, 'updateStatus'])->name('holiday.updateStatus');
 Route::patch('exit/{demand}/updateStatus', [App\Http\Controllers\ExitDemandController::class, 'updateStatus'])->name('exitdemand.updateStatus');
 Route::patch('delay/{delay}/updateStatus', [App\Http\Controllers\DelayController::class, 'updateStatus'])->name('delays.updateStatus');
-Route::patch('certificate/{certificate}/updateStatus', [App\Http\Controllers\CertificateController::class, 'updateStatus'])->name('certificate.updateStatus');
+Route::patch('certificate/{id}/updateStatus', [App\Http\Controllers\CertificateController::class, 'updateStatus'])->name('certificate.updateStatus');
 
 // Route for creating a certificate (shows the form)
 Route::get('/certificate/create', [CertificateController::class, 'create'])->name('certificate.create');
@@ -107,6 +107,7 @@ Route::get('/certificate/index', [CertificateController::class, 'index'])->name(
 
 // Route for showing the form to edit a certificate
 Route::get('/certificate/{id}/edit', [CertificateController::class, 'edit'])->name('certificate.edit');
+Route::get('/certificate/generate/{id}', [CertificateController::class, 'generateCertificate'])->name('certificate.generateCertificate');
 
 // Route for updating a certificate
 Route::put('/certificate/{id}', [CertificateController::class, 'update'])->name('certificate.update');

@@ -58,6 +58,9 @@ return array(
          * using the PFDLib back end.
          */
         "temp_dir" => sys_get_temp_dir(),
+        'default_paper_size' => 'a4',
+        'orientation' => 'portrait',
+        'default_font' => 'serif',
 
         /**
          * ==== IMPORTANT ====

@@ -58,7 +58,7 @@ class RegisterController extends Controller
             'department'=> $request->department,
             'salary'    => $request->salary,
             'role_name' => $request->role_name,
-            'status'    => 'active', // Default status
+            'status'    => 'Active', // Default status
             'entry_date'=> $entryDate, // Entry date
             'matricule' => $matricule, // Generated matricule
             'image'     => $imageName, // Save the profile image filename

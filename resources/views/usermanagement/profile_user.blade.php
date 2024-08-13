@@ -8,7 +8,7 @@
         <div class="sidebar-inner slimscroll">
             <div id="sidebar-menu" class="sidebar-menu">
                 <ul>
-                    <li class="menu-title">
+                    <!-- <li class="menu-title">
                         <span>Main</span>
                     </li>
                     <li class="submenu">
@@ -136,7 +136,203 @@
                         <ul style="display: none;">
                             <li><a class="active" href="{{ route('profile_user') }}"> Employee Profile </a></li>
                         </ul>
+                    </li> -->
+                    @if (Auth::user()->role_name=='Employee')
+                    <li class="menu-title"> <span>main</span> </li>
+                    <li class="submenu">
+                        <a href="#">
+                            <i class="la la-files-o"></i>
+                            <span> Demands </span> 
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <ul style="display: none;">
+                            <li><a href="{{ route('all/employee/card') }}">advances</a></li>
+                            <li><a href="{{ route('company/settings/page1') }}">holiday</a></li>
+                            <li><a href="{{ route('company/settings/page2') }}">Epermission</a></li>
+                            <li><a href="{{ route('company/settings/page3') }}">Dpermission</a></li>
+                            <li><a href="{{ route('company/settings/page4') }}">certificate</a></li>
+                        </ul>
                     </li>
+                    <li class="menu-title"> <span>Pages</span> </li>
+                    <li class="submenu"> <a href="#"><i class="la la-user"></i>
+                        <span> Profile </span> <span class="menu-arrow"></span></a>
+                        <ul style="display: none;">
+                            <li><a href="{{ route('profile_user') }}"> Employee Profile </a></li>
+                        </ul>
+                    </li>
+                    @elseif (Auth::user()->role_name=='Head of department')
+                    <li class="menu-title"> <span>main</span> </li>
+                    <li class="submenu">
+                        <a href="#">
+                            <i class="la la-files-o"></i>
+                            <span>advances demands Demands </span> 
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <ul style="display: none;">
+                            <li><a href="{{ route('all/employee/card') }}">advances</a></li>
+                            <li><a href="{{ route('company/settings/page1') }}">holiday</a></li>
+                            <li><a href="{{ route('company/settings/page2') }}">Epermission</a></li>
+                            <li><a href="{{ route('company/settings/page3') }}">Dpermission</a></li>
+                            <li><a href="{{ route('company/settings/page4') }}">certificate</a></li>
+
+                        </ul>
+                    </li>
+                    <li class="submenu">
+                        <a href="#">
+                            <i class="la la-files-o"></i>
+                            <span> consult retard demands </span> 
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <ul style="display: none;">
+                            <li><a href="{{ route('all/employee/card') }}">advances</a></li>
+                            <li><a href="{{ route('company/settings/page1') }}">holiday</a></li>
+                            <li><a href="{{ route('company/settings/page2') }}">Epermission</a></li>
+                            <li><a href="{{ route('company/settings/page3') }}">Dpermission</a></li>
+                            <li><a href="{{ route('company/settings/page4') }}">certificate</a></li>
+
+                        </ul>
+                    </li>
+                    <li class="submenu">
+                        <a href="#">
+                            <i class="la la-files-o"></i>
+                            <span> consult permission de sortie </span> 
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <ul style="display: none;">
+                            <li><a href="{{ route('all/employee/card') }}">advances</a></li>
+                            <li><a href="{{ route('company/settings/page1') }}">holiday</a></li>
+                            <li><a href="{{ route('company/settings/page2') }}">Epermission</a></li>
+                            <li><a href="{{ route('company/settings/page3') }}">Dpermission</a></li>
+                            <li><a href="{{ route('company/settings/page4') }}">certificate</a></li>
+
+                        </ul>
+                    </li>
+                    <li class="menu-title"> <span>Pages</span> </li>
+                    <li class="submenu"> <a href="#"><i class="la la-user"></i>
+                        <span> Profile </span> <span class="menu-arrow"></span></a>
+                        <ul style="display: none;">
+                            <li><a href="{{ route('profile_user') }}"> Employee Profile </a></li>
+                        </ul>
+                    </li>
+                    @elseif (Auth::user()->role_name=='Chief of staff')
+                    <li class="menu-title"> <span>main</span> </li>
+                    <li class="submenu">
+                        <a href="#">
+                            <i class="la la-files-o"></i>
+                            <span> consult certificates </span> 
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <ul style="display: none;">
+                            <li><a href="{{ route('all/employee/card') }}">advances</a></li>
+                            <li><a href="{{ route('company/settings/page1') }}">holiday</a></li>
+                            <li><a href="{{ route('company/settings/page2') }}">Epermission</a></li>
+                            <li><a href="{{ route('company/settings/page3') }}">Dpermission</a></li>
+                            <li><a href="{{ route('company/settings/page4') }}">certificate</a></li>
+
+                        </ul>
+                    </li>
+                    <li class="submenu">
+                        <a href="#">
+                            <i class="la la-files-o"></i>
+                            <span> consult retard demands</span> 
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <ul style="display: none;">
+                            <li><a href="{{ route('all/employee/card') }}">advances</a></li>
+                            <li><a href="{{ route('company/settings/page1') }}">holiday</a></li>
+                            <li><a href="{{ route('company/settings/page2') }}">Epermission</a></li>
+                            <li><a href="{{ route('company/settings/page3') }}">Dpermission</a></li>
+                            <li><a href="{{ route('company/settings/page4') }}">certificate</a></li>
+
+                        </ul>
+                    </li>
+                    <li class="submenu">
+                        <a href="#">
+                            <i class="la la-files-o"></i>
+                            <span> consult advances demands </span> 
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <ul style="display: none;">
+                            <li><a href="{{ route('all/employee/card') }}">advances</a></li>
+                            <li><a href="{{ route('company/settings/page1') }}">holiday</a></li>
+                            <li><a href="{{ route('company/settings/page2') }}">Epermission</a></li>
+                            <li><a href="{{ route('company/settings/page3') }}">Dpermission</a></li>
+                            <li><a href="{{ route('company/settings/page4') }}">certificate</a></li>
+
+                        </ul>
+                    </li>
+                    <li class="menu-title"> <span>Pages</span> </li>
+                    <li class="submenu"> <a href="#"><i class="la la-user"></i>
+                        <span> Profile </span> <span class="menu-arrow"></span></a>
+                        <ul style="display: none;">
+                            <li><a href="{{ route('profile_user') }}"> Employee Profile </a></li>
+                        </ul>
+                    </li>
+                    @elseif (Auth::user()->role_name=='Financial director')
+                    <li class="menu-title"> <span>main</span> </li>
+                    <li class="submenu">
+                        <a href="#">
+                            <i class="la la-files-o"></i>
+                            <span>consult advance demands</span> 
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <ul style="display: none;">
+                            <li><a href="{{ route('all/employee/card') }}">advances</a></li>
+                            <li><a href="{{ route('company/settings/page1') }}">holiday</a></li>
+                            <li><a href="{{ route('company/settings/page2') }}">Epermission</a></li>
+                            <li><a href="{{ route('company/settings/page3') }}">Dpermission</a></li>
+                            <li><a href="{{ route('company/settings/page4') }}">certificate</a></li>
+
+                        </ul>
+                    </li>
+                    <li class="menu-title"> <span>Pages</span> </li>
+                    <li class="submenu"> <a href="#"><i class="la la-user"></i>
+                        <span> Profile </span> <span class="menu-arrow"></span></a>
+                        <ul style="display: none;">
+                            <li><a href="{{ route('profile_user') }}"> Employee Profile </a></li>
+                        </ul>
+                    </li>
+                    @elseif (Auth::user()->role_name=='Manager director')
+                    <li class="menu-title"> <span>main</span> </li>
+                    <li class="submenu">
+                        <a href="#">
+                            <i class="la la-files-o"></i>
+                            <span>consult advances Demands </span> 
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <ul style="display: none;">
+                            <li><a href="{{ route('all/employee/card') }}">advances</a></li>
+                            <li><a href="{{ route('company/settings/page1') }}">holiday</a></li>
+                            <li><a href="{{ route('company/settings/page2') }}">Epermission</a></li>
+                            <li><a href="{{ route('company/settings/page3') }}">Dpermission</a></li>
+                            <li><a href="{{ route('company/settings/page4') }}">certificate</a></li>
+
+                        </ul>
+                    </li>
+                    <li class="submenu">
+                        <a href="#">
+                            <i class="la la-files-o"></i>
+                            <span> consult conges demands </span> 
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <ul style="display: none;">
+                            <li><a href="{{ route('all/employee/card') }}">advances</a></li>
+                            <li><a href="{{ route('company/settings/page1') }}">holiday</a></li>
+                            <li><a href="{{ route('company/settings/page2') }}">Epermission</a></li>
+                            <li><a href="{{ route('company/settings/page3') }}">Dpermission</a></li>
+                            <li><a href="{{ route('company/settings/page4') }}">certificate</a></li>
+
+                        </ul>
+                    </li>
+                    <li class="menu-title"> <span>Pages</span> </li>
+                    <li class="submenu"> <a href="#"><i class="la la-user"></i>
+                        <span> Profile </span> <span class="menu-arrow"></span></a>
+                        <ul style="display: none;">
+                            <li><a href="{{ route('profile_user') }}"> Employee Profile </a></li>
+                        </ul>
+                    </li>
+                    @endif
+
                 </ul>
             </div>
         </div>

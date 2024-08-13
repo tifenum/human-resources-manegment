@@ -112,7 +112,7 @@ class LoginController extends Controller
     // Attempt to authenticate the user
     $user = User::where('email', $email)->first();
 
-    if ($user && $user->status === 'active' && Auth::attempt(['email' => $email, 'password' => $password])) {
+    if ($user && $user->status === 'Active' && Auth::attempt(['email' => $email, 'password' => $password])) {
         // Log the successful login
         DB::table('activity_logs')->insert($activityLog);
         Toastr::success('Login successfully :)', 'Success');

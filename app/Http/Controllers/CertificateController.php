@@ -6,6 +6,8 @@ use App\Models\Certificate;
 use Illuminate\Http\Request;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Log;
+use PDF;
+use App\Models\User;
 
 class CertificateController extends Controller
 {
@@ -13,52 +15,56 @@ class CertificateController extends Controller
     {
         return view('certificate.create');
     }
-    public function updateStatus(Request $request, $id)
+
+    // public function generateCertificate($id)
+    // {
+
+    //     $data = [
+    //         'title' => 'Laravel PDF Example',
+    //         'date' => date('m/d/Y'),
+    //     ];
+
+    //     $pdf = PDF::loadView('certificates.template', $data);
+
+    //     return $pdf->download('document.pdf');  
+    // }
+    
+    public function generateCertificate($id)
     {
-        // Find the holiday record by ID
-        $holiday = Certificate::findOrFail($id);
+        // Fetch the certificate record by its ID
+        $certificate = Certificate::find($id);
     
-        // Check user role and update the respective status
-        $userRole = auth()->user()->role_name;
-        $status = $request->input('status') === 'approve';
-    
-        Log::info('User role:', ['role' => $userRole]);
-        Log::info('Status:', ['status' => $status]);
-    
-        switch ($userRole) {
-            case 'Chief of staff':
-                $holiday->status_Ch5 = $status;
-                Log::info('Updating status_Ch5', ['status' => $status]);
-                break;
-            case 'Head of department':
-                $holiday->status_HD = $status;
-                Log::info('Updating status_HD', ['status' => $status]);
-                break;
-            case 'Financial director':
-                $holiday->status_FD = $status;
-                Log::info('Updating status_FD', ['status' => $status]);
-                break;
-            case 'Manager director':
-                $holiday->status_MD = $status;
-                Log::info('Updating status_MD', ['status' => $status]);
-                break;
+        // Check if the certificate exists
+        if (!$certificate) {
+            return abort(404, 'Certificate not found');
         }
     
-        // Optionally, set 'confirmed' status if all other statuses are approved
-        if ($holiday->status_MD && $holiday->status_HD && $holiday->status_FD && $holiday->status_Ch5) {
-            $holiday->confirmed = true;
-            Log::info('All statuses approved. Setting confirmed to true');
-        } else {
-            $holiday->confirmed = false;
-            Log::info('Not all statuses approved. Setting confirmed to false');
-        }
+        // Fetch the user associated with the certificate
+        $user = $certificate->user;
     
-        $holiday->save();
-        Log::info('Holiday status saved', ['holiday' => $holiday]);
-        Toastr::success('Holiday status updated successfully :)', 'Success');
+        // Prepare data for the PDF view
+        $data = [
+            'title' => 'Certificate of Excellence',
+            'user_name' => $user->name, // Assuming the User model has a 'name' attribute
+        ];
     
-        return redirect()->back()->with('status', 'Holiday status updated successfully');
+        // Load the view with the data and generate the PDF
+        $pdf = PDF::loadView('certificates.template', $data);
+    
+        // Return the generated PDF for download
+        return $pdf->download('certificate_'.$user->name.'.pdf');  
     }
+    
+    public function updateStatus($id)
+    {
+        $certificate = Certificate::findOrFail($id);
+        $certificate->confirmed = !$certificate->confirmed;
+        $certificate->save();
+        Toastr::success('Certificate status updated and generated successfully!', 'Success');
+        return redirect()->back()->with('status', 'Certificate status updated and generated successfully');
+    }
+    
+
     
     public function store(Request $request)
     {
