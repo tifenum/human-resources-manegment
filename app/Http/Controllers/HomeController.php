@@ -7,6 +7,8 @@ use DB;
 use Carbon\Carbon;
 use PDF;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+
 class HomeController extends Controller
 {
     /**
@@ -27,7 +29,15 @@ class HomeController extends Controller
     // main dashboard
     public function index()
     {
-        return view('dashboard.dashboard');
+        // Get the authenticated user
+        $user = Auth::user();
+
+        // Redirect based on user role
+        if ($user->role_name === 'Admin') {
+            return redirect()->route('userManagement'); // Define this route in your web.php
+        } else {
+            return redirect()->route('all/employee/card'); // Define this route in your web.php
+        }
     }
     // employee dashboard
     public function emDashboard()
