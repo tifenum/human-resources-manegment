@@ -2,11 +2,11 @@
 @section('content')
 
 
-    {{-- @yield('nav') --}}
+{{-- @yield('nav') --}}
 		<div class="header">
 			<!-- Logo -->
 			<div class="header-left">
-				<a href="{{ route('home') }}" class="logo" style="position: relative; top: 0px;"> <img src="{{ URL::to('assets/img/logo.png') }}" width="40" height="40" alt=""> </a>
+				<a href="{{ route('home') }}" class="logo" style="position: relative; top: 3px;"> <img src="{{ URL::to('assets/img/logo.png') }}" style="width: 50px; height: 50px; border-radius: 50%; position: relative; top: -4px;" alt=""> </a>
 			</div>
 			<!-- /Logo -->
 			<a id="toggle_btn" href="javascript:void(0);" style="position: relative; top: -2px;">
@@ -17,19 +17,29 @@
 				<h3>{{ Auth::user()->role_name }}</h3>
 			</div>
 			<!-- /Header Title -->
+
 			<!-- Header Menu -->
 			<ul class="nav user-menu">
 
-				<li class="nav-item dropdown has-arrow main-drop">
-					<a href="#" class="nav-link">
-						<span class="user-img">
-						<img src="{{ asset('images/profile/' . Auth::user()->image) }}" alt="{{ Auth::user()->name }}">
-						</span></span>
-						<span>{{ Auth::user()->name }}</span>
-					</a>
+            <ul class="nav user-menu" style="align-items: center;">
+        <li class="nav-item">
+        <div class="page-title-box">
+        <h3>{{ now()->format('l, F j, Y') }}</h3>
+    </div>
+            <a href="{{ route('home') }}" class="nav-link" style="display: flex; align-items: center;">
+                <span class="user-img" style="margin-right: 10px;">
+                    <img src="{{ asset('images/profile/' . Auth::user()->image) }}" alt="{{ Auth::user()->name }}" style="width: 40px; height: 40px; border-radius: 50%;">
+                </span>
+                <span style="font-size: 18px;">{{ Auth::user()->name }}</span>
+            </a>
+        </li>
 
-				</li>
+        <!-- Logout Button -->
+        <li class="nav-item">
+            <a href="{{ route('logout') }}" class="btn" style="margin-left: 20px; font-size: 18px;">Logout</a>
+        </li>
 			</ul>
+
 
 		</div>
     <div class="sidebar" id="sidebar">

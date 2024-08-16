@@ -140,7 +140,15 @@
         }
         public function index()
         {
-            $exitdemand = ExitDemand::all();
+            $user = Auth::user(); // Get the currently authenticated user
+
+            if ($user->role_name === 'Employee') {
+                // If the user is an Employee, get only their own advances
+                $exitdemand = ExitDemand::where('user_id', $user->id)->get();
+            } else {
+                // If the user has any other role, get all advances
+                $exitdemand = ExitDemand::all();
+            }       
             return view('settings.exitpermission', compact('exitdemand'));
 
         }
@@ -156,9 +164,10 @@
         // Validate request data
         $request->validate([
             'reason' => 'required|string|max:255',
-            'exit_day' => 'required|date_format:Y-m-d', // Adjusted date format
+            'exit_day' => 'required|date_format:d-m-Y', // Adjusted date format
             'department' => 'required|string|max:255',
         ]);
+
         $user = Auth::User();
         $activityLog = [
             'user_name'    => $user->name,
@@ -186,11 +195,12 @@
             'status_Ch5' => $request->input('status_Ch5', $exitDemand->status_Ch5),
             'confirmed' => $request->input('confirmed', $exitDemand->confirmed),
         ]));
-    
+        $exitDate = Carbon::createFromFormat('d-m-Y', $request->input('exit_day'))->format('Y-m-d');
+
         // Update the record
         $exitDemand->update([
             'reason' => $request->input('reason', $exitDemand->reason),
-            'exit_day' => $request->input('exit_day'), // Using the provided date format
+            'exit_day' => $exitDate, // Using the provided date format
             'department' => $request->input('department', $exitDemand->department),
             'status_MD' => $request->input('status_MD', $exitDemand->status_MD),
             'status_HD' => $request->input('status_HD', $exitDemand->status_HD),

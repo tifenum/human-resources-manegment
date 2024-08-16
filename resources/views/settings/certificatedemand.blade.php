@@ -1,10 +1,11 @@
 @extends('layouts.master')
 @section('content')
-{{-- @yield('nav') --}}
+
+        {{-- @yield('nav') --}}
 		<div class="header">
 			<!-- Logo -->
 			<div class="header-left">
-				<a href="{{ route('home') }}" class="logo" style="position: relative; top: 9px;"> <img src="{{ URL::to('assets/img/logo.png') }}" width="40" height="40" alt=""> </a>
+				<a href="{{ route('home') }}" class="logo" style="position: relative; top: 9px;"> <img src="{{ URL::to('assets/img/logo.png') }}" style="width: 50px; height: 50px; border-radius: 50%; position: relative; top: -4px;" alt=""> </a>
 			</div>
 			<!-- /Logo -->
 			<a id="toggle_btn" href="javascript:void(0);" style="position: relative; top: 18px;">
@@ -15,26 +16,31 @@
 				<h3>{{ Auth::user()->role_name }}</h3>
 			</div>
 			<!-- /Header Title -->
+
 			<!-- Header Menu -->
 			<ul class="nav user-menu">
 
-				<li class="nav-item dropdown has-arrow main-drop">
-					<a href="#" class="nav-link">
-						<span class="user-img">
-						<img src="{{ asset('images/profile/' . Auth::user()->image) }}" alt="{{ Auth::user()->name }}">
-						</span>
-						<span>{{ Auth::user()->name }}</span>
-					</a>
-					<div class="dropdown-menu">
-						<a class="dropdown-item" href="{{ route('profile_user') }}">My Profile</a>
-						<a class="dropdown-item" href="{{ route('company/settings/page') }}">Settings</a>
-						<a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
-					</div>
-				</li>
+            <ul class="nav user-menu" style="align-items: center;">
+        <li class="nav-item">
+        <div class="page-title-box">
+        <h3>{{ now()->format('l, F j, Y') }}</h3>
+    </div>
+            <a href="{{ route('profile_user') }}" class="nav-link" style="display: flex; align-items: center;">
+                <span class="user-img" style="margin-right: 10px;">
+                    <img src="{{ asset('images/profile/' . Auth::user()->image) }}" alt="{{ Auth::user()->name }}" style="width: 40px; height: 40px; border-radius: 50%;">
+                </span>
+                <span style="font-size: 18px;">{{ Auth::user()->name }}</span>
+            </a>
+        </li>
+
+        <!-- Logout Button -->
+        <li class="nav-item">
+            <a href="{{ route('logout') }}" class="btn" style="margin-left: 20px; font-size: 18px;">Logout</a>
+        </li>
 			</ul>
 
-		</div>
 
+		</div>
 <div class="sidebar" id="sidebar">
         <div class="sidebar-inner slimscroll">
             <div id="sidebar-menu" class="sidebar-menu">
@@ -284,9 +290,12 @@
                         <li class="breadcrumb-item active">Certificates</li>
                     </ul>
                 </div>
+                @if (Auth::user()->role_name=='Employee')
+
                 <div class="col-auto float-right ml-auto">
                     <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_certificate"><i class="fa fa-plus"></i> Request Certificate</a>
                 </div>
+                @endif
             </div>
         </div>
 
@@ -303,7 +312,7 @@
                                 <th>Type</th>
                                 <th>Issued For</th>
                                 <th>Salary</th>
-                                <th>discription</th>
+                                <th>Description</th>
                                 <th>Department</th>
                                 <th>Status</th>
                                 <th class="text-right">Actions</th>
@@ -314,8 +323,8 @@
     @foreach($certificates as $certificate)
     <tr>      
         <td>{{ $certificate->type }}</td>
-        <td>{{ $certificate->issued_for }}</td>
-        <td>{{ $certificate->salary }}</td>
+        <td>{{ \Carbon\Carbon::parse($certificate->issued_for)->format('Y-n-j') }}</td>
+        <td>{{ $certificate->salary }} dt</td>
         <td>                                  
             <button href="#" data-toggle="modal" data-target="#view_certificate" class="view-certificate btn btn-info btn-sm btn-rounded custom-btn-info"
                 data-id="{{ $certificate->id }}"
@@ -359,6 +368,8 @@
                    data-description="{{ $certificate->description }}">
                    <i class="fa fa-pencil" aria-hidden="true"></i>
                 </a>
+                @endif
+
                 <form action="{{ route('certificate.destroy', $certificate->id) }}" method="POST" style="display:inline;">
                     @csrf
                     @method('DELETE')
@@ -366,7 +377,6 @@
                         <i class="fa fa-trash-o" aria-hidden="true"></i>
                     </button>
                 </form>
-                @endif
 
             @else
             <form action="{{ route('certificate.updateStatus', $certificate->id) }}" method="POST" style="display:inline;">
@@ -426,25 +436,39 @@
                             @csrf
                             <input type="hidden" name="user_id" value="{{ auth()->id() }}">
 
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <label>Type <span class="text-danger">*</span></label>
                                 <input class="form-control" name="type" type="text" required>
-                            </div>
+                            </div> -->
+                            <div class="form group"> 
+                            <label>Type <span class="text-danger">*</span></label>
+<select class="select" name="type">
+<option selected disabled>-- Select Type --</option>
 
+        <option value="Training">Training</option>
+        <option value="Completion">Completion</option>
+        <option value="Excellence">Excellence</option>
+        <option value="Participation">Participation</option>
+        <option value="Achievement">Achievement</option>
+</select>
+
+                        </div>
                             <div class="form-group">
                                 <label>Issued For <span class="text-danger">*</span></label>
-                                <input class="form-control" name="issued_for" type="text" required>
+                                <input class="form-control datetimepicker" name="issued_for" placeholder="select a date" type="text" required>
                             </div>
 
                             <div class="form-group">
                                 <label>Salary <span class="text-danger">*</span></label>
-                                <input class="form-control" name="salary" type="number" step="0.01" required>
+                                <input class="form-control" name="salary" type="number" placeholder="input salary" step="0.01" required>
                             </div>
 
                             <div class="form-group">
-                                <label>Department <span class="text-danger">*</span></label>
-                                <input class="form-control" name="department" type="text" required>
-                            </div>
+                        <label>Department</label>
+                        <input class="form-control" name="department" type="text" value="{{ auth()->user()->department }}" disabled>
+                        <input type="hidden" name="department" value="{{ auth()->user()->department }}">
+                    </div>
+
 
                             <div class="form-group">
                                 <label>Description</label>
@@ -477,14 +501,21 @@
                             <input type="hidden" name="user_id" value="{{ auth()->id() }}">
                             <input type="hidden" id="editCertificateId" name="certificate_id">
 
-                            <div class="form-group">
-                                <label>Type <span class="text-danger">*</span></label>
-                                <input class="form-control" id="editCertificateType" name="type" type="text" required>
+
+                            <div class="form group"> 
+                            <label>Type <span class="text-danger">*</span></label>
+    <select class="select" id="editCertificateType" name="type">
+            <option value="Training">Training</option>
+            <option value="Completion">Completion</option>
+            <option value="Excellence">Excellence</option>
+                <option value="Participation">Participation</option>
+                <option value="Achievement">Achievement</option>
+        </select>
                             </div>
 
                             <div class="form-group">
                                 <label>Issued For <span class="text-danger">*</span></label>
-                                <input class="form-control" id="editCertificateIssuedFor" name="issued_for" type="text" required>
+                                <input class="form-control datetimepicker" id="editCertificateIssuedFor" name="issued_for" type="text" required>
                             </div>
 
                             <div class="form-group">
@@ -493,9 +524,11 @@
                             </div>
 
                             <div class="form-group">
-                                <label>Department <span class="text-danger">*</span></label>
-                                <input class="form-control" id="editCertificateDepartment" name="department" type="text" required>
-                            </div>
+                        <label>Department</label>
+                        <input class="form-control" name="department" type="text" value="{{ auth()->user()->department }}" disabled>
+                        <input type="hidden" name="department" value="{{ auth()->user()->department }}">
+                    </div>
+
 
                             <div class="form-group">
                                 <label>Description</label>

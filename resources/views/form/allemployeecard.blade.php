@@ -1,11 +1,12 @@
 
 @extends('layouts.master')
 @section('content')
-{{-- @yield('nav') --}}
+
+        {{-- @yield('nav') --}}
 		<div class="header">
 			<!-- Logo -->
 			<div class="header-left">
-				<a href="{{ route('home') }}" class="logo" style="position: relative; top: -3px;"> <img src="{{ URL::to('assets/img/logo.png') }}" width="40" height="40" alt=""> </a>
+				<a href="{{ route('home') }}" class="logo" style="position: relative; top: 9px;"> <img src="{{ URL::to('assets/img/logo.png') }}" style="width: 50px; height: 50px; border-radius: 50%; position: relative; top: -9px;" alt=""> </a>
 			</div>
 			<!-- /Logo -->
 			<a id="toggle_btn" href="javascript:void(0);" style="position: relative; top: -3px;">
@@ -16,23 +17,29 @@
 				<h3>{{ Auth::user()->role_name }}</h3>
 			</div>
 			<!-- /Header Title -->
+
 			<!-- Header Menu -->
 			<ul class="nav user-menu">
 
-				<li class="nav-item dropdown has-arrow main-drop">
-					<a href="#" class="nav-link">
-						<span class="user-img">
-						<img src="{{ asset('images/profile/' . Auth::user()->image) }}" alt="{{ Auth::user()->name }}">
-						</span>
-						<span>{{ Auth::user()->name }}</span>
-					</a>
-					<div class="dropdown-menu">
-						<a class="dropdown-item" href="{{ route('profile_user') }}">My Profile</a>
-						<a class="dropdown-item" href="{{ route('company/settings/page') }}">Settings</a>
-						<a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
-					</div>
-				</li>
+            <ul class="nav user-menu" style="align-items: center;">
+        <li class="nav-item">
+        <div class="page-title-box">
+        <h3>{{ now()->format('l, F j, Y') }}</h3>
+    </div>
+            <a href="{{ route('profile_user') }}" class="nav-link" style="display: flex; align-items: center;">
+                <span class="user-img" style="margin-right: 10px;">
+                    <img src="{{ asset('images/profile/' . Auth::user()->image) }}" alt="{{ Auth::user()->name }}" style="width: 40px; height: 40px; border-radius: 50%;">
+                </span>
+                <span style="font-size: 18px;">{{ Auth::user()->name }}</span>
+            </a>
+        </li>
+
+        <!-- Logout Button -->
+        <li class="nav-item">
+            <a href="{{ route('logout') }}" class="btn" style="margin-left: 20px; font-size: 18px;">Logout</a>
+        </li>
 			</ul>
+
 
 		</div>
     <div class="sidebar" id="sidebar">
@@ -283,9 +290,12 @@
                             <li class="breadcrumb-item active">Advances</li>
                         </ul>
                     </div>
+                    @if (Auth::user()->role_name=='Employee')
+
                     <div class="col-auto float-right ml-auto">
                         <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_advance"><i class="fa fa-plus"></i> Request Advance</a>
                     </div>
+                    @endif
                 </div>
             </div>
             
@@ -345,8 +355,6 @@
         View
     </button>
 </td>
-
-
                     <td class="text-center">
     <div class="action-label">
         <a class="btn btn-white btn-sm btn-rounded" href="javascript:void(0);">
@@ -469,7 +477,7 @@
     width: 75px;
 }
 .table th:nth-child(2), .table td:nth-child(3) { /* For Date Wish */
-    width: 75px;
+    width: 80px;
 }
 .table th:nth-child(3), .table td:nth-child(4) { /* For Date Wish */
     width: 75px;
@@ -583,7 +591,7 @@
                     <div class="form-group">
                         <label>Date Wish <span class="text-danger">*</span></label>
                         <div class="cal-icon">
-                                    <input class="form-control datetimepicker" type="text" name="date_wish">
+                                    <input class="form-control datetimepicker" type="text" name="date_wish" placeholder="Enter the date">
                                 </div>                    </div>
 
                     <div class="form-group">
@@ -593,7 +601,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Description</label>
+                        <label>Reason</label>
                         <textarea class="form-control" name="description" rows="4" placeholder="Add a description"></textarea>
                     </div>
 
@@ -608,8 +616,8 @@
 
 <!-- Edit Advance Modal -->
 <!-- Edit Advance Modal -->
-<div class="modal fade" id="edit_advance" tabindex="-1" role="dialog" aria-labelledby="editAdvanceModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+<div class="modal fade custom-modal" id="edit_advance" tabindex="-1" role="dialog" aria-labelledby="editAdvanceModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="editAdvanceModalLabel">Edit Advance</h5>
@@ -623,23 +631,24 @@
                     @method('PUT')
                     <input type="hidden" name="id" id="edit_id">
                     <div class="form-group">
-                        <label for="edit_amount">Amount</label>
+                        <label for="edit_amount">Amount <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="edit_amount" name="amount" required>
                     </div>
                     <div class="form-group">
-                        <label for="edit_date_wish">Date</label>
-                        <input type="text" class="form-control" id="edit_date_wish" name="date_wish" required>
+                        <label for="edit_date_wish">Date Whish <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control datetimepicker" id="edit_date_wish" name="date_wish" required>
                     </div>
                     <div class="form-group">
                         <label for="edit_department">Department</label>
                         <input type="text" class="form-control" id="edit_department" name="department" required>
                     </div>
+
                     <div class="form-group">
                         <label for="edit_description">Reason</label>
-                        <textarea class="form-control" id="edit_description" name="description" required></textarea>
+                        <textarea class="form-control" id="edit_description" rows="4" name="description" required></textarea>
                     </div>
-                    <div class="form-group text-right">
-                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    <div class="submit-section text-center">
+                        <button type="submit" class="btn btn-primary submit-btn">Save</button>
                     </div>
                 </form>
             </div>

@@ -67,48 +67,6 @@ class AdvanceController extends Controller
         }
     }
     
-    // public function store(Request $request)
-    // {
-    //     try {
-    //         // Validate the request data
-    //         $request->validate([
-    //             'amount' => 'required|numeric',
-    //             'date_wish' => 'required|string', // Validate as string
-    //             'department' => 'required|string',
-    //             'description' => 'nullable|string',
-    //         ]);
-            
-    //         // Convert date_wish from DD-MM-YYYY to YYYY-MM-DD
-    //         $dateWish = \DateTime::createFromFormat('d-m-Y', $request->input('date_wish'));
-    //         $formattedDateWish = $dateWish ? $dateWish->format('Y-m-d') : null;
-    
-    //         // Create a new advance record
-    //         Advance::create([
-    //             'user_id' => $request->input('user_id'),
-    //             'amount' => $request->input('amount'),
-    //             'date_wish' => $formattedDateWish,
-    //             'department' => $request->input('department'),
-    //             'description' => $request->input('description'),
-    //             'chief_staff_status' => false, // Default values
-    //             'head_department_status' => false,
-    //             'financial_director_status' => false,
-    //             'manager_director_status' => false,
-    //             'accepted' => false,
-    //         ]);
-    
-    //         Toastr::success('Advance demand submitted successfully :)','Success');
-    //         return redirect()->route('advance.index')->with('success', 'Advance demand submitted successfully :)');
-    
-    //     } catch (\Illuminate\Validation\ValidationException $e) {
-    //         Log::error('Validation error: ' . json_encode($e->errors())); // Log validation errors
-    //         Toastr::error('Error :(','Error');
-    //         return redirect()->route('advance.index')->with('error', 'Failed to submit advance demand.');
-    //     } catch (\Exception $e) {
-    //         Log::error('General error: ' . $e->getMessage()); // Log general errors
-    //         Toastr::error('Error :(','Error');
-    //         return redirect()->route('advance.index')->with('error', 'Failed to submit advance demand.');
-    //     }
-    // }
     public function destroy($id)
     {
         try {
@@ -140,8 +98,16 @@ class AdvanceController extends Controller
     }
     public function index()
     {
-        $advances = Advance::all();
-        return view('form.allemployeecard', compact('advances')); // Replace 'advances.index' with your actual view path
+        $user = Auth::user(); // Get the currently authenticated user
+
+        if ($user->role_name === 'Employee') {
+            // If the user is an Employee, get only their own advances
+            $advances = Advance::where('user_id', $user->id)->get();
+        } else {
+            // If the user has any other role, get all advances
+            $advances = Advance::all();
+        }
+            return view('form.allemployeecard', compact('advances')); // Replace 'advances.index' with your actual view path
     }
     public function edit($id)
 {

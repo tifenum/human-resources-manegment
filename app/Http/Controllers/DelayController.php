@@ -164,7 +164,15 @@ class DelayController extends Controller
 
     public function index()
     {
-        $delays = Delay::all();
+        $user = Auth::user(); // Get the currently authenticated user
+
+        if ($user->role_name === 'Employee') {
+            // If the user is an Employee, get only their own advances
+            $delays = Delay::where('user_id', $user->id)->get();
+        } else {
+            // If the user has any other role, get all advances
+            $delays = Delay::all();
+        }       
         return view('settings.delaydemand', compact('delays'));
     }
 

@@ -173,8 +173,15 @@ public function updateStatus(Request $request, $id)
     public function index()
     {
         // Fetch holidays from the database
-        $holidays = Holiday::all(); // Adjust this to fit your model and query
-    
+        $user = Auth::user(); // Get the currently authenticated user
+
+        if ($user->role_name === 'Employee') {
+            // If the user is an Employee, get only their own advances
+            $holidays = Holiday::where('user_id', $user->id)->get();
+        } else {
+            // If the user has any other role, get all advances
+            $holidays = Holiday::all();
+        }           
         // Return the view with the holidays data
         return view('settings.holidaydemand', compact('holidays'));
     }

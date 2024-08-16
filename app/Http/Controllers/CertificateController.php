@@ -136,7 +136,15 @@ class CertificateController extends Controller
 
     public function index()
     {
-        $certificates = Certificate::all();
+        $user = Auth::user(); // Get the currently authenticated user
+
+        if ($user->role_name === 'Employee') {
+            // If the user is an Employee, get only their own advances
+            $certificates = Certificate::where('user_id', $user->id)->get();
+        } else {
+            // If the user has any other role, get all advances
+            $certificates = Certificate::all();
+        }       
         return view('settings.certificatedemand', compact('certificates'));
     }
 

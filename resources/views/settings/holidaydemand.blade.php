@@ -6,7 +6,7 @@
 		<div class="header">
 			<!-- Logo -->
 			<div class="header-left">
-				<a href="{{ route('home') }}" class="logo" style="position: relative; top: 9px;"> <img src="{{ URL::to('assets/img/logo.png') }}" width="40" height="40" alt=""> </a>
+				<a href="{{ route('home') }}" class="logo" style="position: relative; top: 9px;"> <img src="{{ URL::to('assets/img/logo.png') }}" style="width: 50px; height: 50px; border-radius: 50%; position: relative; top: -4px;" alt=""> </a>
 			</div>
 			<!-- /Logo -->
 			<a id="toggle_btn" href="javascript:void(0);" style="position: relative; top: 18px;">
@@ -14,26 +14,32 @@
 			</a>
 			<!-- Header Title -->
 			<div class="page-title-box">
-            <h3>{{ Auth::user()->role_name }}</h3>
+				<h3>{{ Auth::user()->role_name }}</h3>
 			</div>
 			<!-- /Header Title -->
+
 			<!-- Header Menu -->
 			<ul class="nav user-menu">
 
-				<li class="nav-item dropdown has-arrow main-drop">
-					<a href="#" class="nav-link">
-						<span class="user-img">
-						<img src="{{ asset('images/profile/' . Auth::user()->image) }}" alt="{{ Auth::user()->name }}">
-						</span></span>
-						<span>{{ Auth::user()->name }}</span>
-					</a>
-					<div class="dropdown-menu">
-						<a class="dropdown-item" href="{{ route('profile_user') }}">My Profile</a>
-						<a class="dropdown-item" href="{{ route('company/settings/page') }}">Settings</a>
-						<a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
-					</div>
-				</li>
+            <ul class="nav user-menu" style="align-items: center;">
+        <li class="nav-item">
+        <div class="page-title-box">
+        <h3>{{ now()->format('l, F j, Y') }}</h3>
+    </div>
+            <a href="{{ route('profile_user') }}" class="nav-link" style="display: flex; align-items: center;">
+                <span class="user-img" style="margin-right: 10px;">
+                    <img src="{{ asset('images/profile/' . Auth::user()->image) }}" alt="{{ Auth::user()->name }}" style="width: 40px; height: 40px; border-radius: 50%;">
+                </span>
+                <span style="font-size: 18px;">{{ Auth::user()->name }}</span>
+            </a>
+        </li>
+
+        <!-- Logout Button -->
+        <li class="nav-item">
+            <a href="{{ route('logout') }}" class="btn" style="margin-left: 20px; font-size: 18px; position: relative; top: -2px;">Logout</a>
+        </li>
 			</ul>
+
 
 		</div>
     <div class="sidebar" id="sidebar">
@@ -286,9 +292,12 @@
                         <li class="breadcrumb-item active">Holidays</li>
                     </ul>
                 </div>
+                @if (Auth::user()->role_name=='Employee')
+
                 <div class="col-auto float-right ml-auto">
                     <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_holiday"><i class="fa fa-plus"></i> Request Holiday</a>
                 </div>
+                @endif
             </div>
         </div>
 
@@ -306,7 +315,7 @@
                             <tr>
                                 <th>Start Date</th>
                                 <th>End Date</th>
-                                <th>Reason</th>
+                                <th>Reason Why ?</th>
                                 <th>Chief Staff</th>
                                 <!-- <th>Dept Head</th> -->
                                 <!-- <th>Fin Director</th> -->
@@ -456,8 +465,8 @@
 
 
                     <div class="form-group">
-                        <label>Description</label>
-                        <textarea class="form-control" name="reason" rows="4" placeholder="Add a description"></textarea>
+                        <label>Reason</label>
+                        <textarea class="form-control" name="reason" rows="4" placeholder="Add a Reason"></textarea>
                     </div>
 
                     <div class="submit-section text-center">
@@ -472,7 +481,7 @@
  
         <!-- Edit Holiday Modal -->
 <!-- Edit Holiday Modal -->
-<div class="modal fade" id="edit_holiday" tabindex="-1" role="dialog" aria-labelledby="editHolidayModalLabel" aria-hidden="true">
+<div class="modal custom-modal fade" id="edit_holiday" tabindex="-1" role="dialog" aria-labelledby="editHolidayModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -498,7 +507,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Description</label>
+                        <label>Reason</label>
                         <textarea class="form-control" id="edit_holiday_description" name="description" rows="4"></textarea>
                     </div>
 
@@ -579,27 +588,27 @@ $(document).ready(function() {
     white-space: nowrap; /* Prevents text wrapping */
 }
 
-.table th:nth-child(1), .table td:nth-child(3) { /* For Date Wish */
-    width: 75px;
+.table th:nth-child(1), .table td:nth-child(2) { /* For Date Wish */
+    width: 80px;
 }
 .table th:nth-child(2), .table td:nth-child(3) { /* For Date Wish */
-    width: 75px;
+    width: 70px;
 }
 .table th:nth-child(3), .table td:nth-child(4) { /* For Date Wish */
-    width: 50px;
+    width: 80px;
 }
 .table th:nth-child(4), .table td:nth-child(5) { /* For Date Wish */
-    width: 80px;
+    width: 70px;
 }
 
 .table th:nth-child(5), .table td:nth-child(6) { /* For Description */
-    width: 100px; /* Increase for longer descriptions */
+    width: 80px; /* Increase for longer descriptions */
 }
 .table th:nth-child(6), .table td:nth-child(7) { /* For Description */
-    width: 50px; /* Increase for longer descriptions */
+    width: 60px; /* Increase for longer descriptions */
 }
 .table th:nth-child(7), .table td:nth-child(8) { /* For Description */
-    width: 50px; /* Increase for longer descriptions */
+    width: 40px; /* Increase for longer descriptions */
 }
 
 .action-icon {

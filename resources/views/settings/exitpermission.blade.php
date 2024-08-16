@@ -1,10 +1,11 @@
 @extends('layouts.master')
 @section('content')
-{{-- @yield('nav') --}}
+
+        {{-- @yield('nav') --}}
 		<div class="header">
 			<!-- Logo -->
 			<div class="header-left">
-				<a href="{{ route('home') }}" class="logo" style="position: relative; top: -3px;"> <img src="{{ URL::to('assets/img/logo.png') }}" width="40" height="40" alt=""> </a>
+				<a href="{{ route('home') }}" class="logo" style="position: relative; top: 9px;"> <img src="{{ URL::to('assets/img/logo.png') }}" style="width: 50px; height: 50px; border-radius: 50%; position: relative; top: -9px;" alt=""> </a>
 			</div>
 			<!-- /Logo -->
 			<a id="toggle_btn" href="javascript:void(0);" style="position: relative; top: -3px;">
@@ -15,23 +16,29 @@
 				<h3>{{ Auth::user()->role_name }}</h3>
 			</div>
 			<!-- /Header Title -->
+
 			<!-- Header Menu -->
 			<ul class="nav user-menu">
 
-				<li class="nav-item dropdown has-arrow main-drop">
-					<a href="#" class="nav-link">
-						<span class="user-img">
-						<img src="{{ asset('images/profile/' . Auth::user()->image) }}" alt="{{ Auth::user()->name }}">
-						</span></span>
-						<span>{{ Auth::user()->name }}</span>
-					</a>
-					<div class="dropdown-menu">
-						<a class="dropdown-item" href="{{ route('profile_user') }}">My Profile</a>
-						<a class="dropdown-item" href="{{ route('company/settings/page') }}">Settings</a>
-						<a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
-					</div>
-				</li>
+            <ul class="nav user-menu" style="align-items: center;">
+        <li class="nav-item">
+        <div class="page-title-box">
+        <h3>{{ now()->format('l, F j, Y') }}</h3>
+    </div>
+            <a href="{{ route('profile_user') }}" class="nav-link" style="display: flex; align-items: center;">
+                <span class="user-img" style="margin-right: 10px;">
+                    <img src="{{ asset('images/profile/' . Auth::user()->image) }}" alt="{{ Auth::user()->name }}" style="width: 40px; height: 40px; border-radius: 50%;">
+                </span>
+                <span style="font-size: 18px;">{{ Auth::user()->name }}</span>
+            </a>
+        </li>
+
+        <!-- Logout Button -->
+        <li class="nav-item">
+            <a href="{{ route('logout') }}" class="btn" style="margin-left: 20px; font-size: 18px;">Logout</a>
+        </li>
 			</ul>
+
 
 		</div>
 <div class="sidebar" id="sidebar">
@@ -289,9 +296,13 @@
                         <li class="breadcrumb-item active">Exit Demands</li>
                     </ul>
                 </div>
+                @if (Auth::user()->role_name=='Employee')
+
                 <div class="col-auto float-right ml-auto">
                     <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_exit_demand"><i class="fa fa-plus"></i> Request Exit</a>
                 </div>
+                @endif
+
             </div>
         </div>
 
@@ -460,9 +471,10 @@
                             </div>
 
                             <div class="form-group">
-                                <label>Department <span class="text-danger">*</span></label>
-                                <input class="form-control" name="department" type="text" required>
-                            </div>
+                        <label>Department <span class="text-danger">*</span></label>
+                        <input class="form-control" name="department" type="text" value="{{ auth()->user()->department }}" disabled>
+                        <input type="hidden" name="department" value="{{ auth()->user()->department }}">
+                    </div>
 
                             <div class="form-group">
                                 <label>Reason</label>
@@ -479,7 +491,7 @@
         </div>
 
         <!-- Edit Exit Demand Modal -->
-        <div class="modal fade" id="edit_exit_demand" tabindex="-1" role="dialog" aria-labelledby="editExitDemandModalLabel" aria-hidden="true">
+        <div class="modal custom-modal fade" id="edit_exit_demand" tabindex="-1" role="dialog" aria-labelledby="editExitDemandModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -502,9 +514,9 @@
 
                     <div class="form-group">
                         <label>Department <span class="text-danger">*</span></label>
-                        <input id="edit_department" class="form-control" name="department" type="text" required>
+                        <input class="form-control" name="department" type="text" value="{{ auth()->user()->department }}" disabled>
+                        <input type="hidden" name="department" value="{{ auth()->user()->department }}">
                     </div>
-
                     <div class="form-group">
                         <label>Reason<span class="text-danger">*</span></label>
                         <textarea id="edit_reason" class="form-control" name="reason" rows="4" placeholder="Add a reason"></textarea>
