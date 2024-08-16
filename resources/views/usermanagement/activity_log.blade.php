@@ -1,6 +1,39 @@
 @extends('layouts.master')
 @section('content')
+{{-- @yield('nav') --}}
+		<div class="header">
+			<!-- Logo -->
+			<div class="header-left">
+				<a href="{{ route('home') }}" class="logo" style="position: relative; top: 0px;"> <img src="{{ URL::to('assets/img/logo.png') }}" width="40" height="40" alt=""> </a>
+			</div>
+			<!-- /Logo -->
+			<a id="toggle_btn" href="javascript:void(0);" style="position: relative; top: -2px;">
+				<span class="bar-icon"><span></span><span></span><span></span></span>
+			</a>
+			<!-- Header Title -->
+			<div class="page-title-box">
+				<h3>{{ Auth::user()->role_name }}</h3>
+			</div>
+			<!-- /Header Title -->
+			<!-- Header Menu -->
+			<ul class="nav user-menu">
 
+				<li class="nav-item dropdown has-arrow main-drop">
+					<a href="#" class="nav-link">
+						<span class="user-img">
+						<img src="{{ asset('images/profile/' . Auth::user()->image) }}" alt="{{ Auth::user()->name }}">
+						</span></span>
+						<span>{{ Auth::user()->name }}</span>
+					</a>
+					<div class="dropdown-menu">
+						<a class="dropdown-item" href="{{ route('profile_user') }}">My Profile</a>
+						<a class="dropdown-item" href="{{ route('company/settings/page') }}">Settings</a>
+						<a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
+					</div>
+				</li>
+			</ul>
+
+		</div>
 <div class="sidebar" id="sidebar">
     <div class="sidebar-inner slimscroll">
         <div id="sidebar-menu" class="sidebar-menu">
@@ -66,7 +99,12 @@
         font-weight: bold; /* Bold text for emphasis */
         border-radius: 8px; /* Match rounded corners for selection */
     }
-
+    .user-img img {
+    width: 35px; /* Adjust as needed */
+    height: 30px; /* Adjust as needed */
+    border-radius: 50%; /* Ensures the image is fully rounded */
+    object-fit: cover; /* Maintains aspect ratio while covering the container */
+}
     .sidebar-menu a.selecting i {
         color: #ecf0f1; /* Match icon color with text */
     }

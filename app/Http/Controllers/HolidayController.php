@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Log;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class HolidayController extends Controller
 {
@@ -47,14 +50,21 @@ public function store(Request $request)
             'to_date' => $toDate->format('Y-m-d'),
             'number_of_days' => $numberOfDays,
             'reason' => $request->reason,
-            'status_MD' => false,
-            'status_HD' => false,
-            'status_FD' => false,
-            'status_Ch5' => false,
-            'confirmed' => false,
         ]);
 
         $holiday->save();
+        $user = Auth::User();
+
+        $activityLog = [
+            'user_name'    => $user->name,
+            'email'        => $user->email,
+            'phone_number' => $user->phone,
+            'status'       => $user->status,
+            'role_name'    => $user->role_name,
+            'modify_user'  => 'Created a Holiday Demand',
+            'date_time'    => now()->toDayDateTimeString(),
+        ];
+        DB::table('user_activity_logs')->insert($activityLog);
         Log::info('Holiday object saved.');
 
         Toastr::success('Holiday request submitted successfully.', 'Success');
@@ -79,7 +89,33 @@ public function updateStatus(Request $request, $id)
     // Check user role and update the respective status
     $userRole = auth()->user()->role_name;
     $status = $request->input('status') === 'approve';
+    $user = Auth::User();
 
+    if($status){
+
+        $activityLog = [
+            'user_name'    => $user->name,
+            'email'        => $user->email,
+            'phone_number' => $user->phone,
+            'status'       => $user->status,
+            'role_name'    => $user->role_name,
+            'modify_user'  => 'Accepted a Holiday Demand',
+            'date_time'    => now()->toDayDateTimeString(),
+        ];
+
+        // Perform the update and log the activity
+    }
+    else{
+        $activityLog = [
+            'user_name'    => $user->name,
+            'email'        => $user->email,
+            'phone_number' => $user->phone,
+            'status'       => $user->status,
+            'role_name'    => $user->role_name,
+            'modify_user'  => 'Rejected a Holiday Demand',
+            'date_time'    => now()->toDayDateTimeString(),
+        ];
+    }
     Log::info('User role:', ['role' => $userRole]);
     Log::info('Status:', ['status' => $status]);
 
@@ -100,10 +136,11 @@ public function updateStatus(Request $request, $id)
             $holiday->status_MD = $status;
             Log::info('Updating status_MD', ['status' => $status]);
             break;
+        
     }
 
     // Optionally, set 'confirmed' status if all other statuses are approved
-    if ($holiday->status_MD && $holiday->status_HD && $holiday->status_FD && $holiday->status_Ch5) {
+    if ($holiday->status_MD && $holiday->status_Ch5) {
         $holiday->confirmed = true;
         Log::info('All statuses approved. Setting confirmed to true');
     } else {
@@ -112,8 +149,23 @@ public function updateStatus(Request $request, $id)
     }
 
     $holiday->save();
+    if ($holiday->confirmed) {
+        $user = User::find($holiday->user_id);
+        
+        if ($user) {
+            Mail::send('emails.holiday_accepted',  ['user' => $user], function($message) use ($user) {
+                $message->from('boukadidahbib@gmail.com');
+                $message->to($user->email);
+                $message->subject('Your holiday Demand Has Been Accepted');
+            });
+            Log::info('Email sent to user', ['email' => $user->email]);
+        } else {
+            Log::warning('User not found for holiday', ['user_id' => $holiday->user_id]);
+        }
+    }
     Log::info('Holiday status saved', ['holiday' => $holiday]);
     Toastr::success('Holiday status updated successfully :)', 'Success');
+    DB::table('user_activity_logs')->insert($activityLog);
 
     return redirect()->back()->with('status', 'Holiday status updated successfully');
 }
@@ -130,14 +182,28 @@ public function updateStatus(Request $request, $id)
     public function destroy($id)
     {
         try {
+
             $holiday = Holiday::findOrFail($id);
             $holiday->delete();
             Toastr::success('Holiday deleted successfully.', 'Success');
-            return redirect()->route('holiday.index')->with('success', 'Advance demand deleted successfully :)');
+            $user = Auth::User();
+
+            $activityLog = [
+                'user_name'    => $user->name,
+                'email'        => $user->email,
+                'phone_number' => $user->phone,
+                'status'       => $user->status,
+                'role_name'    => $user->role_name,
+                'modify_user'  => 'Deleted a Holiday Demand',
+                'date_time'    => now()->toDayDateTimeString(),
+            ];
+            DB::table('user_activity_logs')->insert($activityLog);
+
+            return redirect()->route('holiday.index')->with('success', 'holiday demand deleted successfully :)');
         } catch (\Exception $e) {
             Log::error('Error deleting holiday: ' . $e->getMessage());
             Toastr::error('Failed to delete holiday.', 'Error');
-            return redirect()->route('holiday.index')->with('success', 'Advance demand deleted successfully :)');
+            return redirect()->route('holiday.index')->with('success', 'holiday demand deleted successfully :)');
         }
     }
 
@@ -179,8 +245,20 @@ public function updateStatus(Request $request, $id)
                 'to_date' => $request->input('end_date', $holiday->to_date),
                 'reason' => $request->input('description', $holiday->reason)
             ]);
-            
+            $user = Auth::User();
+
+            $activityLog = [
+                'user_name'    => $user->name,
+                'email'        => $user->email,
+                'phone_number' => $user->phone,
+                'status'       => $user->status,
+                'role_name'    => $user->role_name,
+                'modify_user'  => 'updated a holiday demand',
+                'date_time'    => now()->toDayDateTimeString(),
+            ];
     
+            // Perform the update and log the activity
+            DB::table('user_activity_logs')->insert($activityLog);
             DB::commit();
     
             // Log successful update

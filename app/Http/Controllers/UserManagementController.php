@@ -144,7 +144,19 @@ class UserManagementController extends Controller
             $user->email = $validatedData['email'];
             $user->phone = $validatedData['phone'];
             $user->department = $validatedData['department'];
+            $user = Auth::User();
+            $activityLog = [
+                'user_name'    => $user->name,
+                'email'        => $user->email,
+                'phone_number' => $user->phone,
+                'status'       => $user->status,
+                'role_name'    => $user->role_name,
+                'modify_user'  => 'Updated his Profile',
+                'date_time'    => now()->toDayDateTimeString(),
+            ];
     
+            // Perform the update and log the activity
+            DB::table('user_activity_logs')->insert($activityLog);
             // Convert entry_date from d-m-Y to a Carbon instance
             $entryDate = Carbon::createFromFormat('d-m-Y', $validatedData['entry_date']);
             $user->entry_date = $entryDate;
@@ -168,6 +180,7 @@ class UserManagementController extends Controller
             Log::error('Profile update failed for user ID: ' . $user->id . ' - ' . $e->getMessage());
             return redirect()->back()->with('error', 'Profile update failed. Please try again.');
         }
+        
     }
     
     
@@ -327,7 +340,7 @@ class UserManagementController extends Controller
             $information->designation  = $request->designation;
             $information->reports_to   = $request->reports_to;
             $information->save();
-            
+
             DB::commit();
             Toastr::success('Profile Information successfully :)','Success');
             return redirect()->back();
@@ -437,7 +450,18 @@ class UserManagementController extends Controller
         $user->salary      = $request->salary;
         $user->password    = Hash::make($request->password);
         $user->save();
+        $activityLog = [
+            'user_name'    => $user->name,
+            'email'        => $user->email,
+            'phone_number' => $user->phone,
+            'status'       => $user->status,
+            'role_name'    => $user->role_name,
+            'modify_user'  => 'added a new user',
+            'date_time'    => now()->toDayDateTimeString(),
+        ];
 
+        // Perform the update and log the activity
+        DB::table('user_activity_logs')->insert($activityLog);
         DB::commit();
 
         Toastr::success('Create new account successfully :)', 'Success');
@@ -526,7 +550,7 @@ class UserManagementController extends Controller
                 'phone_number' => $phone,
                 'status'       => $status,
                 'role_name'    => $role_name,
-                'modify_user'  => 'Update',
+                'modify_user'  => 'Updated a User',
                 'date_time'    => now()->toDayDateTimeString(),
             ];
     
@@ -577,6 +601,18 @@ class UserManagementController extends Controller
                 }
             }
             DB::commit();
+            $activityLog = [
+                'user_name'    => $user->name,
+                'email'        => $user->email,
+                'phone_number' => $user->phone,
+                'status'       => $user->status,
+                'role_name'    => $user->role_name,
+                'modify_user'  => 'Deleted a user',
+                'date_time'    => now()->toDayDateTimeString(),
+            ];
+    
+            // Perform the update and log the activity
+            DB::table('user_activity_logs')->insert($activityLog);
             Toastr::success('User deleted successfully :)', 'Success');
             return redirect()->route('userManagement');
         } catch (\Exception $e) {

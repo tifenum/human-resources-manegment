@@ -1,6 +1,39 @@
 @extends('layouts.master')
 @section('content')
+{{-- @yield('nav') --}}
+		<div class="header">
+			<!-- Logo -->
+			<div class="header-left">
+				<a href="{{ route('home') }}" class="logo" style="position: relative; top: -3px;"> <img src="{{ URL::to('assets/img/logo.png') }}" width="40" height="40" alt=""> </a>
+			</div>
+			<!-- /Logo -->
+			<a id="toggle_btn" href="javascript:void(0);" style="position: relative; top: -3px;">
+				<span class="bar-icon"><span></span><span></span><span></span></span>
+			</a>
+			<!-- Header Title -->
+			<div class="page-title-box">
+				<h3>{{ Auth::user()->role_name }}</h3>
+			</div>
+			<!-- /Header Title -->
+			<!-- Header Menu -->
+			<ul class="nav user-menu">
 
+				<li class="nav-item dropdown has-arrow main-drop">
+					<a href="#" class="nav-link">
+						<span class="user-img">
+						<img src="{{ asset('images/profile/' . Auth::user()->image) }}" alt="{{ Auth::user()->name }}">
+						</span></span>
+						<span>{{ Auth::user()->name }}</span>
+					</a>
+					<div class="dropdown-menu">
+						<a class="dropdown-item" href="{{ route('profile_user') }}">My Profile</a>
+						<a class="dropdown-item" href="{{ route('company/settings/page') }}">Settings</a>
+						<a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
+					</div>
+				</li>
+			</ul>
+
+		</div>
 <div class="sidebar" id="sidebar">
         <div class="sidebar-inner slimscroll">
             <div id="sidebar-menu" class="sidebar-menu">
@@ -34,11 +67,10 @@
                     <li class="menu-title" style="font-size: 16px; padding: 15px 20px; color: #bdc3c7; text-transform: uppercase;">
                         <span>request demands</span>
                     </li>
-                    <!-- <li class="menu-title"> <span>main</span> </li> -->
                     <li>
                         <a href="{{ route('all/employee/card') }}" class="{{ request()->routeIs('all/employee/card') ? 'selecting' : '' }}">
-                            <i class="la la-money-bill" style="margin-right: 10px;"></i> 
-                            <span>advances</span>
+                        <i class="la la-money-bill" style="margin-right: 10px;"></i> 
+                        <span>advances</span>
                         </a>
                     </li>
                     <li>
@@ -74,48 +106,27 @@
                             <span>Profile</span>
                         </a>
                     </li>
-                    <!-- <li class="submenu">
-                        <a href="#">
-                            <i class="la la-files-o"></i>
-                            <span> Demands </span> 
-                            <span class="menu-arrow"></span>
-                        </a>
-                        <ul style="display: none;">
-                            <li><a href="{{ route('all/employee/card') }}">advances</a></li>
-                            <li><a href="{{ route('company/settings/page1') }}">holiday</a></li>
-                            <li><a href="{{ route('company/settings/page2') }}">Epermission</a></li>
-                            <li><a href="{{ route('company/settings/page3') }}">Dpermission</a></li>
-                            <li><a href="{{ route('company/settings/page4') }}">certificate</a></li>
-                        </ul>
-                    </li>
-                    <li class="menu-title"> <span>Pages</span> </li>
-                    <li class="submenu"> <a href="#"><i class="la la-user"></i>
-                        <span> Profile </span> <span class="menu-arrow"></span></a>
-                        <ul style="display: none;">
-                            <li><a href="{{ route('profile_user') }}"> Employee Profile </a></li>
-                        </ul>
-                    </li> -->
+
                     @elseif (Auth::user()->role_name=='Head of department')
                     <li class="menu-title" style="font-size: 16px; padding: 15px 20px; color: #bdc3c7; text-transform: uppercase;">
                         <span>consult demands</span>
                     </li>
-                    <!-- <li class="menu-title"> <span>main</span> </li> -->
                     <li>
                         <a href="{{ route('all/employee/card') }}" class="{{ request()->routeIs('all/employee/card') ? 'selecting' : '' }}">
-                            <i class="la la-user-secret" style="margin-right: 10px;"></i> 
-                            <span>advances</span>
+                        <i class="la la-money-bill" style="margin-right: 10px;"></i> 
+                        <span>advances</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('company/settings/page2') }}" class="{{ request()->routeIs('company/settings/page2') ? 'selecting' : '' }}">
-                            <i class="la la-user-secret" style="margin-right: 10px;"></i> 
-                            <span>Exit permission</span>
+                        <i class="la la-door-open" style="margin-right: 10px;"></i> 
+                        <span>Exit permission</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('company/settings/page3') }}" class="{{ request()->routeIs('company/settings/page3') ? 'selecting' : '' }}">
-                            <i class="la la-user-secret" style="margin-right: 10px;"></i> 
-                            <span>delay permission</span>
+                        <i class="la la-clock" style="margin-right: 10px;"></i> 
+                        <span>delay permission</span>
                         </a>
                     </li>
                     <li class="menu-title" style="font-size: 16px; padding: 15px 20px; color: #bdc3c7; text-transform: uppercase;">
@@ -123,84 +134,31 @@
                     </li>
                     <li>
                         <a href="{{ route('profile_user') }}" class="{{ request()->routeIs('profile_user') ? 'selecting' : '' }}">
-                            <i class="la la-user-secret" style="margin-right: 10px;"></i> 
+                            <i class="la la-user" style="margin-right: 10px;"></i> 
                             <span>Profile</span>
                         </a>
                     </li>
-                    <!-- <li class="menu-title"> <span>main</span> </li>
-                    <li class="submenu">
-                        <a href="#">
-                            <i class="la la-files-o"></i>
-                            <span>advances demands Demands </span> 
-                            <span class="menu-arrow"></span>
-                        </a>
-                        <ul style="display: none;">
-                            <li><a href="{{ route('all/employee/card') }}">advances</a></li>
-                            <li><a href="{{ route('company/settings/page1') }}">holiday</a></li>
-                            <li><a href="{{ route('company/settings/page2') }}">Epermission</a></li>
-                            <li><a href="{{ route('company/settings/page3') }}">Dpermission</a></li>
-                            <li><a href="{{ route('company/settings/page4') }}">certificate</a></li>
 
-                        </ul>
-                    </li>
-                    <li class="submenu">
-                        <a href="#">
-                            <i class="la la-files-o"></i>
-                            <span> consult retard demands </span> 
-                            <span class="menu-arrow"></span>
-                        </a>
-                        <ul style="display: none;">
-                            <li><a href="{{ route('all/employee/card') }}">advances</a></li>
-                            <li><a href="{{ route('company/settings/page1') }}">holiday</a></li>
-                            <li><a href="{{ route('company/settings/page2') }}">Epermission</a></li>
-                            <li><a href="{{ route('company/settings/page3') }}">Dpermission</a></li>
-                            <li><a href="{{ route('company/settings/page4') }}">certificate</a></li>
-
-                        </ul>
-                    </li>
-                    <li class="submenu">
-                        <a href="#">
-                            <i class="la la-files-o"></i>
-                            <span> consult permission de sortie </span> 
-                            <span class="menu-arrow"></span>
-                        </a>
-                        <ul style="display: none;">
-                            <li><a href="{{ route('all/employee/card') }}">advances</a></li>
-                            <li><a href="{{ route('company/settings/page1') }}">holiday</a></li>
-                            <li><a href="{{ route('company/settings/page2') }}">Epermission</a></li>
-                            <li><a href="{{ route('company/settings/page3') }}">Dpermission</a></li>
-                            <li><a href="{{ route('company/settings/page4') }}">certificate</a></li>
-
-                        </ul>
-                    </li>
-                    <li class="menu-title"> <span>Pages</span> </li>
-                    <li class="submenu"> <a href="#"><i class="la la-user"></i>
-                        <span> Profile </span> <span class="menu-arrow"></span></a>
-                        <ul style="display: none;">
-                            <li><a href="{{ route('profile_user') }}"> Employee Profile </a></li>
-                        </ul>
-                    </li> -->
                     @elseif (Auth::user()->role_name=='Chief of staff')
                     <li class="menu-title" style="font-size: 16px; padding: 15px 20px; color: #bdc3c7; text-transform: uppercase;">
                         <span>request demands</span>
                     </li>
-                    <!-- <li class="menu-title"> <span>main</span> </li> -->
                     <li>
                         <a href="{{ route('all/employee/card') }}" class="{{ request()->routeIs('all/employee/card') ? 'selecting' : '' }}">
-                            <i class="la la-user-secret" style="margin-right: 10px;"></i> 
-                            <span>advances</span>
+                        <i class="la la-money-bill" style="margin-right: 10px;"></i> 
+                        <span>advances</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('company/settings/page3') }}" class="{{ request()->routeIs('company/settings/page3') ? 'selecting' : '' }}">
-                            <i class="la la-user-secret" style="margin-right: 10px;"></i> 
-                            <span>delay permission</span>
+                        <i class="la la-clock" style="margin-right: 10px;"></i> 
+                        <span>delay permission</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('company/settings/page4') }}" class="{{ request()->routeIs('company/settings/page4') ? 'selecting' : '' }}">
-                            <i class="la la-user-secret" style="margin-right: 10px;"></i> 
-                            <span>Certificate</span>
+                        <i class="la la-certificate" style="margin-right: 10px;"></i> 
+                        <span>Certificate</span>
                         </a>
                     </li>
                     <li class="menu-title" style="font-size: 16px; padding: 15px 20px; color: #bdc3c7; text-transform: uppercase;">
@@ -208,217 +166,70 @@
                     </li>
                     <li>
                         <a href="{{ route('profile_user') }}" class="{{ request()->routeIs('profile_user') ? 'selecting' : '' }}">
-                            <i class="la la-user-secret" style="margin-right: 10px;"></i> 
+                            <i class="la la-user" style="margin-right: 10px;"></i> 
                             <span>Profile</span>
                         </a>
                     </li>
-                    <!-- <li class="menu-title"> <span>main</span> </li>
-                    <li class="submenu">
-                        <a href="#">
-                            <i class="la la-files-o"></i>
-                            <span> consult certificates </span> 
-                            <span class="menu-arrow"></span>
-                        </a>
-                        <ul style="display: none;">
-                            <li><a href="{{ route('all/employee/card') }}">advances</a></li>
-                            <li><a href="{{ route('company/settings/page1') }}">holiday</a></li>
-                            <li><a href="{{ route('company/settings/page2') }}">Epermission</a></li>
-                            <li><a href="{{ route('company/settings/page3') }}">Dpermission</a></li>
-                            <li><a href="{{ route('company/settings/page4') }}">certificate</a></li>
 
-                        </ul>
-                    </li>
-                    <li class="submenu">
-                        <a href="#">
-                            <i class="la la-files-o"></i>
-                            <span> consult retard demands</span> 
-                            <span class="menu-arrow"></span>
-                        </a>
-                        <ul style="display: none;">
-                            <li><a href="{{ route('all/employee/card') }}">advances</a></li>
-                            <li><a href="{{ route('company/settings/page1') }}">holiday</a></li>
-                            <li><a href="{{ route('company/settings/page2') }}">Epermission</a></li>
-                            <li><a href="{{ route('company/settings/page3') }}">Dpermission</a></li>
-                            <li><a href="{{ route('company/settings/page4') }}">certificate</a></li>
-
-                        </ul>
-                    </li>
-                    <li class="submenu">
-                        <a href="#">
-                            <i class="la la-files-o"></i>
-                            <span> consult advances demands </span> 
-                            <span class="menu-arrow"></span>
-                        </a>
-                        <ul style="display: none;">
-                            <li><a href="{{ route('all/employee/card') }}">advances</a></li>
-                            <li><a href="{{ route('company/settings/page1') }}">holiday</a></li>
-                            <li><a href="{{ route('company/settings/page2') }}">Epermission</a></li>
-                            <li><a href="{{ route('company/settings/page3') }}">Dpermission</a></li>
-                            <li><a href="{{ route('company/settings/page4') }}">certificate</a></li>
-
-                        </ul>
-                    </li>
-                    <li class="menu-title"> <span>Pages</span> </li>
-                    <li class="submenu"> <a href="#"><i class="la la-user"></i>
-                        <span> Profile </span> <span class="menu-arrow"></span></a>
-                        <ul style="display: none;">
-                            <li><a href="{{ route('profile_user') }}"> Employee Profile </a></li>
-                        </ul>
-                    </li> -->
                     @elseif (Auth::user()->role_name=='Financial director')
                     <li class="menu-title" style="font-size: 16px; padding: 15px 20px; color: #bdc3c7; text-transform: uppercase;">
                         <span>request demands</span>
                     </li>
-                    <!-- <li class="menu-title"> <span>main</span> </li> -->
                     <li>
                         <a href="{{ route('all/employee/card') }}" class="{{ request()->routeIs('all/employee/card') ? 'selecting' : '' }}">
-                            <i class="la la-user-secret" style="margin-right: 10px;"></i> 
-                            <span>advances</span>
+                        <i class="la la-money-bill" style="margin-right: 10px;"></i> 
+                        <span>advances</span>
                         </a>
                     </li>
-                    <!-- <li>
-                        <a href="{{ route('company/settings/page1') }}" class="{{ request()->routeIs('company/settings/page1') ? 'selecting' : '' }}">
-                            <i class="la la-user-secret" style="margin-right: 10px;"></i> 
-                            <span>holiday</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('company/settings/page2') }}" class="{{ request()->routeIs('company/settings/page2') ? 'selecting' : '' }}">
-                            <i class="la la-user-secret" style="margin-right: 10px;"></i> 
-                            <span>Exit permission</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('company/settings/page3') }}" class="{{ request()->routeIs('company/settings/page3') ? 'selecting' : '' }}">
-                            <i class="la la-user-secret" style="margin-right: 10px;"></i> 
-                            <span>delay permission</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('company/settings/page4') }}" class="{{ request()->routeIs('company/settings/page4') ? 'selecting' : '' }}">
-                            <i class="la la-user-secret" style="margin-right: 10px;"></i> 
-                            <span>Certificate</span>
-                        </a>
-                    </li> -->
+
                     <li class="menu-title" style="font-size: 16px; padding: 15px 20px; color: #bdc3c7; text-transform: uppercase;">
                         <span>Profile Management</span>
                     </li>
                     <li>
                         <a href="{{ route('profile_user') }}" class="{{ request()->routeIs('profile_user') ? 'selecting' : '' }}">
-                            <i class="la la-user-secret" style="margin-right: 10px;"></i> 
+                            <i class="la la-user" style="margin-right: 10px;"></i> 
                             <span>Profile</span>
                         </a>
                     </li>
-                    <!-- <li class="menu-title"> <span>main</span> </li>
-                    <li class="submenu">
-                        <a href="#">
-                            <i class="la la-files-o"></i>
-                            <span>consult advance demands</span> 
-                            <span class="menu-arrow"></span>
-                        </a>
-                        <ul style="display: none;">
-                            <li><a href="{{ route('all/employee/card') }}">advances</a></li>
-                            <li><a href="{{ route('company/settings/page1') }}">holiday</a></li>
-                            <li><a href="{{ route('company/settings/page2') }}">Epermission</a></li>
-                            <li><a href="{{ route('company/settings/page3') }}">Dpermission</a></li>
-                            <li><a href="{{ route('company/settings/page4') }}">certificate</a></li>
 
-                        </ul>
-                    </li>
-                    <li class="menu-title"> <span>Pages</span> </li>
-                    <li class="submenu"> <a href="#"><i class="la la-user"></i>
-                        <span> Profile </span> <span class="menu-arrow"></span></a>
-                        <ul style="display: none;">
-                            <li><a href="{{ route('profile_user') }}"> Employee Profile </a></li>
-                        </ul>
-                    </li> -->
                     @elseif (Auth::user()->role_name=='Manager director')
                     <li class="menu-title" style="font-size: 16px; padding: 15px 20px; color: #bdc3c7; text-transform: uppercase;">
                         <span>request demands</span>
                     </li>
-                    <!-- <li class="menu-title"> <span>main</span> </li> -->
                     <li>
                         <a href="{{ route('all/employee/card') }}" class="{{ request()->routeIs('all/employee/card') ? 'selecting' : '' }}">
-                            <i class="la la-user-secret" style="margin-right: 10px;"></i> 
-                            <span>advances</span>
+                        <i class="la la-money-bill" style="margin-right: 10px;"></i> 
+                        <span>advances</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('company/settings/page1') }}" class="{{ request()->routeIs('company/settings/page1') ? 'selecting' : '' }}">
-                            <i class="la la-user-secret" style="margin-right: 10px;"></i> 
-                            <span>holiday</span>
+                        <i class="la la-grin-stars" style="margin-right: 10px;"></i> 
+                        <span>holiday</span>
                         </a>
                     </li>
-                    <!-- <li>
-                        <a href="{{ route('company/settings/page2') }}" class="{{ request()->routeIs('company/settings/page2') ? 'selecting' : '' }}">
-                            <i class="la la-user-secret" style="margin-right: 10px;"></i> 
-                            <span>Exit permission</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('company/settings/page3') }}" class="{{ request()->routeIs('company/settings/page3') ? 'selecting' : '' }}">
-                            <i class="la la-user-secret" style="margin-right: 10px;"></i> 
-                            <span>delay permission</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('company/settings/page4') }}" class="{{ request()->routeIs('company/settings/page4') ? 'selecting' : '' }}">
-                            <i class="la la-user-secret" style="margin-right: 10px;"></i> 
-                            <span>Certificate</span>
-                        </a>
-                    </li> -->
+
                     <li class="menu-title" style="font-size: 16px; padding: 15px 20px; color: #bdc3c7; text-transform: uppercase;">
                         <span>Profile Management</span>
                     </li>
                     <li>
                         <a href="{{ route('profile_user') }}" class="{{ request()->routeIs('profile_user') ? 'selecting' : '' }}">
-                            <i class="la la-user-secret" style="margin-right: 10px;"></i> 
+                            <i class="la la-user" style="margin-right: 10px;"></i> 
                             <span>Profile</span>
                         </a>
                     </li>
-                    <!-- <li class="menu-title"> <span>main</span> </li>
-                    <li class="submenu">
-                        <a href="#">
-                            <i class="la la-files-o"></i>
-                            <span>consult advances Demands </span> 
-                            <span class="menu-arrow"></span>
-                        </a>
-                        <ul style="display: none;">
-                            <li><a href="{{ route('all/employee/card') }}">advances</a></li>
-                            <li><a href="{{ route('company/settings/page1') }}">holiday</a></li>
-                            <li><a href="{{ route('company/settings/page2') }}">Epermission</a></li>
-                            <li><a href="{{ route('company/settings/page3') }}">Dpermission</a></li>
-                            <li><a href="{{ route('company/settings/page4') }}">certificate</a></li>
 
-                        </ul>
-                    </li>
-                    <li class="submenu">
-                        <a href="#">
-                            <i class="la la-files-o"></i>
-                            <span> consult conges demands </span> 
-                            <span class="menu-arrow"></span>
-                        </a>
-                        <ul style="display: none;">
-                            <li><a href="{{ route('all/employee/card') }}">advances</a></li>
-                            <li><a href="{{ route('company/settings/page1') }}">holiday</a></li>
-                            <li><a href="{{ route('company/settings/page2') }}">Epermission</a></li>
-                            <li><a href="{{ route('company/settings/page3') }}">Dpermission</a></li>
-                            <li><a href="{{ route('company/settings/page4') }}">certificate</a></li>
-
-                        </ul>
-                    </li>
-                    <li class="menu-title"> <span>Pages</span> </li>
-                    <li class="submenu"> <a href="#"><i class="la la-user"></i>
-                        <span> Profile </span> <span class="menu-arrow"></span></a>
-                        <ul style="display: none;">
-                            <li><a href="{{ route('profile_user') }}"> Employee Profile </a></li>
-                        </ul> -->
-                    <!-- </li> -->
                     @endif
                     <li>
                         <a href="{{ route('forget-password') }}" class="{{ request()->routeIs('forget-password') ? 'selecting' : '' }}">
                             <i class="la la-key" style="margin-right: 10px;"></i> 
                             <span>forget password</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('logout') }}" class="{{ request()->routeIs('forget-password') ? 'selecting' : '' }}">
+                            <i class="la la-sign-out" style="margin-right: 10px;"></i> 
+                            <span>Logout</span>
                         </a>
                     </li>
                 </ul>
@@ -444,7 +255,12 @@
         background-color: #2c3e50; /* Slightly different color on hover */
         color: #ecf0f1; /* Light text color on hover */
     }
-
+    .user-img img {
+    width: 35px; /* Adjust as needed */
+    height: 30px; /* Adjust as needed */
+    border-radius: 50%; /* Ensures the image is fully rounded */
+    object-fit: cover; /* Maintains aspect ratio while covering the container */
+}
     .sidebar-menu a.selecting {
         background-color: #34495e; /* Dark background color for selection */
         color: #ecf0f1; /* Light text color */
@@ -491,102 +307,13 @@
                         <th>Exit Day</th>
                         <th>Department</th>
                         <th>Reason</th>
-                        <th>MD Status</th>
-                        <th>HD Status</th>
-                        <!-- <th>FD Status</th> -->
-                        <th>Ch5 Status</th>
+                        <th>Manager Director</th>
+                        <th>Head Department</th>
+                        <th>Cheif Staff</th>
                         <th>Status</th>
                         <th class="text-right">Actions</th>
                     </tr>
                 </thead>
-                <!-- <tbody>
-                    @foreach($exitdemand as $demand)
-                    <tr>
-                        <td>{{ $demand->exit_day }}</td>
-                        <td>{{ $demand->department }}</td>
-                        <td class="text-center">
-                            <button class="btn btn-info btn-sm btn-rounded custom-btn-info" 
-                                    data-toggle="modal" 
-                                    data-target="#reasonModal" 
-                                    data-description="{{ $demand->reason }}">
-                                View
-                            </button>
-                        </td>
-                        <td class="text-center">
-                            <div class="action-label">
-                                <a class="btn btn-white btn-sm btn-rounded" href="javascript:void(0);">
-                                    @if($demand->status_MD)
-                                        <i class="fa fa-dot-circle-o text-success"></i> Approved
-                                    @else
-                                        <i class="fa fa-dot-circle-o text-danger"></i> Declined
-                                    @endif
-                                </a>
-                            </div>
-                        </td>
-                        <td class="text-center">
-                            <div class="action-label">
-                                <a class="btn btn-white btn-sm btn-rounded" href="javascript:void(0);">
-                                    @if($demand->status_HD)
-                                        <i class="fa fa-dot-circle-o text-success"></i> Approved
-                                    @else
-                                        <i class="fa fa-dot-circle-o text-danger"></i> Declined
-                                    @endif
-                                </a>
-                            </div>
-                        </td>
-                        <td class="text-center">
-                            <div class="action-label">
-                                <a class="btn btn-white btn-sm btn-rounded" href="javascript:void(0);">
-                                    @if($demand->status_FD)
-                                        <i class="fa fa-dot-circle-o text-success"></i> Approved
-                                    @else
-                                        <i class="fa fa-dot-circle-o text-danger"></i> Declined
-                                    @endif
-                                </a>
-                            </div>
-                        </td>
-                        <td class="text-center">
-                            <div class="action-label">
-                                <a class="btn btn-white btn-sm btn-rounded" href="javascript:void(0);">
-                                    @if($demand->status_Ch5)
-                                        <i class="fa fa-dot-circle-o text-success"></i> Approved
-                                    @else
-                                        <i class="fa fa-dot-circle-o text-danger"></i> Declined
-                                    @endif
-                                </a>
-                            </div>
-                        </td>
-                        <td class="text-center">
-                            <div class="action-label">
-                                <a class="btn btn-white btn-sm btn-rounded" href="javascript:void(0);">
-                                    @if($demand->confirmed)
-                                        <i class="fa fa-dot-circle-o text-success"></i> Approved
-                                    @else
-                                        <i class="fa fa-dot-circle-o text-danger"></i> Declined
-                                    @endif
-                                </a>
-                            </div>
-                        </td>
-                        <td class="text-right">
-                            <a href="#" data-toggle="modal" data-target="#edit_exit_demand" class="action-icon edit-exit-demand"
-                               data-id="{{ $demand->id }}"
-                               data-exit_day="{{ $demand->exit_day }}"
-                               data-department="{{ $demand->department }}"
-                               data-description="{{ $demand->reason }}">
-                               <i class="fa fa-pencil" aria-hidden="true"></i>
-                            </a>
-
-                            <form action="{{ route('exitdemand.destroy', $demand->id) }}" method="POST" style="display:inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="action-icon" style="border: none; background: none; cursor: pointer;">
-                                    <i class="fa fa-trash-o" aria-hidden="true"></i>
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody> -->
                 <tbody>
     @foreach($exitdemand as $demand)
     <tr>
@@ -601,49 +328,47 @@
             </button>
         </td>
         <td class="text-center">
-            <div class="action-label">
-                <a class="btn btn-white btn-sm btn-rounded" href="javascript:void(0);">
-                    @if($demand->status_MD)
-                        <i class="fa fa-dot-circle-o text-success"></i> Approved
-                    @else
-                        <i class="fa fa-dot-circle-o text-danger"></i> Declined
-                    @endif
-                </a>
-            </div>
-        </td>
+    <div class="action-label">
+        <a class="btn btn-white btn-sm btn-rounded" href="javascript:void(0);">
+            @if(is_null($demand->status_MD))
+                <i class="fa fa-dot-circle-o text-warning"></i> Unchecked
+            @elseif($demand->status_MD)
+                <i class="fa fa-dot-circle-o text-success"></i> Approved
+            @else
+                <i class="fa fa-dot-circle-o text-danger"></i> Declined
+            @endif
+        </a>
+    </div>
+</td>
+
         <td class="text-center">
-            <div class="action-label">
-                <a class="btn btn-white btn-sm btn-rounded" href="javascript:void(0);">
-                    @if($demand->status_HD)
-                        <i class="fa fa-dot-circle-o text-success"></i> Approved
-                    @else
-                        <i class="fa fa-dot-circle-o text-danger"></i> Declined
-                    @endif
-                </a>
-            </div>
-        </td>
-        <!-- <td class="text-center">
-            <div class="action-label">
-                <a class="btn btn-white btn-sm btn-rounded" href="javascript:void(0);">
-                    @if($demand->status_FD)
-                        <i class="fa fa-dot-circle-o text-success"></i> Approved
-                    @else
-                        <i class="fa fa-dot-circle-o text-danger"></i> Declined
-                    @endif  
-                </a>
-            </div>
-        </td> -->
+    <div class="action-label">
+        <a class="btn btn-white btn-sm btn-rounded" href="javascript:void(0);">
+            @if(is_null($demand->status_HD))
+                <i class="fa fa-dot-circle-o text-warning"></i> Unchecked
+            @elseif($demand->status_HD)
+                <i class="fa fa-dot-circle-o text-success"></i> Approved
+            @else
+                <i class="fa fa-dot-circle-o text-danger"></i> Declined
+            @endif
+        </a>
+    </div>
+</td>
+
         <td class="text-center">
-            <div class="action-label">
-                <a class="btn btn-white btn-sm btn-rounded" href="javascript:void(0);">
-                    @if($demand->status_Ch5)
-                        <i class="fa fa-dot-circle-o text-success"></i> Approved
-                    @else
-                        <i class="fa fa-dot-circle-o text-danger"></i> Declined
-                    @endif
-                </a>
-            </div>
-        </td>
+    <div class="action-label">
+        <a class="btn btn-white btn-sm btn-rounded" href="javascript:void(0);">
+            @if(is_null($demand->status_Ch5))
+                <i class="fa fa-dot-circle-o text-warning"></i> Unchecked
+            @elseif($demand->status_Ch5)
+                <i class="fa fa-dot-circle-o text-success"></i> Approved
+            @else
+                <i class="fa fa-dot-circle-o text-danger"></i> Declined
+            @endif
+        </a>
+    </div>
+</td>
+
         <td class="text-center">
             <div class="action-label">
                 <a class="btn btn-white btn-sm btn-rounded" href="javascript:void(0);">
@@ -806,42 +531,52 @@
 .table {
     width: 100%;
     table-layout: fixed; /* Ensures table cells take up equal width */
+    border-collapse: collapse; /* Ensures borders are collapsed into a single border */
 }
 
 .table th, .table td {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap; /* Prevents text wrapping */
+    padding: 8px; /* Add padding for better spacing */
 }
 
-.table th:nth-child(1), .table td:nth-child(3) { /* For Date Wish */
-    width: 75px;
-}
-.table th:nth-child(2), .table td:nth-child(3) { /* For Date Wish */
-    width: 75px;
-}
-.table th:nth-child(3), .table td:nth-child(4) { /* For Date Wish */
-    width: 75px;
-}
-.table th:nth-child(4), .table td:nth-child(5) { /* For Date Wish */
-    width: 75px;
+.table th {
+    background-color: #f8f9fa; /* Background color for header */
 }
 
-.table th:nth-child(5), .table td:nth-child(6) { /* For Description */
-    width: 100px; /* Increase for longer descriptions */
+.table th:nth-child(1), .table td:nth-child(1) {
+    width: 150px; /* Adjusted width */
 }
-.table th:nth-child(6), .table td:nth-child(7) { /* For Description */
-    width: 100px; /* Increase for longer descriptions */
+
+.table th:nth-child(2), .table td:nth-child(2) {
+    width: 150px; /* Adjusted width */
 }
-.table th:nth-child(7), .table td:nth-child(8) { /* For Description */
-    width: 104px; /* Increase for longer descriptions */
+
+.table th:nth-child(3), .table td:nth-child(3) {
+    width: 100px; /* Adjusted width */
 }
-.table th:nth-child(8), .table td:nth-child(9) { /* For Description */
-    width: 75px; /* Increase for longer descriptions */
+
+.table th:nth-child(4), .table td:nth-child(4) {
+    width: 170px; /* Adjusted width */
 }
-.table th:nth-child(9), .table td:nth-child(10) { /* For Description */
-    width: 75px; /* Increase for longer descriptions */
+
+.table th:nth-child(5), .table td:nth-child(5) {
+    width: 170px; /* Adjusted width */
 }
+
+.table th:nth-child(6), .table td:nth-child(6) {
+    width: 150px; /* Adjusted width */
+}
+
+.table th:nth-child(7), .table td:nth-child(7) {
+    width: 120px; /* Adjusted width */
+}
+
+.table th:nth-child(8), .table td:nth-child(8) {
+    width: 100px; /* Adjusted width */
+}
+
 .action-icon {
     color: #333; /* Adjust color as needed */
     font-size: 20px; /* Adjust size as needed */
@@ -857,27 +592,34 @@
 }
 
 .table td {
-    max-width: 400px; /* Increase if needed */
+    max-width: 200px; /* Adjusted to fit content */
+    word-wrap: break-word; /* Allows breaking long words */
 }
 
 .custom-btn-info {
-  background-color: #f43b48; /* Button background color */
-  border-color: #f43b48; /* Button border color */
-  color: white; /* Text color */
+    background-color: #f43b48; /* Button background color */
+    border-color: #f43b48; /* Button border color */
+    color: white; /* Text color */
 }
 
 .custom-btn-info:hover,
 .custom-btn-info:focus,
 .custom-btn-info:active {
-  background-color: #e03a44; /* Darker color for hover and focus */
-  border-color: #e03a44; /* Border color for hover and focus */
-  color: white; /* Text color on hover and focus */
-  box-shadow: none; /* Remove any box shadow */
+    background-color: #e03a44; /* Darker color for hover and focus */
+    border-color: #e03a44; /* Border color for hover and focus */
+    color: white; /* Text color on hover and focus */
+    box-shadow: none; /* Remove any box shadow */
 }
 
 .custom-btn-info:active {
-  background-color: #d93a3e; /* Even darker color for active state */
-  border-color: #d93a3e; /* Border color for active state */
+    background-color: #d93a3e; /* Even darker color for active state */
+    border-color: #d93a3e; /* Border color for active state */
+}
+.user-img img {
+    width: 35px; /* Adjust as needed */
+    height: 30px; /* Adjust as needed */
+    border-radius: 50%; /* Ensures the image is fully rounded */
+    object-fit: cover; /* Maintains aspect ratio while covering the container */
 }
 
 </style>

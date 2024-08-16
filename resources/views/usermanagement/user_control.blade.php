@@ -1,28 +1,37 @@
 @extends('layouts.master')
 @section('content')
 
-    <!-- Sidebar -->
-    <!-- <div class="sidebar" id="sidebar">
-        <div class="sidebar-inner slimscroll">
-            <div id="sidebar-menu" class="sidebar-menu">
-                <ul>
-                    @if (Auth::user()->role_name=='Admin')
-                        <li class="menu-title"> <span>Authentication</span> </li>
-                        <li class="submenu">
-                            <a href="#" class="noti-dot">
-                                <i class="la la-user-secret"></i> <span> User Controller</span> <span class="menu-arrow"></span>
-                            </a>
-                            <ul style="display: none;">
-                                <li><a class="active" href="{{ route('userManagement') }}">All User</a></li>
-                                <li><a href="{{ route('activity/log') }}">Activity Log</a></li>
-                                <li><a href="{{ route('activity/login/logout') }}">Activity User</a></li>
-                            </ul>
-                        </li>
-                    @endif
-                </ul>
-            </div>
-        </div>
-    </div> -->
+
+    {{-- @yield('nav') --}}
+		<div class="header">
+			<!-- Logo -->
+			<div class="header-left">
+				<a href="{{ route('home') }}" class="logo" style="position: relative; top: 0px;"> <img src="{{ URL::to('assets/img/logo.png') }}" width="40" height="40" alt=""> </a>
+			</div>
+			<!-- /Logo -->
+			<a id="toggle_btn" href="javascript:void(0);" style="position: relative; top: -2px;">
+				<span class="bar-icon"><span></span><span></span><span></span></span>
+			</a>
+			<!-- Header Title -->
+			<div class="page-title-box">
+				<h3>{{ Auth::user()->role_name }}</h3>
+			</div>
+			<!-- /Header Title -->
+			<!-- Header Menu -->
+			<ul class="nav user-menu">
+
+				<li class="nav-item dropdown has-arrow main-drop">
+					<a href="#" class="nav-link">
+						<span class="user-img">
+						<img src="{{ asset('images/profile/' . Auth::user()->image) }}" alt="{{ Auth::user()->name }}">
+						</span></span>
+						<span>{{ Auth::user()->name }}</span>
+					</a>
+
+				</li>
+			</ul>
+
+		</div>
     <div class="sidebar" id="sidebar">
     <div class="sidebar-inner slimscroll">
         <div id="sidebar-menu" class="sidebar-menu">
@@ -57,6 +66,12 @@
                         <a href="{{ route('forget-password') }}" class="{{ request()->routeIs('forget-password') ? 'selecting' : '' }}">
                             <i class="la la-key" style="margin-right: 10px;"></i> 
                             <span>forget password</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('logout') }}" class="{{ request()->routeIs('forget-password') ? 'selecting' : '' }}">
+                            <i class="la la-sign-out" style="margin-right: 10px;"></i> 
+                            <span>Logout</span>
                         </a>
                     </li>
             </ul>
@@ -100,7 +115,12 @@
     object-fit: cover; /* Ensures the image covers the entire container */
     overflow: hidden; /* Hides any overflow */
 }
-
+.user-img img {
+    width: 35px; /* Adjust as needed */
+    height: 30px; /* Adjust as needed */
+    border-radius: 50%; /* Ensures the image is fully rounded */
+    object-fit: cover; /* Maintains aspect ratio while covering the container */
+}
 </style>
 
 

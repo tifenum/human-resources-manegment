@@ -15,10 +15,10 @@
                 $table->string('date_wish');
                 $table->string('department');
                 $table->text('description')->nullable();
-                $table->boolean('chief_staff_status')->default(false);
-                $table->boolean('head_department_status')->default(false);
-                $table->boolean('financial_director_status')->default(false);
-                $table->boolean('manager_director_status')->default(false);
+                $table->boolean('chief_staff_status')->nullable()->default(null);
+                $table->boolean('head_department_status')->nullable()->default(null);
+                $table->boolean('financial_director_status')->nullable()->default(null);
+                $table->boolean('manager_director_status')->nullable()->default(null);
                 $table->boolean('accepted')->default(false);
                 $table->timestamps();
                 $table->softDeletes();

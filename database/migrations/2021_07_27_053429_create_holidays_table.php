@@ -20,10 +20,10 @@ class CreateHolidaysTable extends Migration
             $table->string('to_date'); // To date as date
             $table->string('number_of_days'); // Number of days as string
             $table->string('reason')->nullable(); // Reason as text
-            $table->boolean('status_MD')->default(false); // Status MD as boolean
-            $table->boolean('status_HD')->default(false); // Status HD as boolean
-            $table->boolean('status_FD')->default(false); // Status FD as boolean
-            $table->boolean('status_Ch5')->default(false); // Status Ch5 as boolean
+            $table->boolean('status_MD')->nullable()->default(null);
+            $table->boolean('status_HD')->nullable()->default(null);// Status HD as boolean
+            $table->boolean('status_FD')->nullable()->default(null); // Status FD as boolean
+            $table->boolean('status_Ch5')->nullable()->default(null); // Status Ch5 as boolean
             $table->boolean('confirmed')->default(false); // Confirmed as boolean
             $table->timestamps();
 

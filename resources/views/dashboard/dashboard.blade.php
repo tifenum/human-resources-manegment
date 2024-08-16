@@ -54,8 +54,8 @@
                     </li>
                     <li>
                         <a href="{{ route('company/settings/page3') }}" class="{{ request()->routeIs('company/settings/page3') ? 'selecting' : '' }}">
-                            <i class="la la-clock" style="margin-right: 10px;"></i> 
-                            <span>delay permission</span>
+                        <i class="la la-clock" style="margin-right: 10px;"></i> 
+                        <span>delay permission</span>
                         </a>
                     </li>
                     <li>
@@ -79,20 +79,20 @@
                     </li>
                     <li>
                         <a href="{{ route('all/employee/card') }}" class="{{ request()->routeIs('all/employee/card') ? 'selecting' : '' }}">
-                            <i class="la la-user-secret" style="margin-right: 10px;"></i> 
+                            <i class="la la-money-bill" style="margin-right: 10px;"></i> 
                             <span>advances</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('company/settings/page2') }}" class="{{ request()->routeIs('company/settings/page2') ? 'selecting' : '' }}">
-                            <i class="la la-user-secret" style="margin-right: 10px;"></i> 
-                            <span>Exit permission</span>
+                        <i class="la la-door-open" style="margin-right: 10px;"></i> 
+                        <span>Exit permission</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('company/settings/page3') }}" class="{{ request()->routeIs('company/settings/page3') ? 'selecting' : '' }}">
-                            <i class="la la-user-secret" style="margin-right: 10px;"></i> 
-                            <span>delay permission</span>
+                        <i class="la la-clock" style="margin-right: 10px;"></i> 
+                        <span>delay permission</span>
                         </a>
                     </li>
                     <li class="menu-title" style="font-size: 16px; padding: 15px 20px; color: #bdc3c7; text-transform: uppercase;">
@@ -100,8 +100,8 @@
                     </li>
                     <li>
                         <a href="{{ route('profile_user') }}" class="{{ request()->routeIs('profile_user') ? 'selecting' : '' }}">
-                            <i class="la la-user-secret" style="margin-right: 10px;"></i> 
-                            <span>Profile</span>
+                        <i class="la la-user" style="margin-right: 10px;"></i> 
+                        <span>Profile</span>
                         </a>
                     </li>
                     @elseif (Auth::user()->role_name=='Chief of staff')
@@ -110,20 +110,20 @@
                     </li>
                     <li>
                         <a href="{{ route('all/employee/card') }}" class="{{ request()->routeIs('all/employee/card') ? 'selecting' : '' }}">
-                            <i class="la la-user-secret" style="margin-right: 10px;"></i> 
+                            <i class="la la-money-bill" style="margin-right: 10px;"></i> 
                             <span>advances</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('company/settings/page3') }}" class="{{ request()->routeIs('company/settings/page3') ? 'selecting' : '' }}">
-                            <i class="la la-user-secret" style="margin-right: 10px;"></i> 
-                            <span>delay permission</span>
+                        <i class="la la-clock" style="margin-right: 10px;"></i> 
+                        <span>delay permission</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('company/settings/page4') }}" class="{{ request()->routeIs('company/settings/page4') ? 'selecting' : '' }}">
-                            <i class="la la-user-secret" style="margin-right: 10px;"></i> 
-                            <span>Certificate</span>
+                        <i class="la la-certificate" style="margin-right: 10px;"></i> 
+                        <span>Certificate</span>
                         </a>
                     </li>
                     <li class="menu-title" style="font-size: 16px; padding: 15px 20px; color: #bdc3c7; text-transform: uppercase;">
@@ -131,8 +131,8 @@
                     </li>
                     <li>
                         <a href="{{ route('profile_user') }}" class="{{ request()->routeIs('profile_user') ? 'selecting' : '' }}">
-                            <i class="la la-user-secret" style="margin-right: 10px;"></i> 
-                            <span>Profile</span>
+                        <i class="la la-user" style="margin-right: 10px;"></i> 
+                        <span>Profile</span>
                         </a>
                     </li>
                     @elseif (Auth::user()->role_name=='Financial director')
@@ -141,7 +141,7 @@
                     </li>
                     <li>
                         <a href="{{ route('all/employee/card') }}" class="{{ request()->routeIs('all/employee/card') ? 'selecting' : '' }}">
-                            <i class="la la-user-secret" style="margin-right: 10px;"></i> 
+                            <i class="la la-money-bill" style="margin-right: 10px;"></i> 
                             <span>advances</span>
                         </a>
                     </li>
@@ -150,8 +150,8 @@
                     </li>
                     <li>
                         <a href="{{ route('profile_user') }}" class="{{ request()->routeIs('profile_user') ? 'selecting' : '' }}">
-                            <i class="la la-user-secret" style="margin-right: 10px;"></i> 
-                            <span>Profile</span>
+                        <i class="la la-user" style="margin-right: 10px;"></i> 
+                        <span>Profile</span>
                         </a>
                     </li>
                     @elseif (Auth::user()->role_name=='Manager director')
@@ -160,14 +160,14 @@
                     </li>
                     <li>
                         <a href="{{ route('all/employee/card') }}" class="{{ request()->routeIs('all/employee/card') ? 'selecting' : '' }}">
-                            <i class="la la-user-secret" style="margin-right: 10px;"></i> 
+                            <i class="la la-money-bill" style="margin-right: 10px;"></i> 
                             <span>advances</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('company/settings/page1') }}" class="{{ request()->routeIs('company/settings/page1') ? 'selecting' : '' }}">
-                            <i class="la la-user-secret" style="margin-right: 10px;"></i> 
-                            <span>holiday</span>
+                        <i class="la la-grin-stars" style="margin-right: 10px;"></i> 
+                        <span>holiday</span>
                         </a>
                     </li>
                     <li class="menu-title" style="font-size: 16px; padding: 15px 20px; color: #bdc3c7; text-transform: uppercase;">
@@ -175,8 +175,8 @@
                     </li>
                     <li>
                         <a href="{{ route('profile_user') }}" class="{{ request()->routeIs('profile_user') ? 'selecting' : '' }}">
-                            <i class="la la-user-secret" style="margin-right: 10px;"></i> 
-                            <span>Profile</span>
+                        <i class="la la-user" style="margin-right: 10px;"></i> 
+                        <span>Profile</span>
                         </a>
                     </li>
                     @endif

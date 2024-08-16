@@ -8,6 +8,9 @@
     use Carbon\Carbon;
     use Illuminate\Support\Facades\DB;
     use Illuminate\Support\Facades\Log;
+    use Illuminate\Support\Facades\Mail;
+    use App\Models\User;
+    use Illuminate\Support\Facades\Auth;
 
     class ExitDemandController extends Controller
     {
@@ -30,12 +33,19 @@
                 'reason' => $request->reason,
                 'exit_day' => $exitDate,
                 'department' => $request->department,
-                'status_MD' => false,
-                'status_HD' => false,
-                'status_FD' => false,
-                'status_Ch5' => false,
-                'confirmed' => false,
             ]);
+            $user = Auth::User();
+            $activityLog = [
+                'user_name'    => $user->name,
+                'email'        => $user->email,
+                'phone_number' => $user->phone,
+                'status'       => $user->status,
+                'role_name'    => $user->role_name,
+                'modify_user'  => 'Created an Exit Demand',
+                'date_time'    => now()->toDayDateTimeString(),
+            ];
+            DB::table('user_activity_logs')->insert($activityLog);
+
             Toastr::success('Exit request submitted successfully.', 'Success');
             return redirect()->route('exit.index')->with('success', 'Holiday request submitted successfully.');
 
@@ -51,7 +61,35 @@
         
             Log::info('User role:', ['role' => $userRole]);
             Log::info('Status:', ['status' => $status]);
-        
+            $user = Auth::User();
+
+    if($status){
+
+        $activityLog = [
+            'user_name'    => $user->name,
+            'email'        => $user->email,
+            'phone_number' => $user->phone,
+            'status'       => $user->status,
+            'role_name'    => $user->role_name,
+            'modify_user'  => 'Accepted an Exit Demand',
+            'date_time'    => now()->toDayDateTimeString(),
+        ];
+
+        // Perform the update and log the activity
+    }
+    else{
+        $activityLog = [
+            'user_name'    => $user->name,
+            'email'        => $user->email,
+            'phone_number' => $user->phone,
+            'status'       => $user->status,
+            'role_name'    => $user->role_name,
+            'modify_user'  => 'Rejected an Exit Demand',
+            'date_time'    => now()->toDayDateTimeString(),
+        ];
+    }
+    DB::table('user_activity_logs')->insert($activityLog);
+
             switch ($userRole) {
                 case 'Chief of staff':
                     $holiday->status_Ch5 = $status;
@@ -72,8 +110,8 @@
             }
         
             // Optionally, set 'confirmed' status if all other statuses are approved
-            if ($holiday->status_MD && $holiday->status_HD && $holiday->status_FD && $holiday->status_Ch5) {
-                $holiday    ->confirmed = true;
+            if ($holiday->status_MD || $holiday->status_HD && $holiday->status_Ch5) {
+                $holiday->confirmed = true;
                 Log::info('All statuses approved. Setting confirmed to true');
             } else {
                 $holiday->confirmed = false;
@@ -81,8 +119,22 @@
             }
         
             $holiday->save();
+            if ($holiday->confirmed) {
+                $user = User::find($holiday->user_id);
+                
+                if ($user) {
+                    Mail::send('emails.holiday_accepted',  ['user' => $user], function($message) use ($user) {
+                        $message->from('boukadidahbib@gmail.com');
+                        $message->to($user->email);
+                        $message->subject('Your Exit Demand Has Been Accepted');
+                    });
+                    Log::info('Email sent to user', ['email' => $user->email]);
+                } else {
+                    Log::warning('User not found for holiday', ['user_id' => $holiday->user_id]);
+                }
+            }
             Log::info('Holiday status saved', ['holiday' => $holiday]);
-            Toastr::success('Holiday status updated successfully :)', 'Success');
+            Toastr::success('Exit status updated successfully :)', 'Success');
         
             return redirect()->back()->with('status', 'Holiday status updated successfully');
         }
@@ -107,6 +159,17 @@
             'exit_day' => 'required|date_format:Y-m-d', // Adjusted date format
             'department' => 'required|string|max:255',
         ]);
+        $user = Auth::User();
+        $activityLog = [
+            'user_name'    => $user->name,
+            'email'        => $user->email,
+            'phone_number' => $user->phone,
+            'status'       => $user->status,
+            'role_name'    => $user->role_name,
+            'modify_user'  => 'Updated an Exit Demand',
+            'date_time'    => now()->toDayDateTimeString(),
+        ];
+        DB::table('user_activity_logs')->insert($activityLog);
 
         // Find the exit demand record
         $exitDemand = ExitDemand::findOrFail($id);
@@ -163,6 +226,18 @@
             $exitDemand->delete();
 
             Toastr::success('Exit request deleted successfully.', 'Success');
+            $user = Auth::User();
+            $activityLog = [
+                'user_name'    => $user->name,
+                'email'        => $user->email,
+                'phone_number' => $user->phone,
+                'status'       => $user->status,
+                'role_name'    => $user->role_name,
+                'modify_user'  => 'Deleted an Exit Demand',
+                'date_time'    => now()->toDayDateTimeString(),
+            ];
+            DB::table('user_activity_logs')->insert($activityLog);
+
             return redirect()->route('exit.index')->with('success', 'Holiday request submitted successfully.');
 
         }

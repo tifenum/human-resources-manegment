@@ -54,41 +54,6 @@ class LoginController extends Controller
         return view('auth.login');
     }
 
-    // public function authenticate(Request $request)
-    // {
-    //     $request->validate([
-    //         'email' => 'required|string|email',
-    //         'password' => 'required|string',
-    //     ]);
-
-    //     $email    = $request->email;
-    //     $password = $request->password;
-
-    //     $dt         = Carbon::now();
-    //     $todayDate  = $dt->toDayDateTimeString();
-
-    //     $activityLog = [
-
-    //         'name'        => $email,
-    //         'email'       => $email,
-    //         'description' => 'has log in',
-    //         'date_time'   => $todayDate,
-    //     ];
-    //     if (Auth::attempt(['email'=>$email,'password'=>$password])) {
-    //         DB::table('activity_logs')->insert($activityLog);
-    //         Toastr::success('Login successfully :)','Success');
-    //         return redirect()->intended('home');
-    //     }elseif (Auth::attempt(['email'=>$email,'password'=>$password])) {
-    //         DB::table('activity_logs')->insert($activityLog);
-    //         Toastr::success('Login successfully :)','Success');
-    //         return redirect()->intended('home');
-    //     }
-    //     else{
-    //         Toastr::error('fail, WRONG USERNAME OR PASSWORD :)','Error');
-    //         return redirect('login');
-    //     }
-
-    // }
     public function authenticate(Request $request)
 {
     $request->validate([
@@ -117,7 +82,7 @@ class LoginController extends Controller
         DB::table('activity_logs')->insert($activityLog);
         Toastr::success('Login successfully :)', 'Success');
         return redirect()->intended('home');
-    } elseif ($user && $user->status !== 'active') {
+    } elseif ($user && $user->status !== 'Active') {
         // User exists but is not active
         Toastr::error('Your account is blocked. Please contact support.', 'Error');
         return redirect('login');

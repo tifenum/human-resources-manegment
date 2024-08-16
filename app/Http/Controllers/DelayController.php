@@ -7,6 +7,9 @@ use App\Models\Delay;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class DelayController extends Controller
 {
@@ -22,6 +25,34 @@ class DelayController extends Controller
         // Check user role and update the respective status
         $userRole = auth()->user()->role_name;
         $status = $request->input('status') === 'approve';
+        $user = Auth::User();
+
+        if($status){
+    
+            $activityLog = [
+                'user_name'    => $user->name,
+                'email'        => $user->email,
+                'phone_number' => $user->phone,
+                'status'       => $user->status,
+                'role_name'    => $user->role_name,
+                'modify_user'  => 'Accepted a Delay Demand',
+                'date_time'    => now()->toDayDateTimeString(),
+            ];
+    
+            // Perform the update and log the activity
+        }
+        else{
+            $activityLog = [
+                'user_name'    => $user->name,
+                'email'        => $user->email,
+                'phone_number' => $user->phone,
+                'status'       => $user->status,
+                'role_name'    => $user->role_name,
+                'modify_user'  => 'Rejected a Delay Demand',
+                'date_time'    => now()->toDayDateTimeString(),
+            ];
+        }
+        DB::table('user_activity_logs')->insert($activityLog);
     
         Log::info('User role:', ['role' => $userRole]);
         Log::info('Status:', ['status' => $status]);
@@ -46,7 +77,7 @@ class DelayController extends Controller
         }
     
         // Optionally, set 'confirmed' status if all other statuses are approved
-        if ($holiday->status_MD && $holiday->status_HD && $holiday->status_FD && $holiday->status_Ch5) {
+        if ($holiday->status_HD && $holiday->status_Ch5) {
             $holiday->confirmed = true;
             Log::info('All statuses approved. Setting confirmed to true');
         } else {
@@ -55,6 +86,20 @@ class DelayController extends Controller
         }
     
         $holiday->save();
+        if ($holiday->confirmed) {
+            $user = User::find($holiday->user_id);
+            
+            if ($user) {
+                Mail::send('emails.holiday_accepted',  ['user' => $user], function($message) use ($user) {
+                    $message->from('boukadidahbib@gmail.com');
+                    $message->to($user->email);
+                    $message->subject('Your holiday Demand Has Been Accepted');
+                });
+                Log::info('Email sent to user', ['email' => $user->email]);
+            } else {
+                Log::warning('User not found for holiday', ['user_id' => $holiday->user_id]);
+            }
+        }
         Log::info('Holiday status saved', ['holiday' => $holiday]);
         Toastr::success('Holiday status updated successfully :)', 'Success');
     
@@ -78,6 +123,17 @@ class DelayController extends Controller
         $minutes = $interval->i;
 
         $amountOfTime = "{$hours} hours {$minutes} minutes";
+        $user = Auth::User();
+        $activityLog = [
+            'user_name'    => $user->name,
+            'email'        => $user->email,
+            'phone_number' => $user->phone,
+            'status'       => $user->status,
+            'role_name'    => $user->role_name,
+            'modify_user'  => 'Created a Delay Demand',
+            'date_time'    => now()->toDayDateTimeString(),
+        ];
+        DB::table('user_activity_logs')->insert($activityLog);
 
         DB::beginTransaction();
         try {
@@ -88,11 +144,6 @@ class DelayController extends Controller
                 'return_time' => $request->return_time,
                 'day' => $request->day,
                 'amount_of_time' => $amountOfTime,
-                'status_MD' => false,
-                'status_HD' => false,
-                'status_FD' => false,
-                'status_Ch5' => false,
-                'confirmed' => false,
             ]);
 
             $delay->save();
@@ -133,7 +184,18 @@ class DelayController extends Controller
                 'return_time' => 'required|string',
                 'day' => 'required|string',
             ]);
-
+            $user = Auth::User();
+            $activityLog = [
+                'user_name'    => $user->name,
+                'email'        => $user->email,
+                'phone_number' => $user->phone,
+                'status'       => $user->status,
+                'role_name'    => $user->role_name,
+                'modify_user'  => 'Updated a Delay Demand',
+                'date_time'    => now()->toDayDateTimeString(),
+            ];
+            DB::table('user_activity_logs')->insert($activityLog);
+    
             // Find the delay record
             $delay = Delay::findOrFail($id);
 
@@ -192,6 +254,18 @@ class DelayController extends Controller
         $delay = Delay::findOrFail($id);
         $delay->delete();
         Toastr::success('Delay request deleted successfully.', 'Success');
+        $user = Auth::User();
+        $activityLog = [
+            'user_name'    => $user->name,
+            'email'        => $user->email,
+            'phone_number' => $user->phone,
+            'status'       => $user->status,
+            'role_name'    => $user->role_name,
+            'modify_user'  => 'Deleted a Delay Demand',
+            'date_time'    => now()->toDayDateTimeString(),
+        ];
+        DB::table('user_activity_logs')->insert($activityLog);
+
         return redirect()->route('delay.index')->with('success', 'Delay request deleted successfully.');
     }
 }

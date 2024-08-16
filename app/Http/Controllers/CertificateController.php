@@ -8,6 +8,9 @@ use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Log;
 use PDF;
 use App\Models\User;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class CertificateController extends Controller
 {
@@ -38,9 +41,14 @@ class CertificateController extends Controller
         if (!$certificate) {
             return abort(404, 'Certificate not found');
         }
-    
+        $user = User::find($certificate->user_id);
+
+        // Check if the user exists
+        if (!$user) {
+            return abort(404, 'User not found');
+        }
+        
         // Fetch the user associated with the certificate
-        $user = $certificate->user;
     
         // Prepare data for the PDF view
         $data = [
@@ -50,9 +58,21 @@ class CertificateController extends Controller
     
         // Load the view with the data and generate the PDF
         $pdf = PDF::loadView('certificates.template', $data);
-    
+        $user1 = Auth::User();
+        $activityLog = [
+            'user_name'    => $user1->name,
+            'email'        => $user1->email,
+            'phone_number' => $user1->phone,
+            'status'       => $user1->status,
+            'role_name'    => $user1->role_name,
+            'modify_user'  => 'Downloaded a Certificate',
+            'date_time'    => now()->toDayDateTimeString(),
+        ];
+        DB::table('user_activity_logs')->insert($activityLog);
+
         // Return the generated PDF for download
         return $pdf->download('certificate_'.$user->name.'.pdf');  
+
     }
     
     public function updateStatus($id)
@@ -60,6 +80,20 @@ class CertificateController extends Controller
         $certificate = Certificate::findOrFail($id);
         $certificate->confirmed = !$certificate->confirmed;
         $certificate->save();
+        if ($certificate->confirmed) {
+            $user = User::find($certificate->user_id);
+            
+            if ($user) {
+                Mail::send('emails.certificate_accepted',  ['user' => $user], function($message) use ($user) {
+                    $message->from('boukadidahbib@gmail.com');
+                    $message->to($user->email);
+                    $message->subject('Your certificate Demand Has Been Accepted');
+                });
+                Log::info('Email sent to user', ['email' => $user->email]);
+            } else {
+                Log::warning('User not found for certificate', ['user_id' => $certificate->user_id]);
+            }
+        }
         Toastr::success('Certificate status updated and generated successfully!', 'Success');
         return redirect()->back()->with('status', 'Certificate status updated and generated successfully');
     }
@@ -83,12 +117,18 @@ class CertificateController extends Controller
             'salary' => $request->salary,
             'department' => $request->department,
             'description' => $request->description,
-            'confirmed' => false,
-            'status_MD' => false,
-            'status_HD' => false,
-            'status_FD' => false,
-            'status_Ch5' => false,
         ]);
+        $user = Auth::User();
+        $activityLog = [
+            'user_name'    => $user->name,
+            'email'        => $user->email,
+            'phone_number' => $user->phone,
+            'status'       => $user->status,
+            'role_name'    => $user->role_name,
+            'modify_user'  => 'Created a Certificate Demand',
+            'date_time'    => now()->toDayDateTimeString(),
+        ];
+        DB::table('user_activity_logs')->insert($activityLog);
 
         Toastr::success('Certificate request submitted successfully.', 'Success');
         return redirect()->route('certificate.index')->with('success', 'Certificate request submitted successfully!');
@@ -129,6 +169,17 @@ class CertificateController extends Controller
             'status_FD' => $request->status_FD ?? $certificate->status_FD,
             'status_Ch5' => $request->status_Ch5 ?? $certificate->status_Ch5,
         ]);
+        $user = Auth::User();
+        $activityLog = [
+            'user_name'    => $user->name,
+            'email'        => $user->email,
+            'phone_number' => $user->phone,
+            'status'       => $user->status,
+            'role_name'    => $user->role_name,
+            'modify_user'  => 'Updated a Certificate Demand',
+            'date_time'    => now()->toDayDateTimeString(),
+        ];
+        DB::table('user_activity_logs')->insert($activityLog);
 
         Toastr::success('Certificate updated successfully.', 'Success');
         return redirect()->route('certificate.index')->with('success', 'Certificate updated successfully!');
@@ -138,6 +189,17 @@ class CertificateController extends Controller
     {
         $certificate = Certificate::findOrFail($id);
         $certificate->delete();
+        $user = Auth::User();
+        $activityLog = [
+            'user_name'    => $user->name,
+            'email'        => $user->email,
+            'phone_number' => $user->phone,
+            'status'       => $user->status,
+            'role_name'    => $user->role_name,
+            'modify_user'  => 'Deleted a Certificate Demand',
+            'date_time'    => now()->toDayDateTimeString(),
+        ];
+        DB::table('user_activity_logs')->insert($activityLog);
 
         Toastr::success('Certificate deleted successfully.', 'Success');
         return redirect()->route('certificate.index')->with('success', 'Certificate deleted successfully!');

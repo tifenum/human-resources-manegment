@@ -14,10 +14,10 @@ class CreateExitDemandsTable extends Migration
             $table->string('reason');
             $table->string('exit_day');
             $table->string('department');
-            $table->boolean('status_MD')->default(false);
-            $table->boolean('status_HD')->default(false);
-            $table->boolean('status_FD')->default(false);
-            $table->boolean('status_Ch5')->default(false);
+            $table->boolean('status_MD')->nullable()->default(null);
+            $table->boolean('status_HD')->nullable()->default(null);
+            $table->boolean('status_FD')->nullable()->default(null);
+            $table->boolean('status_Ch5')->nullable()->default(null);
             $table->boolean('confirmed')->default(false);
             $table->timestamps();
         });
