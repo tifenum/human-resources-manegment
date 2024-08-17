@@ -123,7 +123,7 @@
                 $user = User::find($holiday->user_id);
                 
                 if ($user) {
-                    Mail::send('emails.holiday_accepted',  ['user' => $user], function($message) use ($user) {
+                    Mail::send('emails.exit_accepted', ['user' => $user, 'exit' => $holiday], function($message) use ($user) {
                         $message->from('boukadidahbib@gmail.com');
                         $message->to($user->email);
                         $message->subject('Your Exit Demand Has Been Accepted');
@@ -154,80 +154,80 @@
         }
         // Add update function
         public function update(Request $request, $id)
-{
-    DB::beginTransaction();
-    
-    try {
-        // Log incoming request data
-        Log::info('Updating exit demand with ID: ' . $id . ', Data: ' . json_encode($request->all()));
-    
-        // Validate request data
-        $request->validate([
-            'reason' => 'required|string|max:255',
-            'exit_day' => 'required|date_format:d-m-Y', // Adjusted date format
-            'department' => 'required|string|max:255',
-        ]);
-
-        $user = Auth::User();
-        $activityLog = [
-            'user_name'    => $user->name,
-            'email'        => $user->email,
-            'phone_number' => $user->phone,
-            'status'       => $user->status,
-            'role_name'    => $user->role_name,
-            'modify_user'  => 'Updated an Exit Demand',
-            'date_time'    => now()->toDayDateTimeString(),
-        ];
-        DB::table('user_activity_logs')->insert($activityLog);
-
-        // Find the exit demand record
-        $exitDemand = ExitDemand::findOrFail($id);
-
-        // Log the old and new values for comparison
-        Log::info('Old Values: ' . json_encode($exitDemand->toArray()));
-        Log::info('New Values: ' . json_encode([
-            'reason' => $request->input('reason', $exitDemand->reason),
-            'exit_day' => $request->input('exit_day'), // Using the provided date format
-            'department' => $request->input('department', $exitDemand->department),
-            'status_MD' => $request->input('status_MD', $exitDemand->status_MD),
-            'status_HD' => $request->input('status_HD', $exitDemand->status_HD),
-            'status_FD' => $request->input('status_FD', $exitDemand->status_FD),
-            'status_Ch5' => $request->input('status_Ch5', $exitDemand->status_Ch5),
-            'confirmed' => $request->input('confirmed', $exitDemand->confirmed),
-        ]));
-        $exitDate = Carbon::createFromFormat('d-m-Y', $request->input('exit_day'))->format('Y-m-d');
-
-        // Update the record
-        $exitDemand->update([
-            'reason' => $request->input('reason', $exitDemand->reason),
-            'exit_day' => $exitDate, // Using the provided date format
-            'department' => $request->input('department', $exitDemand->department),
-            'status_MD' => $request->input('status_MD', $exitDemand->status_MD),
-            'status_HD' => $request->input('status_HD', $exitDemand->status_HD),
-            'status_FD' => $request->input('status_FD', $exitDemand->status_FD),
-            'status_Ch5' => $request->input('status_Ch5', $exitDemand->status_Ch5),
-            'confirmed' => $request->input('confirmed', $exitDemand->confirmed),
-        ]);
-    
-        DB::commit();
-    
-        // Log successful update
-        Log::info('Exit demand updated successfully.');
-    
-        Toastr::success('Exit demand updated successfully.', 'Success');
-        return redirect()->route('exitdemand.index')->with('success', 'Exit demand updated successfully.');
-    } catch (\Illuminate\Validation\ValidationException $e) {
-        DB::rollBack();
-        Log::error('Validation error: ' . json_encode($e->errors()));
-        Toastr::error('Validation error.', 'Error');
-        return redirect()->route('exitdemand.index')->with('error', 'Validation error.');
-    } catch (\Exception $e) {
-        DB::rollBack();
-        Log::error('Error updating exit demand: ' . $e->getMessage());
-        Toastr::error('Failed to update exit demand.', 'Error');
-        return redirect()->route('exitdemand.index')->with('error', 'Failed to update exit demand.');
-    }
-}
+        {
+            DB::beginTransaction();
+        
+            try {
+                // Log incoming request data
+                Log::info('Updating exit demand with ID: ' . $id . ', Data: ' . json_encode($request->all()));
+        
+                // Validate request data
+                $request->validate([
+                    'reason' => 'required|string|max:255',
+                    'exit_day' => 'required|date_format:Y-m-d', // Expect 'Y-m-d' format
+                    'department' => 'required|string|max:255',
+                ]);
+        
+                $user = Auth::user();
+                $activityLog = [
+                    'user_name'    => $user->name,
+                    'email'        => $user->email,
+                    'phone_number' => $user->phone,
+                    'status'       => $user->status,
+                    'role_name'    => $user->role_name,
+                    'modify_user'  => 'Updated an Exit Demand',
+                    'date_time'    => now()->toDayDateTimeString(),
+                ];
+                DB::table('user_activity_logs')->insert($activityLog);
+        
+                // Find the exit demand record
+                $exitDemand = ExitDemand::findOrFail($id);
+        
+                // Log the old and new values for comparison
+                Log::info('Old Values: ' . json_encode($exitDemand->toArray()));
+                Log::info('New Values: ' . json_encode([
+                    'reason' => $request->input('reason', $exitDemand->reason),
+                    'exit_day' => $request->input('exit_day'), // Using the provided date format
+                    'department' => $request->input('department', $exitDemand->department),
+                    'status_MD' => $request->input('status_MD', $exitDemand->status_MD),
+                    'status_HD' => $request->input('status_HD', $exitDemand->status_HD),
+                    'status_FD' => $request->input('status_FD', $exitDemand->status_FD),
+                    'status_Ch5' => $request->input('status_Ch5', $exitDemand->status_Ch5),
+                    'confirmed' => $request->input('confirmed', $exitDemand->confirmed),
+                ]));
+        
+                // Update the record
+                $exitDemand->update([
+                    'reason' => $request->input('reason', $exitDemand->reason),
+                    'exit_day' => $request->input('exit_day'), // No conversion needed if using 'Y-m-d'
+                    'department' => $request->input('department', $exitDemand->department),
+                    'status_MD' => $request->input('status_MD', $exitDemand->status_MD),
+                    'status_HD' => $request->input('status_HD', $exitDemand->status_HD),
+                    'status_FD' => $request->input('status_FD', $exitDemand->status_FD),
+                    'status_Ch5' => $request->input('status_Ch5', $exitDemand->status_Ch5),
+                    'confirmed' => $request->input('confirmed', $exitDemand->confirmed),
+                ]);
+        
+                DB::commit();
+        
+                // Log successful update
+                Log::info('Exit demand updated successfully.');
+        
+                Toastr::success('Exit demand updated successfully.', 'Success');
+                return redirect()->route('exitdemand.index')->with('success', 'Exit demand updated successfully.');
+            } catch (\Illuminate\Validation\ValidationException $e) {
+                DB::rollBack();
+                Log::error('Validation error: ' . json_encode($e->errors()));
+                Toastr::error('Validation error.', 'Error');
+                return redirect()->route('exitdemand.index')->with('error', 'Validation error.');
+            } catch (\Exception $e) {
+                DB::rollBack();
+                Log::error('Error updating exit demand: ' . $e->getMessage());
+                Toastr::error('Failed to update exit demand.', 'Error');
+                return redirect()->route('exitdemand.index')->with('error', 'Failed to update exit demand.');
+            }
+        }
+        
 
         // Add destroy function
         public function destroy($id)

@@ -80,7 +80,7 @@ class EmployeeController extends Controller
                 
                 DB::commit();
                 Toastr::success('Add new employee successfully :)','Success');
-                return redirect()->route('all/employee/card');
+                return redirect()->route('advance');
             } else {
                 DB::rollback();
                 Toastr::error('Add new employee exits :)','Error');
@@ -147,7 +147,7 @@ class EmployeeController extends Controller
         
             DB::commit();
             Toastr::success('updated record successfully :)','Success');
-            return redirect()->route('all/employee/card');
+            return redirect()->route('advance');
         }catch(\Exception $e){
             DB::rollback();
             Toastr::error('updated record fail :)','Error');
@@ -165,7 +165,7 @@ class EmployeeController extends Controller
 
             DB::commit();
             Toastr::success('Delete record successfully :)','Success');
-            return redirect()->route('all/employee/card');
+            return redirect()->route('advance');
 
         }catch(\Exception $e){
             DB::rollback();

@@ -45,7 +45,7 @@
                             <span class="menu-arrow"></span>
                         </a>
                         <ul style="display: none;">
-                            <li><a href="{{ route('all/employee/card') }}">All Employees</a></li>
+                            <li><a href="{{ route('advance') }}">All Employees</a></li>
                             <li><a href="{{ route('form/holidays/new') }}">Holidays</a></li>
                             <li><a href="{{ route('form/leaves/new') }}">Leaves (Admin) 
                                 <span class="badge badge-pill bg-primary float-right">1</span></a>
@@ -187,7 +187,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-sm-6 m-b-20">
-                                    <img src="{{ URL::to('assets/img/logo2.png') }}" class="inv-logo" alt="">
+                                    <img src="{{ URL::to('assets/img/photo_defaults.jpg') }}" class="inv-logo" alt="">
                                      <ul class="list-unstyled">
                                         <li>Soeng Souy</li>
                                         <li>3864 Quiet Valley Lane,</li>

@@ -5,7 +5,7 @@
 		<div class="header">
 			<!-- Logo -->
 			<div class="header-left">
-				<a href="{{ route('home') }}" class="logo" style="position: relative; top: 9px;"> <img src="{{ URL::to('assets/img/logo.png') }}" style="width: 50px; height: 50px; border-radius: 50%; position: relative; top: -4px;" alt=""> </a>
+				<a href="{{ route('home') }}" class="logo" style="position: relative; top: 9px;"> <img src="{{ URL::to('assets/img/photo_defaults.jpg') }}" style="width: 50px; height: 50px; border-radius: 50%; position: relative; top: -4px;" alt=""> </a>
 			</div>
 			<!-- /Logo -->
 			<a id="toggle_btn" href="javascript:void(0);" style="position: relative; top: 18px;">
@@ -75,31 +75,31 @@
                         <span>request demands</span>
                     </li>
                     <li>
-                        <a href="{{ route('all/employee/card') }}" class="{{ request()->routeIs('all/employee/card') ? 'selecting' : '' }}">
+                        <a href="{{ route('advance') }}" class="{{ request()->routeIs('advance') ? 'selecting' : '' }}">
                         <i class="la la-money-bill" style="margin-right: 10px;"></i> 
                         <span>advances</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('company/settings/page1') }}" class="{{ request()->routeIs('company/settings/page1') ? 'selecting' : '' }}">
+                        <a href="{{ route('holiday.index') }}" class="{{ request()->routeIs('holidays') ? 'selecting' : '' }}">
                             <i class="la la-grin-stars" style="margin-right: 10px;"></i> 
                             <span>holiday</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('company/settings/page2') }}" class="{{ request()->routeIs('company/settings/page2') ? 'selecting' : '' }}">
+                        <a href="{{ route('exits_demands') }}" class="{{ request()->routeIs('exits_demands') ? 'selecting' : '' }}">
                             <i class="la la-door-open" style="margin-right: 10px;"></i> 
                             <span>Exit permission</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('company/settings/page3') }}" class="{{ request()->routeIs('company/settings/page3') ? 'selecting' : '' }}">
+                        <a href="{{ route('delays') }}" class="{{ request()->routeIs('delays') ? 'selecting' : '' }}">
                             <i class="la la-clock" style="margin-right: 10px;"></i> 
                             <span>delay permission</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('company/settings/page4') }}" class="{{ request()->routeIs('company/settings/page4') ? 'selecting' : '' }}">
+                        <a href="{{ route('certificates') }}" class="{{ request()->routeIs('certificates') ? 'selecting' : '' }}">
                             <i class="la la-certificate" style="margin-right: 10px;"></i> 
                             <span>Certificate</span>
                         </a>
@@ -119,19 +119,19 @@
                         <span>consult demands</span>
                     </li>
                     <li>
-                        <a href="{{ route('all/employee/card') }}" class="{{ request()->routeIs('all/employee/card') ? 'selecting' : '' }}">
+                        <a href="{{ route('advance') }}" class="{{ request()->routeIs('advance') ? 'selecting' : '' }}">
                         <i class="la la-money-bill" style="margin-right: 10px;"></i> 
                         <span>advances</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('company/settings/page2') }}" class="{{ request()->routeIs('company/settings/page2') ? 'selecting' : '' }}">
+                        <a href="{{ route('exits_demands') }}" class="{{ request()->routeIs('exits_demands') ? 'selecting' : '' }}">
                         <i class="la la-door-open" style="margin-right: 10px;"></i> 
                         <span>Exit permission</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('company/settings/page3') }}" class="{{ request()->routeIs('company/settings/page3') ? 'selecting' : '' }}">
+                        <a href="{{ route('delays') }}" class="{{ request()->routeIs('delays') ? 'selecting' : '' }}">
                         <i class="la la-clock" style="margin-right: 10px;"></i> 
                         <span>delay permission</span>
                         </a>
@@ -151,19 +151,19 @@
                         <span>request demands</span>
                     </li>
                     <li>
-                        <a href="{{ route('all/employee/card') }}" class="{{ request()->routeIs('all/employee/card') ? 'selecting' : '' }}">
+                        <a href="{{ route('advance') }}" class="{{ request()->routeIs('advance') ? 'selecting' : '' }}">
                         <i class="la la-money-bill" style="margin-right: 10px;"></i> 
                         <span>advances</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('company/settings/page3') }}" class="{{ request()->routeIs('company/settings/page3') ? 'selecting' : '' }}">
+                        <a href="{{ route('delays') }}" class="{{ request()->routeIs('delays') ? 'selecting' : '' }}">
                         <i class="la la-clock" style="margin-right: 10px;"></i> 
                         <span>delay permission</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('company/settings/page4') }}" class="{{ request()->routeIs('company/settings/page4') ? 'selecting' : '' }}">
+                        <a href="{{ route('certificates') }}" class="{{ request()->routeIs('certificates') ? 'selecting' : '' }}">
                         <i class="la la-certificate" style="margin-right: 10px;"></i> 
                         <span>Certificate</span>
                         </a>
@@ -183,7 +183,7 @@
                         <span>request demands</span>
                     </li>
                     <li>
-                        <a href="{{ route('all/employee/card') }}" class="{{ request()->routeIs('all/employee/card') ? 'selecting' : '' }}">
+                        <a href="{{ route('advance') }}" class="{{ request()->routeIs('advance') ? 'selecting' : '' }}">
                         <i class="la la-money-bill" style="margin-right: 10px;"></i> 
                         <span>advances</span>
                         </a>
@@ -204,13 +204,13 @@
                         <span>request demands</span>
                     </li>
                     <li>
-                        <a href="{{ route('all/employee/card') }}" class="{{ request()->routeIs('all/employee/card') ? 'selecting' : '' }}">
+                        <a href="{{ route('advance') }}" class="{{ request()->routeIs('advance') ? 'selecting' : '' }}">
                         <i class="la la-money-bill" style="margin-right: 10px;"></i> 
                         <span>advances</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('company/settings/page1') }}" class="{{ request()->routeIs('company/settings/page1') ? 'selecting' : '' }}">
+                        <a href="{{ route('holiday.index') }}" class="{{ request()->routeIs('holidays') ? 'selecting' : '' }}">
                         <i class="la la-grin-stars" style="margin-right: 10px;"></i> 
                         <span>holiday</span>
                         </a>
@@ -354,8 +354,8 @@
         <td class="text-right">
             @if(auth()->user()->role_name == 'Employee')
                 @if($certificate->confirmed)
-        <!-- Display the Download button if the certificate is accepted -->
-        <a href="{{ route('certificate.generateCertificate', $certificate->id) }}" class="action-icon" style="border: none; background: none; cursor: pointer;" target="_blank">
+
+        <a href="{{ route('certificate.generateCertificate', $certificate->id) }}" class="action-icon" style="border: none; background: none; cursor: pointer;text-align: center; width: 40%;" target="_blank">
             <i class="fa fa-download" aria-hidden="true"></i>
         </a>
     @else
@@ -368,7 +368,6 @@
                    data-description="{{ $certificate->description }}">
                    <i class="fa fa-pencil" aria-hidden="true"></i>
                 </a>
-                @endif
 
                 <form action="{{ route('certificate.destroy', $certificate->id) }}" method="POST" style="display:inline;">
                     @csrf
@@ -377,6 +376,7 @@
                         <i class="fa fa-trash-o" aria-hidden="true"></i>
                     </button>
                 </form>
+                @endif
 
             @else
             <form action="{{ route('certificate.updateStatus', $certificate->id) }}" method="POST" style="display:inline;">

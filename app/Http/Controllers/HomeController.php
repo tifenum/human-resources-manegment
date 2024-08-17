@@ -36,7 +36,7 @@ class HomeController extends Controller
         if ($user->role_name === 'Admin') {
             return redirect()->route('userManagement'); // Define this route in your web.php
         } else {
-            return redirect()->route('all/employee/card'); // Define this route in your web.php
+            return redirect()->route('advance'); // Define this route in your web.php
         }
     }
     // employee dashboard

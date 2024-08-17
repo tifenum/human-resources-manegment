@@ -8,7 +8,7 @@
 		<div class="header">
 			<!-- Logo -->
 			<div class="header-left">
-				<a href="{{ route('home') }}" class="logo" style="position: relative; top: 9px;"> <img src="{{ URL::to('assets/img/logo.png') }}" style="width: 50px; height: 50px; border-radius: 50%; position: relative; top: -3px;" alt=""> </a>
+				<a href="{{ route('home') }}" class="logo" style="position: relative; top: 9px;"> <img src="{{ URL::to('assets/img/photo_defaults.jpg') }}" style="width: 50px; height: 50px; border-radius: 50%; position: relative; top: -3px;" alt=""> </a>
 			</div>
 			<!-- /Logo -->
 			<a id="toggle_btn" href="javascript:void(0);" style="position: relative; top: 18px;">
@@ -78,31 +78,31 @@
                         <span>request demands</span>
                     </li>
                     <li>
-                        <a href="{{ route('all/employee/card') }}" class="{{ request()->routeIs('all/employee/card') ? 'selecting' : '' }}">
+                        <a href="{{ route('advance') }}" class="{{ request()->routeIs('advance') ? 'selecting' : '' }}">
                         <i class="la la-money-bill" style="margin-right: 10px;"></i> 
                         <span>advances</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('company/settings/page1') }}" class="{{ request()->routeIs('company/settings/page1') ? 'selecting' : '' }}">
+                        <a href="{{ route('holiday.index') }}" class="{{ request()->routeIs('holidays') ? 'selecting' : '' }}">
                             <i class="la la-grin-stars" style="margin-right: 10px;"></i> 
                             <span>holiday</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('company/settings/page2') }}" class="{{ request()->routeIs('company/settings/page2') ? 'selecting' : '' }}">
+                        <a href="{{ route('exits_demands') }}" class="{{ request()->routeIs('exits_demands') ? 'selecting' : '' }}">
                             <i class="la la-door-open" style="margin-right: 10px;"></i> 
                             <span>Exit permission</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('company/settings/page3') }}" class="{{ request()->routeIs('company/settings/page3') ? 'selecting' : '' }}">
+                        <a href="{{ route('delays') }}" class="{{ request()->routeIs('delays') ? 'selecting' : '' }}">
                             <i class="la la-clock" style="margin-right: 10px;"></i> 
                             <span>delay permission</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('company/settings/page4') }}" class="{{ request()->routeIs('company/settings/page4') ? 'selecting' : '' }}">
+                        <a href="{{ route('certificates') }}" class="{{ request()->routeIs('certificates') ? 'selecting' : '' }}">
                             <i class="la la-certificate" style="margin-right: 10px;"></i> 
                             <span>Certificate</span>
                         </a>
@@ -122,19 +122,19 @@
                         <span>consult demands</span>
                     </li>
                     <li>
-                        <a href="{{ route('all/employee/card') }}" class="{{ request()->routeIs('all/employee/card') ? 'selecting' : '' }}">
+                        <a href="{{ route('advance') }}" class="{{ request()->routeIs('advance') ? 'selecting' : '' }}">
                         <i class="la la-money-bill" style="margin-right: 10px;"></i> 
                         <span>advances</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('company/settings/page2') }}" class="{{ request()->routeIs('company/settings/page2') ? 'selecting' : '' }}">
+                        <a href="{{ route('exits_demands') }}" class="{{ request()->routeIs('exits_demands') ? 'selecting' : '' }}">
                         <i class="la la-door-open" style="margin-right: 10px;"></i> 
                         <span>Exit permission</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('company/settings/page3') }}" class="{{ request()->routeIs('company/settings/page3') ? 'selecting' : '' }}">
+                        <a href="{{ route('delays') }}" class="{{ request()->routeIs('delays') ? 'selecting' : '' }}">
                         <i class="la la-clock" style="margin-right: 10px;"></i> 
                         <span>delay permission</span>
                         </a>
@@ -154,19 +154,19 @@
                         <span>request demands</span>
                     </li>
                     <li>
-                        <a href="{{ route('all/employee/card') }}" class="{{ request()->routeIs('all/employee/card') ? 'selecting' : '' }}">
+                        <a href="{{ route('advance') }}" class="{{ request()->routeIs('advance') ? 'selecting' : '' }}">
                         <i class="la la-money-bill" style="margin-right: 10px;"></i> 
                         <span>advances</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('company/settings/page3') }}" class="{{ request()->routeIs('company/settings/page3') ? 'selecting' : '' }}">
+                        <a href="{{ route('delays') }}" class="{{ request()->routeIs('delays') ? 'selecting' : '' }}">
                         <i class="la la-clock" style="margin-right: 10px;"></i> 
                         <span>delay permission</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('company/settings/page4') }}" class="{{ request()->routeIs('company/settings/page4') ? 'selecting' : '' }}">
+                        <a href="{{ route('certificates') }}" class="{{ request()->routeIs('certificates') ? 'selecting' : '' }}">
                         <i class="la la-certificate" style="margin-right: 10px;"></i> 
                         <span>Certificate</span>
                         </a>
@@ -186,7 +186,7 @@
                         <span>request demands</span>
                     </li>
                     <li>
-                        <a href="{{ route('all/employee/card') }}" class="{{ request()->routeIs('all/employee/card') ? 'selecting' : '' }}">
+                        <a href="{{ route('advance') }}" class="{{ request()->routeIs('advance') ? 'selecting' : '' }}">
                         <i class="la la-money-bill" style="margin-right: 10px;"></i> 
                         <span>advances</span>
                         </a>
@@ -207,13 +207,13 @@
                         <span>request demands</span>
                     </li>
                     <li>
-                        <a href="{{ route('all/employee/card') }}" class="{{ request()->routeIs('all/employee/card') ? 'selecting' : '' }}">
+                        <a href="{{ route('advance') }}" class="{{ request()->routeIs('advance') ? 'selecting' : '' }}">
                         <i class="la la-money-bill" style="margin-right: 10px;"></i> 
                         <span>advances</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('company/settings/page1') }}" class="{{ request()->routeIs('company/settings/page1') ? 'selecting' : '' }}">
+                        <a href="{{ route('holiday.index') }}" class="{{ request()->routeIs('holidays') ? 'selecting' : '' }}">
                         <i class="la la-grin-stars" style="margin-right: 10px;"></i> 
                         <span>holiday</span>
                         </a>
@@ -371,8 +371,7 @@
                     </div>
                 </div>
 
-<!-- Modal -->
-<div id="profile_info" class="modal fade" tabindex="-1" role="dialog">
+<div id="profile_info" class="modal custom-modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -387,10 +386,8 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="profile_image">Profile Image:</label>
-                                <input type="file" class="form-control-file" id="profile_image" name="image">
-                            </div>
+
+
                             <div class="form-group">
                                 <label for="name">Name:</label>
                                 <input type="text" class="form-control" id="name" name="name" value="{{ Auth::user()->name }}" required>
@@ -403,10 +400,24 @@
                                 <label for="phone">Phone:</label>
                                 <input type="text" class="form-control" id="phone" name="phone" value="{{ Auth::user()->phone }}" required>
                             </div>
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <label for="department">Department:</label>
                                 <input type="text" class="form-control" id="department" name="department" value="{{ Auth::user()->department }}" required>
-                            </div>
+                            </div> -->
+                            <div class="form-group">
+                                <!-- <label for="department">Department:</label>
+                                <input type="text" class="form-control" id="department" name="department" value="{{ Auth::user()->department }}" required> -->
+                                <label for="department">Select Department:</label>
+<select class="select" name="department" id="department">
+    <option value="web_department" {{ Auth::user()->department == 'web_department' ? 'selected' : '' }}>Web Department</option>
+    <option value="it_management" {{ Auth::user()->department == 'it_management' ? 'selected' : '' }}>IT Management</option>
+    <option value="hr" {{ Auth::user()->department == 'hr' ? 'selected' : '' }}>HR</option>
+    <option value="finance" {{ Auth::user()->department == 'finance' ? 'selected' : '' }}>Finance</option>
+    <option value="development" {{ Auth::user()->department == 'development' ? 'selected' : '' }}>Development</option>
+    <option value="sales" {{ Auth::user()->department == 'sales' ? 'selected' : '' }}>Sales</option>
+    <option value="marketing" {{ Auth::user()->department == 'marketing' ? 'selected' : '' }}>Marketing</option>
+</select>
+
                             <div class="form-group">
                                 <label for="entry_date">Entry Date:</label>
                                 <input type="text" class="form-control" id="entry_date" name="entry_date" value="{{ Auth::user()->entry_date->format('d-m-Y') }}" required>
@@ -415,6 +426,15 @@
                                 <label for="salary">Salary:</label>
                                 <input type="text" class="form-control" id="salary" name="salary" value="{{ Auth::user()->salary }}" required>
                             </div>
+                            <div class="form-group text-center">
+    <div class="profile-img-preview mb-3">
+        <img id="profileImagePreview" src="#" alt="Profile Image Preview" class="img-thumbnail rounded-circle" style="max-width: 150px; display: none; width: 150px; height: 150px;">
+    </div>
+    <div class="custom-file">
+        <input type="file" class="custom-file-input" id="profile_image" name="image" onchange="previewImage(event)">
+        <label class="custom-file-label text-left" for="profile_image">Choose your profile picture</label>
+    </div>
+</div>
                             <div class="form-group">
                                 <label for="salary">Status:</label>
                                 <input type="text" class="form-control" id="status" name="status" value="{{ Auth::user()->status }}" readonly>
@@ -435,3 +455,15 @@
         </div>
     </div>
 </div>
+
+<script>
+function previewImage(event) {
+    const reader = new FileReader();
+    reader.onload = function() {
+        const output = document.getElementById('profileImagePreview');
+        output.src = reader.result;
+        output.style.display = 'block';
+    };
+    reader.readAsDataURL(event.target.files[0]);
+}
+</script>

@@ -6,7 +6,7 @@
 		<div class="header">
 			<!-- Logo -->
 			<div class="header-left">
-				<a href="{{ route('home') }}" class="logo" style="position: relative; top: 3px;"> <img src="{{ URL::to('assets/img/logo.png') }}" style="width: 50px; height: 50px; border-radius: 50%; position: relative; top: -4px;" alt=""> </a>
+				<a href="{{ route('home') }}" class="logo" style="position: relative; top: 3px;"> <img src="{{ URL::to('assets/img/photo_defaults.jpg') }}" style="width: 50px; height: 50px; border-radius: 50%; position: relative; top: -4px;" alt=""> </a>
 			</div>
 			<!-- /Logo -->
 			<a id="toggle_btn" href="javascript:void(0);" style="position: relative; top: -2px;">
@@ -239,7 +239,7 @@
                                                 </a>
                                                 @elseif ($user->status=='Inactive')
                                                 <a class="btn btn-white btn-sm btn-rounded " href="#" data-toggle="dropdown" aria-expanded="false">
-                                                    <i class="fa fa-dot-circle-o text-info"></i>
+                                                    <i class="fa fa-dot-circle-o text-danger"></i>
                                                     <span class="statuss">{{ $user->status }}</span>
                                                 </a>
                                             @endif
@@ -336,21 +336,37 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="row"> 
-                                <div class="col-sm-6"> 
-                                    <label>Status</label>
-                                    <select class="select" name="status" id="status">
-                                        <option selected disabled> --Select --</option>
-                                        @foreach ($status_user as $status )
-                                        <option value="{{ $status->type_name }}">{{ $status->type_name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="col-sm-6"> 
-                                    <label>Photo</label>
-                                    <input class="form-control" type="file" id="image" name="image">
+                            <div class="row">
+                            <div class="col-sm-6">
+    <label>Status</label>
+    <select class="select" name="status" id="status">
+        <option selected disabled> --Select --</option>
+        @foreach ($status_user as $status )
+        <option value="{{ $status->type_name }}">{{ $status->type_name }}</option>
+        @endforeach
+    </select>
+</div>
+<div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Photo</label>
+                                <div class="d-flex align-items-center">
+                                    <!-- File input with adjusted width -->
+                                    <div class="custom-file" style="flex: 0 0 80%;">
+                                        <input type="file" class="custom-file-input" id="profile_image" name="image" onchange="previewImage(event)">
+                                        <label class="custom-file-label" for="profile_image">Choose a picture</label>
+                                    </div>
+
+                                    <!-- Image preview -->
+                                    <div class="profile-img-preview ml-3">
+                                        <img id="profileImagePreview" src="#" alt="Profile Image Preview" class="img-thumbnail rounded-circle" style="max-width: 50px; display: none; width: 50px; height: 50px;">
+                                    </div>
                                 </div>
                             </div>
+                        </div>
+
+
+</div>
+
                             <br>
                             <div class="row"> 
                                 <div class="col-sm-6"> 
@@ -373,7 +389,6 @@
             </div>
         </div>
         <!-- /Add User Modal -->
-				
         <div id="edit_user" class="modal custom-modal fade" role="dialog">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
@@ -403,14 +418,13 @@
                         <div class="col-sm-6"> 
                             <label>Role Name</label>
                             <select class="select" name="role_name" id="e_role_name">
-    <option disabled selected>{{ old('role_name', $user->role_name ?? '--Select--') }}</option>
-    @foreach ($role_name as $role)
-        <option value="{{ $role->role_type }}" {{ old('role_name', $user->role_name) == $role->role_type ? 'selected' : '' }}>
-            {{ $role->role_type }}
-        </option>
-    @endforeach
-</select>
-
+                                <option disabled selected>{{ old('role_name', $user->role_name ?? '--Select--') }}</option>
+                                @foreach ($role_name as $role)
+                                    <option value="{{ $role->role_type }}" {{ old('role_name', $user->role_name) == $role->role_type ? 'selected' : '' }}>
+                                        {{ $role->role_type }}
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="col-sm-6"> 
                             <label>Salary</label>
@@ -428,34 +442,42 @@
                         <div class="col-sm-6"> 
                             <label>Department</label>
                             <select class="select" name="department" id="e_department">
-    <option disabled selected>{{ old('department', $user->department ?? '--Select--') }}</option>
-    @foreach ($department as $departments)
-        <option value="{{ $departments->department }}" {{ old('department', $user->department) == $departments->department ? 'selected' : '' }}>
-            {{ $departments->department }}
-        </option>
-    @endforeach
-</select>
-
-
+                                <option disabled selected>{{ old('department', $user->department ?? '--Select--') }}</option>
+                                @foreach ($department as $departments)
+                                    <option value="{{ $departments->department }}" {{ old('department', $user->department) == $departments->department ? 'selected' : '' }}>
+                                        {{ $departments->department }}
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="row"> 
                         <div class="col-sm-6"> 
                             <label>Status</label>
-<select class="select" name="status" id="e_status">
-    <option disabled selected>{{ old('status', $user->status ?? '--Select--') }}</option>
-    @foreach ($status_user as $status)
-        <option value="{{ $status->type_name }}" {{ old('status', $user->status) == $status->type_name ? 'selected' : '' }}>
-            {{ $status->type_name }}
-        </option>
-    @endforeach
-</select>
-
+                            <select class="select" name="status" id="e_status">
+                                <option disabled selected>{{ old('status', $user->status ?? '--Select--') }}</option>
+                                @foreach ($status_user as $status)
+                                    <option value="{{ $status->type_name }}" {{ old('status', $user->status) == $status->type_name ? 'selected' : '' }}>
+                                        {{ $status->type_name }}
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
+   
                         <div class="col-sm-6"> 
-                            <label>Photo</label>
-                            <input class="form-control" type="file" name="image" id="e_image_file">
-                            <input type="hidden" name="hidden_image" id="e_image" value="">
+                            <div class="form-group">
+                                <label>Photo</label>
+                                <div class="d-flex align-items-center">
+                                    <div class="custom-file" style="max-width: 300px;">
+                                        <input type="file" class="form-control-file" id="e_image_file" name="image" onchange="previewImage1(event)">
+                                        <label class="custom-file-label" for="e_image_file">Choose a picture</label>
+                                    </div>
+                                    <div class="profile-img-preview ml-3">
+                                        <img id="profileImagePreview1" src="http://127.0.0.1:8000/images/profile/photo_defaults.jpg" alt="Profile Image Preview" class="img-thumbnail rounded-circle" style="max-width: 50px; width: 50px; height: 50px;">
+                                    </div>
+                                </div>
+                                <input type="hidden" name="hidden_image" id="e_image" value="">
+                            </div>
                         </div>
                     </div>
                     <br>
@@ -467,15 +489,7 @@
         </div>
     </div>
 </div>
-
-
-
-
-
-
-
-        <!-- /Edit Salary Modal -->
-				
+	
         <!-- Delete User Modal -->
         <div class="modal custom-modal fade" id="delete_user" role="dialog">
             <div class="modal-dialog modal-dialog-centered">
@@ -519,7 +533,7 @@ $(document).on('click', '.userUpdate', function() {
     var roleName = $(this).data('role_name');
     var department = $(this).data('department');
     var status = $(this).data('status');
-    var image = $(this).data('image');
+    var image = $(this).data('image'); // This is the image filename
 
     $('#e_id').val(userId);
     $('#e_name').val(fullName);
@@ -551,18 +565,11 @@ $(document).on('click', '.userUpdate', function() {
             $(this).removeAttr('selected');
         }
     });
-
-    $('#e_image_file').val(image);
-
-    if (image) {
-        $('#e_image_preview').attr('src', 'images/profile/' + image);
-    } else {
-        $('#e_image_preview').attr('src', 'path/to/default-image.jpg');
-    }
+    // Set the image preview URL
+    var imageUrl = image ? 'http://127.0.0.1:8000/images/profile/' + image : 'http://127.0.0.1:8000/images/profile/photo_defaults.jpg';
+    $('#profileImagePreview1').attr('src', imageUrl).show();
+    $('#e_image').val(image || '');
 });
-
-
-
 
     </script>
 
@@ -574,6 +581,24 @@ $(document).on('click', '.userUpdate', function() {
             $('.e_id').val(_this.find('.ids').text());
             $('.e_avatar').val(_this.find('.image').text());
         });
+        function previewImage(event) {
+    const reader = new FileReader();
+    reader.onload = function() {
+        const output = document.getElementById('profileImagePreview');
+        output.src = reader.result;  // Update src to the selected image
+        output.style.display = 'block';
+    };
+    reader.readAsDataURL(event.target.files[0]);
+}
+function previewImage1(event) {
+    const reader = new FileReader();
+    reader.onload = function() {
+        const output = document.getElementById('profileImagePreview1');
+        output.src = reader.result;  // Update src to the selected image
+        output.style.display = 'block';
+    };
+    reader.readAsDataURL(event.target.files[0]);
+}
     </script>
     @endsection
 

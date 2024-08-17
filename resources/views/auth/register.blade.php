@@ -5,13 +5,12 @@
             <div class="container">
                 <!-- Account Logo -->
                 <div class="account-logo">
-                    <a href="index.html"><img src="{{ URL::to('assets/img/logo2.png') }}" alt="SoengSouy"></a>
+                    <a href="index.html"><img src="{{ URL::to('assets/img/photo_defaults.jpg') }}" alt="SoengSouy"></a>
                 </div>
                 <!-- /Account Logo -->
                 <div class="account-box">
                     <div class="account-wrapper">
                         <h3 class="account-title">Register</h3>
-                        <p class="account-subtitle">Access to our dashboard</p>
 
                         <!-- Account Form -->
                         <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
@@ -35,17 +34,16 @@
                                     </span>
                                 @enderror
                             </div>
+    <div class="form-group text-center">
+    <div class="profile-img-preview mb-3">
+        <img id="profileImagePreview" src="#" alt="Profile Image Preview" class="img-thumbnail rounded-circle" style="max-width: 150px; display: none; width: 150px; height: 150px;">
+    </div>
+    <div class="custom-file">
+        <input type="file" class="custom-file-input" id="profile_image" name="image" onchange="previewImage(event)">
+        <label class="custom-file-label text-left" for="profile_image">Choose your profile picture</label>
+    </div>
+</div>
 
-                            <!-- Profile Photo Upload -->
-                            <div class="form-group">
-                                <label>Profile Photo</label>
-                                <input type="file" class="form-control @error('image') is-invalid @enderror" name="image" id="image">
-                                @error('image')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
 
                             <!-- Phone Number Field -->
                             <div class="form-group">
@@ -57,22 +55,19 @@
                                     </span>
                                 @enderror
                             </div>
-
                             <!-- Department Dropdown -->
                             <div class="form-group">
                                 <label class="col-form-label">Department</label>
-                                <select class="select @error('department') is-invalid @enderror" name="department" id="department">
-                                    <option selected disabled>-- Select Department --</option>
-                                    <option value="HR">HR</option>
-                                    <option value="Finance">Finance</option>
-                                    <option value="Development">Development</option>
-                                    <option value="Sales">Sales</option>
+                                <select class="select @error('department') is-invalid @enderror" name="department" id="department" placeholder="-- Select Department --"  
+">
+
+                                    @foreach ($department as $departments)
+                                    <option value="{{ $departments->department }}">
+                                        {{ $departments->department }}
+                                    </option>
+                                @endforeach
                                 </select>
-                                @error('department')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+ 
                             </div>
 
                             <!-- Salary Field -->
@@ -118,4 +113,16 @@
             </div>
         </div>
     </div>
+    <script>
+function previewImage(event) {
+    const reader = new FileReader();
+    reader.onload = function() {
+        const output = document.getElementById('profileImagePreview');
+        output.src = reader.result;
+        output.style.display = 'block';
+    };
+    reader.readAsDataURL(event.target.files[0]);
+}
+
+</script>
 @endsection

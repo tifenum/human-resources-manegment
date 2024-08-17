@@ -19,8 +19,8 @@ class DelayController extends Controller
     }
     public function updateStatus(Request $request, $id)
     {
-        // Find the holiday record by ID
-        $holiday = Delay::findOrFail($id);
+        // Find the delay record by ID
+        $delay = Delay::findOrFail($id);
     
         // Check user role and update the respective status
         $userRole = auth()->user()->role_name;
@@ -59,51 +59,51 @@ class DelayController extends Controller
     
         switch ($userRole) {
             case 'Chief of staff':
-                $holiday->status_Ch5 = $status;
+                $delay->status_Ch5 = $status;
                 Log::info('Updating status_Ch5', ['status' => $status]);
                 break;
             case 'Head of department':
-                $holiday->status_HD = $status;
+                $delay->status_HD = $status;
                 Log::info('Updating status_HD', ['status' => $status]);
                 break;
             case 'Financial director':
-                $holiday->status_FD = $status;
+                $delay->status_FD = $status;
                 Log::info('Updating status_FD', ['status' => $status]);
                 break;
             case 'Manager director':
-                $holiday->status_MD = $status;
+                $delay->status_MD = $status;
                 Log::info('Updating status_MD', ['status' => $status]);
                 break;
         }
     
         // Optionally, set 'confirmed' status if all other statuses are approved
-        if ($holiday->status_HD && $holiday->status_Ch5) {
-            $holiday->confirmed = true;
+        if ($delay->status_HD && $delay->status_Ch5) {
+            $delay->confirmed = true;
             Log::info('All statuses approved. Setting confirmed to true');
         } else {
-            $holiday->confirmed = false;
+            $delay->confirmed = false;
             Log::info('Not all statuses approved. Setting confirmed to false');
         }
     
-        $holiday->save();
-        if ($holiday->confirmed) {
-            $user = User::find($holiday->user_id);
+        $delay->save();
+        if ($delay->confirmed) {
+            $user = User::find($delay->user_id);
             
             if ($user) {
-                Mail::send('emails.holiday_accepted',  ['user' => $user], function($message) use ($user) {
+                Mail::send('emails.delay_accepted', ['user' => $user, 'delay' => $delay], function($message) use ($user) {
                     $message->from('boukadidahbib@gmail.com');
                     $message->to($user->email);
-                    $message->subject('Your holiday Demand Has Been Accepted');
+                    $message->subject('Your delay Demand Has Been Accepted');
                 });
                 Log::info('Email sent to user', ['email' => $user->email]);
-            } else {
-                Log::warning('User not found for holiday', ['user_id' => $holiday->user_id]);
+            } else {    
+                Log::warning('User not found for delay', ['user_id' => $delay->user_id]);
             }
         }
-        Log::info('Holiday status saved', ['holiday' => $holiday]);
-        Toastr::success('Holiday status updated successfully :)', 'Success');
+        Log::info('delay status saved', ['delay' => $delay]);
+        Toastr::success('delay status updated successfully :)', 'Success');
     
-        return redirect()->back()->with('status', 'Holiday status updated successfully');
+        return redirect()->back()->with('status', 'delay status updated successfully');
     }
     public function store(Request $request)
     {

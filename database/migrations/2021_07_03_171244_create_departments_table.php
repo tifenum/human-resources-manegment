@@ -21,10 +21,13 @@ class CreateDepartmentsTable extends Migration
         DB::table('departments')->insert([
             ['department' => 'Web Department'],
             ['department' => 'IT Management'],
+            ['department' => 'HR'],
+            ['department' => 'Finance'],
+            ['department' => 'Development'],
+            ['department' => 'Sales'],
             ['department' => 'Marketing'],
         ]);
     }
-
     /**
      * Reverse the migrations.
      *
