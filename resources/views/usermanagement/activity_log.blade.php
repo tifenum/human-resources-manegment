@@ -1,6 +1,8 @@
 @extends('layouts.master')
 @section('content')
 {{-- @yield('nav') --}}
+<link rel="shortcut icon" type="image/x-icon" href="{{ URL::to('assets/img/photo_defaults.jpg') }}">
+
 		<div class="header">
 			<!-- Logo -->
 			<div class="header-left">
