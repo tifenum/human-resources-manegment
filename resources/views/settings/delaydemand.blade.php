@@ -25,7 +25,6 @@
             <ul class="nav user-menu" style="align-items: center;">
         <li class="nav-item">
         <div class="page-title-box">
-        <h3>{{ now()->format('l, F j, Y') }}</h3>
     </div>
             <a href="{{ route('profile_user') }}" class="nav-link" style="display: flex; align-items: center;">
                 <span class="user-img" style="margin-right: 10px;">
@@ -318,6 +317,8 @@
             <table class="table table-striped custom-table mb-0">
                 <thead>
                     <tr>
+                    <th>Name</th>
+
                         <th>Delay Day</th>
                         <th>Exit Time</th>
                         <th>Return Time</th>
@@ -326,7 +327,7 @@
                         <!-- <th>MD Status</th> -->
                         <th>Head Dep</th>
                         <!-- <th>FD Status</th> -->
-                        <th>Cheif Staff</th>
+                        <th>Cheif</th>
                         <th>Status</th>
                         <th class="text-right">Actions</th>
                     </tr>
@@ -334,6 +335,8 @@
                 <tbody>
     @foreach($delays as $delay)
     <tr>
+                        <td>{{ $delay->user->name }}</td> <!-- Display the user's name -->
+
         <td>{{ $delay->day }}</td>
         <td>{{ $delay->exit_time }}</td>
         <td>{{ $delay->return_time }}</td>
@@ -608,29 +611,32 @@ document.addEventListener('DOMContentLoaded', function() {
 }
 
 .table th:nth-child(1), .table td:nth-child(2) { /* For Date Wish */
-    width: 150px;
+    width: 100px;
 }
 .table th:nth-child(2), .table td:nth-child(3) { /* For Date Wish */
-    width: 120px;
+    width: 130px;
 }
 .table th:nth-child(3), .table td:nth-child(4) { /* For Date Wish */
-    width: 140px;
+    width: 130px;
 }
 .table th:nth-child(4), .table td:nth-child(5) { /* For Date Wish */
-    width: 100px;
+    width: 140px;
 }
 
 .table th:nth-child(5), .table td:nth-child(6) { /* For Description */
-    width: 180px; /* Increase for longer descriptions */
+    width: 100px; /* Increase for longer descriptions */
 }
 .table th:nth-child(6), .table td:nth-child(7) { /* For Description */
-    width: 150px; /* Increase for longer descriptions */
+    width: 180px; /* Increase for longer descriptions */
 }
 .table th:nth-child(7), .table td:nth-child(8) { /* For Description */
-    width: 103x; /* Increase for longer descriptions */
+    width: 120px; /* Increase for longer descriptions */
 }
 .table th:nth-child(8), .table td:nth-child(9) { /* For Description */
-    width: 130x; /* Increase for longer descriptions */
+    width: 120px; /* Increase for longer descriptions */
+}
+.table th:nth-child(9), .table td:nth-child(10) { /* For Description */
+    width: 120px; /* Increase for longer descriptions */
 }
 
 .action-icon {

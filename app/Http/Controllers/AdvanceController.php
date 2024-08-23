@@ -97,18 +97,31 @@
             }
         }
         public function index()
-        {
-            $user = Auth::user(); // Get the currently authenticated user
+{
+    $user = Auth::user();
 
-            if ($user->role_name === 'Employee') {
-                // If the user is an Employee, get only their own advances
-                $advances = Advance::where('user_id', $user->id)->get();
-            } else {
-                // If the user has any other role, get all advances
-                $advances = Advance::all();
-            }
-                return view('form.allemployeecard', compact('advances')); // Replace 'advances.index' with your actual view path
-        }
+    if ($user->role_name === 'Employee') {
+        $advances = Advance::where('user_id', $user->id)->with('user')->get();
+    } else {
+        $advances = Advance::with('user')->get();
+    }
+
+    return view('form.allemployeecard', compact('advances'));
+}
+
+        // public function index()
+        // {
+        //     $user = Auth::user(); // Get the currently authenticated user
+
+        //     if ($user->role_name === 'Employee') {
+        //         // If the user is an Employee, get only their own advances
+        //         $advances = Advance::where('user_id', $user->id)->get();
+        //     } else {
+        //         // If the user has any other role, get all advances
+        //         $advances = Advance::all();
+        //     }
+        //         return view('form.allemployeecard', compact('advances')); // Replace 'advances.index' with your actual view path
+        // }
         public function edit($id)
     {
         $advance = Advance::findOrFail($id);
@@ -259,6 +272,8 @@
             } else {
                 Log::warning('User not found for advance', ['user_id' => $advance->user_id]);
             }
+            $advance->delete();
+
         }
 
         Toastr::success('Advance status updated successfully :)', 'Success');

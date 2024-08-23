@@ -32,7 +32,7 @@ class RegisterController extends Controller
             'email'     => 'required|string|email|max:255|unique:users',
             'phone'     => 'nullable|string|max:20',
             'department'=> 'nullable|string|max:255',
-            'salary'    => 'nullable|numeric',
+            'salary'    => 'nullable|numeric|digits_between:1,4', // Allows up to 4 digits without decimals
             'role_name' => 'required|string|max:255',
             'password'  => 'required|string|min:8|confirmed',
             'image'     => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',

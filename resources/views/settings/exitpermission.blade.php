@@ -25,7 +25,6 @@
             <ul class="nav user-menu" style="align-items: center;">
         <li class="nav-item">
         <div class="page-title-box">
-        <h3>{{ now()->format('l, F j, Y') }}</h3>
     </div>
             <a href="{{ route('profile_user') }}" class="nav-link" style="display: flex; align-items: center;">
                 <span class="user-img" style="margin-right: 10px;">
@@ -317,6 +316,8 @@
             <table class="table table-striped custom-table mb-0">
                 <thead>
                     <tr>
+                    <th>Name</th>
+
                         <th>Exit Day</th>
                         <th>Department</th>
                         <th>Reason</th>
@@ -330,6 +331,8 @@
                 <tbody>
     @foreach($exitdemand as $demand)
     <tr>
+    <td>{{ $demand->user->name }}</td> <!-- Display the user's name -->
+
         <td>{{ $demand->exit_day }}</td>
         <td>{{ $demand->department }}</td>
         <td class="text-center">
@@ -564,7 +567,7 @@
 }
 
 .table th:nth-child(1), .table td:nth-child(1) {
-    width: 150px; /* Adjusted width */
+    width: 100px; /* Adjusted width */
 }
 
 .table th:nth-child(2), .table td:nth-child(2) {
@@ -572,27 +575,27 @@
 }
 
 .table th:nth-child(3), .table td:nth-child(3) {
-    width: 100px; /* Adjusted width */
-}
-
-.table th:nth-child(4), .table td:nth-child(4) {
-    width: 170px; /* Adjusted width */
-}
-
-.table th:nth-child(5), .table td:nth-child(5) {
-    width: 170px; /* Adjusted width */
-}
-
-.table th:nth-child(6), .table td:nth-child(6) {
     width: 150px; /* Adjusted width */
 }
 
+.table th:nth-child(4), .table td:nth-child(4) {
+    width: 100px; /* Adjusted width */
+}
+
+.table th:nth-child(5), .table td:nth-child(5) {
+    width: 190px; /* Adjusted width */
+}
+
+.table th:nth-child(6), .table td:nth-child(6) {
+    width: 180px; /* Adjusted width */
+}
+
 .table th:nth-child(7), .table td:nth-child(7) {
-    width: 120px; /* Adjusted width */
+    width: 150px; /* Adjusted width */
 }
 
 .table th:nth-child(8), .table td:nth-child(8) {
-    width: 100px; /* Adjusted width */
+    width: 120px; /* Adjusted width */
 }
 
 .action-icon {

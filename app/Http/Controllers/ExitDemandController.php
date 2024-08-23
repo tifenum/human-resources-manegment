@@ -132,26 +132,39 @@
                 } else {
                     Log::warning('User not found for holiday', ['user_id' => $holiday->user_id]);
                 }
+                $holiday->delete();
             }
             Log::info('Holiday status saved', ['holiday' => $holiday]);
             Toastr::success('Exit status updated successfully :)', 'Success');
         
             return redirect()->back()->with('status', 'Holiday status updated successfully');
         }
+        // public function index()
+        // {
+        //     $user = Auth::user(); // Get the currently authenticated user
+
+        //     if ($user->role_name === 'Employee') {
+        //         // If the user is an Employee, get only their own advances
+        //         $exitdemand = ExitDemand::where('user_id', $user->id)->get();
+        //     } else {
+        //         // If the user has any other role, get all advances
+        //         $exitdemand = ExitDemand::all();
+        //     }       
+        //     return view('settings.exitpermission', compact('exitdemand'));
+
+        // }
         public function index()
         {
-            $user = Auth::user(); // Get the currently authenticated user
-
+            $user = Auth::user();
+        
             if ($user->role_name === 'Employee') {
-                // If the user is an Employee, get only their own advances
-                $exitdemand = ExitDemand::where('user_id', $user->id)->get();
+                $exitdemand = ExitDemand::where('user_id', $user->id)->with('user')->get();
             } else {
-                // If the user has any other role, get all advances
-                $exitdemand = ExitDemand::all();
-            }       
-            return view('settings.exitpermission', compact('exitdemand'));
-
-        }
+                $exitdemand = ExitDemand::with('user')->get();
+            }
+        
+             return view('settings.exitpermission', compact('exitdemand'));
+    }
         // Add update function
         public function update(Request $request, $id)
         {

@@ -30,4 +30,10 @@ class Advance extends Model
         'financial_director_status' => 'boolean',
         'manager_director_status' => 'boolean',
     ];
+    // In Advance.php (Advance model)
+public function user()
+{
+    return $this->belongsTo(User::class);
+}
+
 }

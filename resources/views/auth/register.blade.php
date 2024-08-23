@@ -58,9 +58,7 @@
                             <!-- Department Dropdown -->
                             <div class="form-group">
                                 <label class="col-form-label">Department</label>
-                                <select class="select @error('department') is-invalid @enderror" name="department" id="department" placeholder="-- Select Department --"  
-">
-
+                                <select class="select @error('department') is-invalid @enderror" name="department" id="department" placeholder="-- Select Department --">
                                     @foreach ($department as $departments)
                                     <option value="{{ $departments->department }}">
                                         {{ $departments->department }}

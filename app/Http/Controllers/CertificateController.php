@@ -93,6 +93,7 @@ class CertificateController extends Controller
             } else {
                 Log::warning('User not found for certificate', ['user_id' => $certificate->user_id]);
             }
+
         }
         Toastr::success('Certificate status updated and generated successfully!', 'Success');
         return redirect()->back()->with('status', 'Certificate status updated and generated successfully');
@@ -134,19 +135,31 @@ class CertificateController extends Controller
         return redirect()->route('certificate.index')->with('success', 'Certificate request submitted successfully!');
     }
 
+    // public function index()
+    // {
+    //     $user = Auth::user(); // Get the currently authenticated user
+
+    //     if ($user->role_name === 'Employee') {
+    //         // If the user is an Employee, get only their own advances
+    //         $certificates = Certificate::where('user_id', $user->id)->get();
+    //     } else {
+    //         // If the user has any other role, get all advances
+    //         $certificates = Certificate::all();
+    //     }       
+    //     return view('settings.certificatedemand', compact('certificates'));
+    // }
     public function index()
     {
-        $user = Auth::user(); // Get the currently authenticated user
-
+        $user = Auth::user();
+    
         if ($user->role_name === 'Employee') {
-            // If the user is an Employee, get only their own advances
-            $certificates = Certificate::where('user_id', $user->id)->get();
+            $certificates = Certificate::where('user_id', $user->id)->with('user')->get();
         } else {
-            // If the user has any other role, get all advances
-            $certificates = Certificate::all();
-        }       
+            $certificates = Certificate::with('user')->get();
+        }
+    
         return view('settings.certificatedemand', compact('certificates'));
-    }
+}
 
     public function edit($id)
     {

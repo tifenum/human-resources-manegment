@@ -26,7 +26,6 @@
             <ul class="nav user-menu" style="align-items: center;">
         <li class="nav-item">
         <div class="page-title-box">
-        <h3>{{ now()->format('l, F j, Y') }}</h3>
     </div>
             <a href="{{ route('home') }}" class="nav-link" style="display: flex; align-items: center;">
                 <span class="user-img" style="margin-right: 10px;">
@@ -317,9 +316,24 @@
                                 </div>
                                 <div class="col-sm-6"> 
                                     <label>Salary</label>
-                                    <input class="form-control" type="number" id="" name="salary" placeholder="Enter salary">
+                                    <!-- <input class="form-control" type="number" id="" name="salary" placeholder="Enter salary"> -->
+                                    <input type="number" step="0.01" id="" class="form-control @error('salary') is-invalid @enderror" name="salary" placeholder="Enter Your Salary">
+                                    @error('salary')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                                 </div>
                             </div>
+                            <!-- <div class="form-group">
+                                <label>Salary</label>
+                                <input type="number" step="0.01" class="form-control @error('salary') is-invalid @enderror" name="salary" placeholder="Enter Your Salary">
+                                @error('salary')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div> -->
                             <br>
                             <div class="row"> 
                                 <div class="col-sm-6"> 

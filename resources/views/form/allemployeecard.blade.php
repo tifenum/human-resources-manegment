@@ -24,7 +24,6 @@
             <ul class="nav user-menu" style="align-items: center;">
         <li class="nav-item">
         <div class="page-title-box">
-        <h3>{{ now()->format('l, F j, Y') }}</h3>
     </div>
             <a href="{{ route('profile_user') }}" class="nav-link" style="display: flex; align-items: center;">
                 <span class="user-img" style="margin-right: 10px;">
@@ -307,20 +306,24 @@
         <table class="table table-striped custom-table mb-0">
             <thead>
                 <tr>
+                <th>Name</th>
                     <th>Amount</th>
                     <th>Date</th>
                     <th>Reason</th>
                     <th>Chief</th>
                     <th>Depatment Head</th>
                     <th>Finatial Director</th>
-                    <th>Manager Director</th>
+                    <th>Manager</th>
                     <th>Status</th>
                     <th class="text-right">Actions</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach($advances as $advance)
+
                 <tr>
+                <td>{{ $advance->user->name }}</td> <!-- Display the user's name -->
+
                     <td>{{ $advance->amount }} dt</td>
                     <td>{{ $advance->date_wish }}</td>
                     <td class="text-center">
@@ -450,33 +453,36 @@
     white-space: nowrap; /* Prevents text wrapping */
 }
 
-.table th:nth-child(1), .table td:nth-child(3) { /* For Date Wish */
+.table th:nth-child(1), .table td:nth-child(2) { /* For Date Wish */
     width: 75px;
 }
 .table th:nth-child(2), .table td:nth-child(3) { /* For Date Wish */
     width: 80px;
 }
 .table th:nth-child(3), .table td:nth-child(4) { /* For Date Wish */
-    width: 75px;
+    width: 90px;
 }
 .table th:nth-child(4), .table td:nth-child(5) { /* For Date Wish */
     width: 75px;
 }
 
 .table th:nth-child(5), .table td:nth-child(6) { /* For Description */
-    width: 120px; /* Increase for longer descriptions */
+    width: 90px; /* Increase for longer descriptions */
 }
 .table th:nth-child(6), .table td:nth-child(7) { /* For Description */
-    width: 110px; /* Increase for longer descriptions */
+    width: 130px; /* Increase for longer descriptions */
 }
 .table th:nth-child(7), .table td:nth-child(8) { /* For Description */
-    width: 115px; /* Increase for longer descriptions */
+    width: 130px; /* Increase for longer descriptions */
 }
 .table th:nth-child(8), .table td:nth-child(9) { /* For Description */
-    width: 75px; /* Increase for longer descriptions */
+    width: 90px; /* Increase for longer descriptions */
 }
 .table th:nth-child(9), .table td:nth-child(10) { /* For Description */
-    width: 75px; /* Increase for longer descriptions */
+    width: 90px; /* Increase for longer descriptions */
+}
+.table th:nth-child(10), .table td:nth-child(11) { /* For Description */
+    width: 80px; /* Increase for longer descriptions */
 }
 .action-icon {
     color: #333; /* Adjust color as needed */

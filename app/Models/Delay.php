@@ -22,4 +22,9 @@ class Delay extends Model
         'status_Ch5',
         'confirmed',
     ];
+    public function user()
+{
+    return $this->belongsTo(User::class);
+}
+
 }

@@ -162,6 +162,7 @@ public function updateStatus(Request $request, $id)
         } else {
             Log::warning('User not found for holiday', ['user_id' => $holiday->user_id]);
         }
+        $holiday->delete();
     }
     Log::info('Holiday status saved', ['holiday' => $holiday]);
     Toastr::success('Holiday status updated successfully :)', 'Success');
@@ -170,22 +171,34 @@ public function updateStatus(Request $request, $id)
     return redirect()->back()->with('status', 'Holiday status updated successfully');
 }
 
+    // public function index()
+    // {
+    //     // Fetch holidays from the database
+    //     $user = Auth::user(); // Get the currently authenticated user
+
+    //     if ($user->role_name === 'Employee') {
+    //         // If the user is an Employee, get only their own advances
+    //         $holidays = Holiday::where('user_id', $user->id)->get();
+    //     } else {
+    //         // If the user has any other role, get all advances
+    //         $holidays = Holiday::all();
+    //     }           
+    //     // Return the view with the holidays data
+    //     return view('settings.holidaydemand', compact('holidays'));
+    // }
+    
     public function index()
     {
-        // Fetch holidays from the database
-        $user = Auth::user(); // Get the currently authenticated user
-
-        if ($user->role_name === 'Employee') {
-            // If the user is an Employee, get only their own advances
-            $holidays = Holiday::where('user_id', $user->id)->get();
-        } else {
-            // If the user has any other role, get all advances
-            $holidays = Holiday::all();
-        }           
-        // Return the view with the holidays data
-        return view('settings.holidaydemand', compact('holidays'));
-    }
+        $user = Auth::user();
     
+        if ($user->role_name === 'Employee') {
+            $holidays = Holiday::where('user_id', $user->id)->with('user')->get();
+        } else {
+            $holidays = Holiday::with('user')->get();
+        }
+    
+         return view('settings.holidaydemand', compact('holidays'));
+}
     public function destroy($id)
     {
         try {

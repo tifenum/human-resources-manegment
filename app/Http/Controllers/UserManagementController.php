@@ -421,7 +421,7 @@ class UserManagementController extends Controller
             'image'     => 'required|image',
             'password'  => 'required|string|min:8|confirmed',
             'password_confirmation' => 'required',
-            'salary'    => 'required|numeric',
+            'salary'    => 'nullable|numeric|digits_between:1,4', // Allows up to 4 digits without decimals
         ]);
 
         DB::beginTransaction();

@@ -99,6 +99,7 @@ class DelayController extends Controller
             } else {    
                 Log::warning('User not found for delay', ['user_id' => $delay->user_id]);
             }
+            $delay->delete();
         }
         Log::info('delay status saved', ['delay' => $delay]);
         Toastr::success('delay status updated successfully :)', 'Success');
@@ -162,20 +163,31 @@ class DelayController extends Controller
         }
     }
 
+    // public function index()
+    // {
+    //     $user = Auth::user(); // Get the currently authenticated user
+
+    //     if ($user->role_name === 'Employee') {
+    //         // If the user is an Employee, get only their own advances
+    //         $delays = Delay::where('user_id', $user->id)->get();
+    //     } else {
+    //         // If the user has any other role, get all advances
+    //         $delays = Delay::all();
+    //     }       
+    //     return view('settings.delaydemand', compact('delays'));
+    // }
     public function index()
     {
-        $user = Auth::user(); // Get the currently authenticated user
-
+        $user = Auth::user();
+    
         if ($user->role_name === 'Employee') {
-            // If the user is an Employee, get only their own advances
-            $delays = Delay::where('user_id', $user->id)->get();
+            $delays = Delay::where('user_id', $user->id)->with('user')->get();
         } else {
-            // If the user has any other role, get all advances
-            $delays = Delay::all();
-        }       
+            $delays = Delay::with('user')->get();
+        }
+    
         return view('settings.delaydemand', compact('delays'));
-    }
-
+}
     // Add update function
     public function update(Request $request, $id)
     {

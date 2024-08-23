@@ -26,7 +26,6 @@
             <ul class="nav user-menu" style="align-items: center;">
         <li class="nav-item">
         <div class="page-title-box">
-        <h3>{{ now()->format('l, F j, Y') }}</h3>
     </div>
             <a href="{{ route('profile_user') }}" class="nav-link" style="display: flex; align-items: center;">
                 <span class="user-img" style="margin-right: 10px;">
@@ -315,6 +314,8 @@
                     <table class="table table-striped custom-table mb-0">
                         <thead>
                             <tr>
+                            <th>Name</th>
+
                                 <th>Start Date</th>
                                 <th>End Date</th>
                                 <th>Reason Why ?</th>
@@ -330,6 +331,8 @@
                         <tbody>
     @foreach($holidays as $holiday)
     <tr>
+    <td>{{ $holiday->user->name }}</td> <!-- Display the user's name -->
+
         <td>{{ $holiday->from_date }}</td>
         <td>{{ $holiday->to_date }}</td>
         <td class="text-center">
@@ -595,28 +598,30 @@ $(document).ready(function() {
 }
 
 .table th:nth-child(1), .table td:nth-child(2) { /* For Date Wish */
-    width: 80px;
+    width: 10px;
 }
 .table th:nth-child(2), .table td:nth-child(3) { /* For Date Wish */
-    width: 70px;
+    width: 50px;
 }
 .table th:nth-child(3), .table td:nth-child(4) { /* For Date Wish */
-    width: 80px;
+    width: 50px;
 }
 .table th:nth-child(4), .table td:nth-child(5) { /* For Date Wish */
-    width: 70px;
+    width: 60px;
 }
 
 .table th:nth-child(5), .table td:nth-child(6) { /* For Description */
-    width: 80px; /* Increase for longer descriptions */
+    width: 60px; /* Increase for longer descriptions */
 }
 .table th:nth-child(6), .table td:nth-child(7) { /* For Description */
-    width: 60px; /* Increase for longer descriptions */
+    width: 70px; /* Increase for longer descriptions */
 }
 .table th:nth-child(7), .table td:nth-child(8) { /* For Description */
     width: 40px; /* Increase for longer descriptions */
 }
-
+.table th:nth-child(8), .table td:nth-child(9) { /* For Description */
+    width: 40px; /* Increase for longer descriptions */
+}
 .action-icon {
     color: #333; /* Adjust color as needed */
     font-size: 20px; /* Adjust size as needed */

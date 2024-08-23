@@ -25,7 +25,6 @@
             <ul class="nav user-menu" style="align-items: center;">
         <li class="nav-item">
         <div class="page-title-box">
-        <h3>{{ now()->format('l, F j, Y') }}</h3>
     </div>
             <a href="{{ route('profile_user') }}" class="nav-link" style="display: flex; align-items: center;">
                 <span class="user-img" style="margin-right: 10px;">
@@ -311,6 +310,7 @@
                     <table class="table table-striped custom-table mb-0">
                         <thead>
                             <tr>
+                                <th>Name</th>
                                 <th>Type</th>
                                 <th>Issued For</th>
                                 <th>Salary</th>
@@ -324,6 +324,8 @@
                         <tbody>
     @foreach($certificates as $certificate)
     <tr>      
+    <td>{{ $certificate->user->name }}</td> <!-- Display the user's name -->
+
         <td>{{ $certificate->type }}</td>
         <td>{{ \Carbon\Carbon::parse($certificate->issued_for)->format('Y-n-j') }}</td>
         <td>{{ $certificate->salary }} dt</td>
@@ -624,14 +626,14 @@ $('#edit_certificate').on('show.bs.modal', function(event) {
     width: 150px;
 }
 .table th:nth-child(4), .table td:nth-child(5) { /* For Date Wish */
-    width: 150px;
+    width: 100  px;
 }
 
 .table th:nth-child(5), .table td:nth-child(6) { /* For Description */
-    width: 225px; /* Increase for longer descriptions */
+    width: 150px; /* Increase for longer descriptions */
 }
 .table th:nth-child(6), .table td:nth-child(7) { /* For Description */
-    width: 120px; /* Increase for longer descriptions */
+    width: 200px; /* Increase for longer descriptions */
 }
 .table th:nth-child(7), .table td:nth-child(8) { /* For Description */
     width: 175px; /* Increase for longer descriptions */

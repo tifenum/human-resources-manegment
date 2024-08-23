@@ -78,7 +78,7 @@ class FormController extends Controller
             'phone_number' => 'required|numeric|min:9',
             'position'     => 'required|string|max:255',
             'department'   => 'required|string|max:255',
-            'salary'       => 'required|string|max:255',
+            'salary'       => 'required|numeric|max:4',
         ]);
         try{
             $fullName     = $request->fullName;
