@@ -65,6 +65,8 @@ class RegisterController extends Controller
             'matricule' => $matricule, // Generated matricule
             'image'     => $imageName, // Save the profile image filename
             'password'  => Hash::make($request->password),
+            'checked'  => false, // Admin is active by default
+            'position'  => 'NO ASSIGNED POSITION', // Default position
         ]);
 
         // Display a success message

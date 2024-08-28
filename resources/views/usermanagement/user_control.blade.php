@@ -220,72 +220,79 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($result as $key=>$user )
-                                    <tr>
-                                        <td>
-                                            <span hidden class="image">{{ $user->image}}</span>
-                                            <h2 class="table-avatar">
-                                            <a href="{{ url('/userManagement') }}" class="avatar">
-                                            <img src="{{ asset('images/profile/'.$user->image) }}" alt="{{ $user->name }}" class="profile-image">
-                                            </a>
-                                                <a href="{{ url('/userManagement') }}" class="name">{{ $user->name }}</span></a>
-                                            </h2>
-                                        </td>
-                                        <td hidden class="ids">{{ $user->id }}</td>
-                                        <td class="id">{{ $user->rec_id }}</td>
-                                        <td class="email">{{ $user->email }}</td>
-                                        <td class="position">{{ $user->department }}</td>
-                                        <td class="phone_number">{{ $user->phone }}</td>
-                                        <td>
-                                            @if ($user->role_name=='Admin')
-                                                <span class="badge bg-inverse-danger role_name">{{ $user->role_name }}</span>
-                                                @elseif ($user->role_name=='Employee')
-                                                <span class="badge bg-inverse-dark role_name">{{ $user->role_name }}</span>
-                                                @else
-                                                <span class="badge bg-inverse-info role_name">{{ $user->role_name }}</span>
-                                            @endif
-                                        </td>
+    @foreach ($result as $key => $user)
+    <tr @if($user->checked == false) style="background-color: #ffe0e0;" @endif>
+        <td>
+            <span hidden class="image">{{ $user->image }}</span>
+            <h2 class="table-avatar">
+                <a href="{{ url('/userManagement') }}" class="avatar">
+                    <img src="{{ asset('images/profile/'.$user->image) }}" alt="{{ $user->name }}" class="profile-image">
+                </a>
+                <a href="{{ url('/userManagement') }}" class="name">{{ $user->name }}
+                    @if($user->checked == false)
+                        <span class="badge badge-danger" title="Unchecked User"><i class="fa fa-exclamation-circle"></i></span>
+                    @endif
+                </a>
+            </h2>
+        </td>
+        <td hidden class="ids">{{ $user->id }}</td>
+        <td class="id">{{ $user->rec_id }}</td>
+        <td class="email">{{ $user->email }}</td>
+        <td class="position">{{ $user->department }}</td>
+        <td class="phone_number">{{ $user->phone }}</td>
+        <td>
+            @if ($user->role_name=='Admin')
+                <span class="badge bg-inverse-danger role_name">{{ $user->role_name }}</span>
+            @elseif ($user->role_name=='Employee')
+                <span class="badge bg-inverse-dark role_name">{{ $user->role_name }}</span>
+            @else
+                <span class="badge bg-inverse-info role_name">{{ $user->role_name }}</span>
+            @endif
+        </td>
+        <td>
+            <div class="dropdown action-label">
+                @if ($user->status=='Active')
+                    <a class="btn btn-white btn-sm btn-rounded" href="#" data-toggle="dropdown" aria-expanded="false">
+                        <i class="fa fa-dot-circle-o text-success"></i>
+                        <span class="statuss">{{ $user->status }}</span>
+                    </a>
+                @elseif ($user->status=='Inactive')
+                    <a class="btn btn-white btn-sm btn-rounded" href="#" data-toggle="dropdown" aria-expanded="false">
+                        <i class="fa fa-dot-circle-o text-danger"></i>
+                        <span class="statuss">{{ $user->status }}</span>
+                    </a>
+                @endif
+            </div>
+        </td>
+        <td class="text-right">
+            <div class="dropdown dropdown-action">
+                <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    <i class="material-icons">more_vert</i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item userUpdate" data-toggle="modal" data-id="{{ $user->id }}" data-target="#edit_user"
+                        data-name="{{ $user->name }}"
+                        data-email="{{ $user->email }}"
+                        data-role_name="{{ $user->role_name }}"
+                        data-salary="{{ $user->salary }}"
+                        data-phone_number="{{ $user->phone }}"
+                        data-department="{{ $user->department }}"
+                        data-entry_date="{{ $user->entry_date }}"
+                        data-image="{{ $user->image }}"
+                        data-status="{{ $user->status }}"
+                        data-position="{{ $user->position }}">
+                        <i class="fa fa-pencil m-r-5"></i> Edit
+                    </a>
+                    <a class="dropdown-item userDelete" href="#" data-toggle="modal" ata-id="{{ $user->id }}" data-target="#delete_user">
+                        <i class="fa fa-trash-o m-r-5"></i> Delete
+                    </a>
+                </div>
+            </div>
+        </td>
+    </tr>
+    @endforeach
+</tbody>
 
-                                        <td>
-                                            <div class="dropdown action-label">
-                                                @if ($user->status=='Active')
-                                                    <a class="btn btn-white btn-sm btn-rounded" href="#" data-toggle="dropdown" aria-expanded="false">
-                                                        <i class="fa fa-dot-circle-o text-success"></i>
-                                                        <span class="statuss">{{ $user->status }}</span>
-                                                    </a>
-                                                    @elseif ($user->status=='Inactive')
-                                                    <a class="btn btn-white btn-sm btn-rounded " href="#" data-toggle="dropdown" aria-expanded="false">
-                                                        <i class="fa fa-dot-circle-o text-danger"></i>
-                                                        <span class="statuss">{{ $user->status }}</span>
-                                                    </a>
-                                                @endif
-                                                
-                                            </div>
-                                        </td>
-                                        <td class="text-right">
-                                            <div class="dropdown dropdown-action">
-                                                <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
-                                                <div class="dropdown-menu dropdown-menu-right">
-                                                <a class="dropdown-item userUpdate" data-toggle="modal" data-id="{{ $user->id }}" data-target="#edit_user"
-    data-name="{{ $user->name }}"
-    data-email="{{ $user->email }}"
-    data-role_name="{{ $user->role_name }}"
-    data-salary="{{ $user->salary }}"
-    data-phone_number="{{ $user->phone }}"
-    data-department="{{ $user->department }}"
-    data-entry_date="{{ $user->entry_date }}"
-    data-image="{{ $user->image }}"
-    data-status="{{ $user->status }}">
-    <i class="fa fa-pencil m-r-5"></i> Edit
-    </a>
-
-                                                    <a class="dropdown-item userDelete" href="#" data-toggle="modal" ata-id="'.$user->id.'" data-target="#delete_user"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
                             </table>
                         </div>
                     </div>
@@ -407,10 +414,21 @@
                                         </div>
                                     </div>
                                     <div class="col-sm-6"> 
+                                        <label>Position</label>
+                                        <input type="text" class="form-control" name="position" placeholder="assign position">
+
+                                    </div>
+                                    <!-- <div class="col-sm-6"> 
                                         <label>Repeat Password</label>
                                         <input type="password" class="form-control" name="password_confirmation" placeholder="Choose Repeat Password">
-                                    </div>
+                                    </div> -->
                                 </div>
+
+                                <!-- <div class="col-sm-6"> 
+                                        <label>Position</label>
+                                        <input type="text" class="form-control" name="position" placeholder="assign position">
+
+                                    </div> -->
                                 <div class="submit-section">
                                     <button type="submit" class="btn btn-primary submit-btn">Submit</button>
                                 </div>
@@ -469,34 +487,37 @@
             </div>
             <!-- /Add User Modal -->
             <div id="edit_user" class="modal custom-modal fade" role="dialog">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Edit User</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form action="{{ route('update') }}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        <input type="hidden" name="rec_id" id="e_id" value="">
-                        <div class="row"> 
-                            <div class="col-sm-6"> 
-                                <div class="form-group">
-                                    <label>Full Name</label>
-                                    <input class="form-control @error('name') is-invalid @enderror" type="text" name="name" id="e_name" value="" placeholder="Enter Name">
-                                </div>
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit User</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ route('update') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <input type="hidden" name="rec_id" id="e_id" value="">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Full Name</label>
+                                <input class="form-control @error('name') is-invalid @enderror" type="text" name="name" id="e_name" value="" placeholder="Enter Name">
                             </div>
-                            <div class="col-sm-6"> 
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
                                 <label>Email Address</label>
                                 <input class="form-control" type="email" name="email" id="e_email" placeholder="Enter Email"/>
                             </div>
                         </div>
-                        <div class="row"> 
-                            <div class="col-sm-6"> 
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
                                 <label>Role Name</label>
-                                <select class="select" name="role_name" id="e_role_name">
+                                <select class="form-control select" name="role_name" id="e_role_name">
                                     <option disabled selected>{{ old('role_name', $user->role_name ?? '--Select--') }}</option>
                                     @foreach ($role_name as $role)
                                         <option value="{{ $role->role_type }}" {{ old('role_name', $user->role_name) == $role->role_type ? 'selected' : '' }}>
@@ -505,22 +526,25 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="col-sm-6"> 
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
                                 <label>Salary</label>
                                 <input class="form-control" type="number" name="salary" id="e_salary" placeholder="Enter Salary">
                             </div>
                         </div>
-                        <br>
-                        <div class="row"> 
-                            <div class="col-sm-6"> 
-                                <div class="form-group">
-                                    <label>Phone</label>
-                                    <input class="form-control" type="tel" name="phone" id="e_phone_number" placeholder="Enter Phone">
-                                </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Phone</label>
+                                <input class="form-control" type="tel" name="phone" id="e_phone_number" placeholder="Enter Phone">
                             </div>
-                            <div class="col-sm-6"> 
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
                                 <label>Department</label>
-                                <select class="select" name="department" id="e_department">
+                                <select class="form-control select" name="department" id="e_department">
                                     <option disabled selected>{{ old('department', $user->department ?? '--Select--') }}</option>
                                     @foreach ($department as $departments)
                                         <option value="{{ $departments->department }}" {{ old('department', $user->department) == $departments->department ? 'selected' : '' }}>
@@ -530,10 +554,12 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="row"> 
-                            <div class="col-sm-6"> 
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
                                 <label>Status</label>
-                                <select class="select" name="status" id="e_status">
+                                <select class="form-control select" name="status" id="e_status">
                                     <option disabled selected>{{ old('status', $user->status ?? '--Select--') }}</option>
                                     @foreach ($status_user as $status)
                                         <option value="{{ $status->type_name }}" {{ old('status', $user->status) == $status->type_name ? 'selected' : '' }}>
@@ -542,32 +568,40 @@
                                     @endforeach
                                 </select>
                             </div>
-    
-                            <div class="col-sm-6"> 
-                                <div class="form-group">
-                                    <label>Photo</label>
-                                    <div class="d-flex align-items-center">
-                                        <div class="custom-file" style="max-width: 300px;">
-                                            <input type="file" class="form-control-file" id="e_image_file" name="image" onchange="previewImage1(event)">
-                                            <label class="custom-file-label" for="e_image_file">Choose a picture</label>
-                                        </div>
-                                        <div class="profile-img-preview ml-3">
-                                            <img id="profileImagePreview1" src="http://127.0.0.1:8000/images/profile/photo_defaults.jpg" alt="Profile Image Preview" class="img-thumbnail rounded-circle" style="max-width: 50px; width: 50px; height: 50px;">
-                                        </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Photo</label>
+                                <div class="d-flex align-items-center">
+                                    <div class="custom-file" style="max-width: 300px;">
+                                        <input type="file" class="custom-file-input" id="e_image_file" name="image" onchange="previewImage1(event)">
+                                        <label class="custom-file-label" for="e_image_file">Choose a picture</label>
                                     </div>
-                                    <input type="hidden" name="hidden_image" id="e_image" value="">
+                                    <div class="profile-img-preview ml-3">
+                                        <img id="profileImagePreview1" src="http://127.0.0.1:8000/images/profile/photo_defaults.jpg" alt="Profile Image Preview" class="img-thumbnail rounded-circle" style="max-width: 50px; width: 50px; height: 50px;">
+                                    </div>
                                 </div>
+                                <input type="hidden" name="hidden_image" id="e_image" value="">
                             </div>
                         </div>
-                        <br>
-                        <div class="submit-section">
-                            <button type="submit" class="btn btn-primary submit-btn">Update</button>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Position</label>
+                                <input class="form-control" type="text" name="position" id="e_position" placeholder="Enter Position">
+                            </div>
                         </div>
-                    </form>
-                </div>
+                    </div>
+                    <div class="submit-section">
+                        <button type="submit" class="btn btn-primary submit-btn">Update</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
+</div>
+
         
             <!-- Delete User Modal -->
             <div class="modal custom-modal fade" id="delete_user" role="dialog">
@@ -613,13 +647,13 @@
         var department = $(this).data('department');
         var status = $(this).data('status');
         var image = $(this).data('image'); // This is the image filename
-
+        var position = $(this).data('position');
         $('#e_id').val(userId);
         $('#e_name').val(fullName);
         $('#e_email').val(email);
         $('#e_phone_number').val(phone);
         $('#e_salary').val(salary);
-
+        $('#e_position').val(position)
         // Set the selected value in dropdowns
         $('#e_role_name option').each(function() {
             if ($(this).val() === roleName) {

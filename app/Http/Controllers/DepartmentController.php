@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Department;
 use Illuminate\Http\Request;
+use Brian2694\Toastr\Facades\Toastr;
 
 class DepartmentController extends Controller
 {
@@ -23,6 +24,7 @@ class DepartmentController extends Controller
         Department::create([
             'department' => $request->input('department'),
         ]);
+        Toastr::success('department added successfully :)', 'Success');
 
         return redirect()->back()->with('status', 'Department added successfully.');
     }
@@ -31,6 +33,7 @@ class DepartmentController extends Controller
     {
         $department = Department::findOrFail($id);
         $department->delete();
+        Toastr::success('department deleted successfully :)', 'Success');
 
         return redirect()->back()->with('status', 'Department deleted successfully.');
     }

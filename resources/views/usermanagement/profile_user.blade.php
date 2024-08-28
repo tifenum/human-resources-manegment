@@ -341,6 +341,10 @@
                                                         <div class="text"><a href="">{{ Auth::user()->department }}</a></div>
                                                     </li>
                                                     <li>
+                                                        <div class="title">Position:</div>
+                                                        <div class="text"><a href="">{{ Auth::user()->position }}</a></div>
+                                                    </li>
+                                                    <li>
                                                         <div class="title">role:</div>
                                                         <div class="text"><a href="">{{ Auth::user()->role_name }}</a></div>
                                                     </li>
@@ -403,17 +407,21 @@
                             <div class="form-group">
                                 <!-- <label for="department">Department:</label>
                                 <input type="text" class="form-control" id="department" name="department" value="{{ Auth::user()->department }}" required> -->
-                                <label for="department">Select Department:</label>
+                                <label>Department</label>
 <select class="select" name="department" id="department">
-    <option value="web_department" {{ Auth::user()->department == 'web_department' ? 'selected' : '' }}>Web Department</option>
-    <option value="it_management" {{ Auth::user()->department == 'it_management' ? 'selected' : '' }}>IT Management</option>
-    <option value="hr" {{ Auth::user()->department == 'hr' ? 'selected' : '' }}>HR</option>
-    <option value="finance" {{ Auth::user()->department == 'finance' ? 'selected' : '' }}>Finance</option>
-    <option value="development" {{ Auth::user()->department == 'development' ? 'selected' : '' }}>Development</option>
-    <option value="sales" {{ Auth::user()->department == 'sales' ? 'selected' : '' }}>Sales</option>
-    <option value="marketing" {{ Auth::user()->department == 'marketing' ? 'selected' : '' }}>Marketing</option>
+    <!-- Default selected option set to authenticated user's department -->
+    @foreach ($department as $departments)
+        <option value="{{ $departments->department }}"
+            @if ($departments->department == Auth::user()->department)
+                selected
+            @endif>
+            {{ $departments->department }}
+        </option>
+    @endforeach
 </select>
 
+                                    </div>
+                                    <div class="form-group">
                             <div class="form-group">
                                 <label for="entry_date">Entry Date:</label>
                                 <input type="text" class="form-control" id="entry_date" name="entry_date" value="{{ Auth::user()->entry_date->format('d-m-Y') }}" required>

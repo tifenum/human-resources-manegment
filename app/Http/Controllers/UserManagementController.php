@@ -279,24 +279,25 @@ class UserManagementController extends Controller
         Session::put('user', $user);
         $user=Session::get('user');
         $profile = $user->rec_id;
-       
+        $department  = DB::table('departments')->get();
+
         $user = DB::table('users')->get();
         $employees = DB::table('profile_information')->where('rec_id',$profile)->first();
 
         if(empty($employees))
         {
             $information = DB::table('profile_information')->where('rec_id',$profile)->first();
-            return view('usermanagement.profile_user',compact('information','user'));
+            return view('usermanagement.profile_user',compact('information','user','department'));
 
         }else{
             $rec_id = $employees->rec_id;
             if($rec_id == $profile)
             {
                 $information = DB::table('profile_information')->where('rec_id',$profile)->first();
-                return view('usermanagement.profile_user',compact('information','user'));
+                return view('usermanagement.profile_user',compact('information','user','department'));
             }else{
                 $information = ProfileInformation::all();
-                return view('usermanagement.profile_user',compact('information','user'));
+                return view('usermanagement.profile_user',compact('information','user','department'));
             } 
         }
        
@@ -452,8 +453,8 @@ class UserManagementController extends Controller
             'department'=> 'required|string|max:255',
             'status'    => 'required|string|max:255',
             'image'     => 'required|image',
-            'password'  => 'required|string|min:8|confirmed',
-            'password_confirmation' => 'required',
+            'position'  => 'required|string|max:255',
+            'password'  => 'required|string|min:8',
             'salary'    => 'nullable|numeric|digits_between:1,4', // Allows up to 4 digits without decimals
         ]);
 
@@ -481,7 +482,9 @@ class UserManagementController extends Controller
         $user->image       = $image;
         $user->matricule   = $matricule;
         $user->salary      = $request->salary;
+        $user->position    = $request->position; // Default position
         $user->password    = Hash::make($request->password);
+        $user->checked     = true; // Admin is active by default
         $user->save();
         $activityLog = [
             'user_name'    => $user->name,
@@ -541,7 +544,7 @@ class UserManagementController extends Controller
             $phone      = $request->phone;
             $department = $request->department;
             $status     = $request->status;
-    
+            $position   = $request->position;
             // Log extracted variables
             Log::info('Extracted Data:', compact('rec_id', 'name', 'email', 'role_name', 'salary', 'phone', 'department', 'status'));
     
@@ -571,6 +574,8 @@ class UserManagementController extends Controller
                 'department'   => $department,
                 'status'       => $status,
                 'image'        => $image_name,
+                'position'     => $position,
+                'checked'      => true,
             ];
     
             // Log the prepared update data

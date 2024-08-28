@@ -28,6 +28,8 @@ class User extends Authenticatable
         'entry_date',  // Entry Date
         'matricule',  // Matricule
         'password',
+        'position',  // Position
+        'checked',  // Active status
     ];
 
     /**
