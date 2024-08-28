@@ -1,8 +1,8 @@
 @extends('layouts.master')
 @section('content')
 
-{{-- @yield('nav') --}}
-<link rel="shortcut icon" type="image/x-icon" href="{{ URL::to('assets/img/photo_defaults.jpg') }}">
+        {{-- @yield('nav') --}}
+        <link rel="shortcut icon" type="image/x-icon" href="{{ URL::to('assets/img/photo_defaults.jpg') }}">
 
 		<div class="header">
 			<!-- Logo -->
@@ -239,15 +239,7 @@
             </div>
         </div>
     </div>
-	<!-- /Sidebar -->
-
     <style>
-        .user-img img {
-    width: 35px; /* Adjust as needed */
-    height: 30px; /* Adjust as needed */
-    border-radius: 50%; /* Ensures the image is fully rounded */
-    object-fit: cover; /* Maintains aspect ratio while covering the container */
-}
     .sidebar-menu a {
         display: flex;
         align-items: center;
@@ -276,7 +268,6 @@
         color: #ecf0f1; /* Match icon color with text */
     }
 </style>
-
 @section('content')
 <!-- Sidebar -->
 {!! Toastr::message() !!}
@@ -288,93 +279,61 @@
         <div class="page-header">
             <div class="row align-items-center">
                 <div class="col">
-                    <h3 class="page-title">Delays <span id="year"></span></h3>
+                    <h3 class="page-title">Certificates <span id="year"></span></h3>
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item">Home</li>
-                        <li class="breadcrumb-item active">Delays</li>
+                        <li class="breadcrumb-item active">Certificates</li>
                     </ul>
                 </div>
-                <div class="col-auto float-right ml-auto">
-                    <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_delay"><i class="fa fa-plus"></i> Request Delay</a>
-                </div>
+
             </div>
         </div>
 
-        <!-- Delay Statistics -->
+        <!-- Certificate Statistics -->
 
-        <!-- /Delay Statistics -->
-<!-- Delay Statistics -->
-<div class="row">
-    <div class="col-md-12">
-        <div class="table-responsive">
-            <table class="table table-striped custom-table mb-0">
-                <thead>
-                    <tr>
-                    <th>Name</th>
+        <!-- /Certificate Statistics -->
 
-                        <th>Delay Day</th>
-                        <th>Exit Time</th>
-                        <th>Return Time</th>
-                        <th>Reason</th>
-                        <th>total time</th>
-                        <!-- <th>MD Status</th> -->
-                        <th>Head Dep</th>
-                        <!-- <th>FD Status</th> -->
-                        <th>Cheif</th>
-                        <th>Status</th>
-                        <th class="text-right">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-    @foreach($delays as $delay)
-    <tr>
-                        <td>{{ $delay->user->name }}</td> <!-- Display the user's name -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table class="table table-striped custom-table mb-0">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Type</th>
+                                <th>Issued For</th>
+                                <th>Salary</th>
+                                <th>Description</th>
+                                <th>Department</th>
+                                <th>Status</th>
+                                <th class="text-right">Actions</th>
+                            </tr>
+                        </thead>
 
-        <td>{{ $delay->day }}</td>
-        <td>{{ $delay->exit_time }}</td>
-        <td>{{ $delay->return_time }}</td>
-        <td class="text-center">
-            <button class="btn btn-info btn-sm btn-rounded custom-btn-info" 
-                    data-toggle="modal" 
-                    data-target="#reasonModal" 
-                    data-description="{{ $delay->reason }}">
+                        <tbody>
+    @foreach($certificates as $certificate)
+    <tr>      
+    <td>{{ $certificate->user->name }}</td> <!-- Display the user's name -->
+
+        <td>{{ $certificate->type }}</td>
+        <td>{{ \Carbon\Carbon::parse($certificate->issued_for)->format('Y-n-j') }}</td>
+        <td>{{ $certificate->salary }} dt</td>
+        <td>                                  
+            <button href="#" data-toggle="modal" data-target="#view_certificate" class="view-certificate btn btn-info btn-sm btn-rounded custom-btn-info"
+                data-id="{{ $certificate->id }}"
+                data-type="{{ $certificate->type }}"
+                data-issued_for="{{ $certificate->issued_for }}"
+                data-salary="{{ $certificate->salary }}"
+                data-department="{{ $certificate->department }}"
+                data-description="{{ $certificate->description }}">
                 View
             </button>
         </td>
-        <td>{{ $delay->amount_of_time }}</td>
-
- 
-        <td class="text-center">
-    <div class="action-label">
-        <a class="btn btn-white btn-sm btn-rounded" href="javascript:void(0);">
-            @if(is_null($delay->status_HD))
-                <i class="fa fa-dot-circle-o text-warning"></i> Unchecked
-            @elseif($delay->status_HD)
-                <i class="fa fa-dot-circle-o text-success"></i> Approved
-            @else
-                <i class="fa fa-dot-circle-o text-danger"></i> Declined
-            @endif
-        </a>
-    </div>
-</td>
-<td class="text-center">
-    <div class="action-label">
-        <a class="btn btn-white btn-sm btn-rounded" href="javascript:void(0);">
-            @if(is_null($delay->status_Ch5))
-                <i class="fa fa-dot-circle-o text-warning"></i> Unchecked
-            @elseif($delay->status_Ch5)
-                <i class="fa fa-dot-circle-o text-success"></i> Approved
-            @else
-                <i class="fa fa-dot-circle-o text-danger"></i> Declined
-            @endif
-        </a>
-    </div>
-</td>
-
+        <td>{{ $certificate->department }}</td>
         <td class="text-center">
             <div class="action-label">
                 <a class="btn btn-white btn-sm btn-rounded" href="javascript:void(0);">
-                    @if($delay->confirmed)
+                    @if($certificate->confirmed)
                         <i class="fa fa-dot-circle-o text-success"></i> Approved
                     @else
                         <i class="fa fa-dot-circle-o text-danger"></i> Declined
@@ -382,50 +341,51 @@
                 </a>
             </div>
         </td>
+
+
+
         <td class="text-right">
+                @if($certificate->confirmed)
 
-                <a href="#" data-toggle="modal" data-target="#edit_delay"
-                   data-id="{{ $delay->id }}"
-                   data-day="{{ $delay->day }}"
-                   data-exit_time="{{ $delay->exit_time }}"
-                   data-return_time="{{ $delay->return_time }}"
-                   data-description="{{ $delay->reason }}"
-                   class="action-icon edit-exit-demand">
-                   <i class="fa fa-pencil" aria-hidden="true"></i>
-                </a>
+        <a href="{{ route('certificate.generateCertificate', $certificate->id) }}" class="action-icon" style="border: none; background: none; cursor: pointer;text-align: center; width: 40%;" target="_blank">
+            <i class="fa fa-download" aria-hidden="true"></i>
+        </a>
+    @else
 
-                <form action="{{ route('delays.destroy', $delay->id) }}" method="POST" style="display:inline;">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="action-icon" style="border: none; background: none; cursor: pointer;">
-                        <i class="fa fa-trash-o" aria-hidden="true"></i>
-                    </button>
-                </form>
-
+            <form action="{{ route('certificate.updateStatus', $certificate->id) }}" method="POST" style="display:inline;">
+    @csrf
+    @method('PATCH')
+    <button type="submit" name="status" value="approve" class="action-icon" style="border: none; background: none; cursor: pointer;">
+        <i class="fa fa-check" aria-hidden="true"></i>
+    </button>
+    <button type="submit" name="status" value="decline" class="action-icon" style="border: none; background: none; cursor: pointer;">
+        <i class="fa fa-times" aria-hidden="true"></i>
+    </button>
+</form>
+    
+            @endif
         </td>
     </tr>
     @endforeach
 </tbody>
 
-
-            </table>
+                    </table>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
 
-
-        <!-- Reason Modal -->
-        <div class="modal fade custom-modal" id="reasonModal" tabindex="-1" role="dialog" aria-labelledby="reasonModalLabel" aria-hidden="true">
+        <!-- View Certificate Modal -->
+        <div class="modal fade custom-modal" id="view_certificate" tabindex="-1" role="dialog" aria-labelledby="viewCertificateModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="reasonModalLabel">Description</h5>
+                        <h5 class="modal-title" id="viewCertificateModalLabel">Certificate Description</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body text-center">
-                        <p id="modalDescription">Your description goes here.</p>
+                        <p id="certificateDescription">Your description goes here.</p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary submit-btn" data-dismiss="modal">OK</button>
@@ -434,135 +394,172 @@
             </div>
         </div>
 
-        <!-- Add Delay Modal -->
-<!-- Add Delay Modal -->
-<div id="add_delay" class="modal custom-modal fade" role="dialog">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Request Delay</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form method="POST" action="{{ route('delays.store') }}">
-                    @csrf
-                    <input type="hidden" name="user_id" value="{{ auth()->id() }}">
+        <!-- Add Certificate Modal -->
+        <div id="add_certificate" class="modal custom-modal fade" role="dialog">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Request Certificate</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="POST" action="{{ route('certificate.store') }}">
+                            @csrf
+                            <input type="hidden" name="user_id" value="{{ auth()->id() }}">
 
-                    <div class="form-group">
-                        <label>Delay Day <span class="text-danger">*</span></label>
-                        <input id="day" class="form-control datetimepicker" name="day" type="text" required>
+                            <!-- <div class="form-group">
+                                <label>Type <span class="text-danger">*</span></label>
+                                <input class="form-control" name="type" type="text" required>
+                            </div> -->
+                            <div class="form group"> 
+                            <label>Type <span class="text-danger">*</span></label>
+<select class="select" name="type">
+<option selected disabled>-- Select Type --</option>
+
+        <option value="Training">Training</option>
+        <option value="Completion">Completion</option>
+        <option value="Excellence">Excellence</option>
+        <option value="Participation">Participation</option>
+        <option value="Achievement">Achievement</option>
+</select>
+
+                        </div>
+                            <div class="form-group">
+                                <label>Issued For <span class="text-danger">*</span></label>
+                                <input class="form-control datetimepicker" name="issued_for" placeholder="select a date" type="text" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Salary <span class="text-danger">*</span></label>
+                                <input class="form-control" name="salary" type="number" placeholder="input salary" step="0.01" required>
+                            </div>
+
+                            <div class="form-group">
+                        <label>Department</label>
+                        <input class="form-control" name="department" type="text" value="{{ auth()->user()->department }}" disabled>
+                        <input type="hidden" name="department" value="{{ auth()->user()->department }}">
                     </div>
 
-                    <div class="form-group">
-                        <label>Exit Time <span class="text-danger">*</span></label>
-                        <input id="exit_time" class="form-control timepicker" name="exit_time" type="time" required>
+
+                            <div class="form-group">
+                                <label>Description</label>
+                                <textarea class="form-control" name="description" rows="4" placeholder="Add a description"></textarea>
+                            </div>
+
+                            <div class="submit-section text-center">
+                                <button type="submit" class="btn btn-primary submit-btn">Save</button>
+                            </div>
+                        </form>
                     </div>
-
-                    <div class="form-group">
-                        <label>Return Time <span class="text-danger">*</span></label>
-                        <input id="return_time" class="form-control timepicker" name="return_time" type="time" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Reason</label>
-                        <textarea class="form-control" name="reason" rows="4" placeholder="Add a reason"></textarea>
-                    </div>
-
-                    <div class="submit-section text-center">
-                        <button type="submit" class="btn btn-primary submit-btn">Save</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-        <!-- Edit Delay Modal -->
-<!-- Edit Delay Modal -->
-<div class="modal custom-modal fade" id="edit_delay" tabindex="-1" role="dialog" aria-labelledby="editDelayModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editDelayModalLabel">Edit Delay</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-            <form id="edit_delay_form" method="POST" action="">
-            @csrf
-                    @method('PUT')
-                    
-                    <input type="hidden" name="id" id="edit_id">
-
-                    <div class="form-group">
-                        <label>Delay Day <span class="text-danger">*</span></label>
-                        <input id="edit_day" class="form-control datetimepicker" name="day" type="text" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Exit Time <span class="text-danger">*</span></label>
-                        <input id="edit_exit_time" class="form-control timepicker" name="exit_time" type="time" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Return Time <span class="text-danger">*</span></label>
-                        <input id="edit_return_time" class="form-control timepicker" name="return_time" type="time" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Reason</label>
-                        <textarea class="form-control" name="reason" id="edit_reason" rows="4" placeholder="Add a reason"></textarea>
-                    </div>
-
-                    <div class="submit-section text-center">
-                        <button type="submit" class="btn btn-primary submit-btn">Save</button>
-                    </div>
-                </form>
+                </div>
             </div>
         </div>
-    </div>
-</div>
 
+        <!-- Edit Certificate Modal -->
+        <div id="edit_certificate" class="modal custom-modal fade" role="dialog">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Edit Certificate</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="POST" id="editCertificateForm" action="">
+                            @csrf
+                            @method('PUT')
+                            <input type="hidden" name="user_id" value="{{ auth()->id() }}">
+                            <input type="hidden" id="editCertificateId" name="certificate_id">
+
+
+                            <div class="form group"> 
+                            <label>Type <span class="text-danger">*</span></label>
+    <select class="select" id="editCertificateType" name="type">
+            <option value="Training">Training</option>
+            <option value="Completion">Completion</option>
+            <option value="Excellence">Excellence</option>
+                <option value="Participation">Participation</option>
+                <option value="Achievement">Achievement</option>
+        </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Issued For <span class="text-danger">*</span></label>
+                                <input class="form-control datetimepicker" id="editCertificateIssuedFor" name="issued_for" type="text" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Salary <span class="text-danger">*</span></label>
+                                <input class="form-control" id="editCertificateSalary" name="salary" type="number" step="0.01" required>
+                            </div>
+
+                            <div class="form-group">
+                        <label>Department</label>
+                        <input class="form-control" name="department" type="text" value="{{ auth()->user()->department }}" disabled>
+                        <input type="hidden" name="department" value="{{ auth()->user()->department }}">
+                    </div>
+
+
+                            <div class="form-group">
+                                <label>Description</label>
+                                <textarea class="form-control" id="editCertificateDescription" name="description" rows="4" placeholder="Add a description"></textarea>
+                            </div>
+
+                            <div class="submit-section text-center">
+                                <button type="submit" class="btn btn-primary submit-btn">Save Changes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <!-- /Page Content -->
 </div>
 <!-- /Page Wrapper -->
-
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const reasonModal = document.getElementById('reasonModal');
-    const modalDescription = reasonModal.querySelector('#modalDescription');
+    $(document).ready(function() {
+        // View Certificate
+        $('.view-certificate').on('click', function() {
+            var id = $(this).data('id');
+            var type = $(this).data('type');
+            var issued_for = $(this).data('issued_for');
+            var salary = $(this).data('salary');
+            var department = $(this).data('department');
+            var description = $(this).data('description');
 
-    $('#reasonModal').on('show.bs.modal', function(event) {
-        const button = $(event.relatedTarget);
-        const description = button.data('description');
-        modalDescription.textContent = description;
-    });
+            $('#certificateDescription').text(description);
+            $('#view_certificate').modal('show');
+        });
 
-    $('#edit_delay').on('show.bs.modal', function(event) {
-        const button = $(event.relatedTarget);
-        const id = button.data('id');
-        const day = button.data('day');
-        const exitTime = button.data('exit_time');
-        const returnTime = button.data('return_time');
-        const description = button.data('description');
+        // Edit Certificate
+// Edit Certificate
+$('#edit_certificate').on('show.bs.modal', function(event) {
+    const button = $(event.relatedTarget);
+    const id = button.data('id');
+    const type = button.data('type');
+    const issuedFor = button.data('issued_for');
+    const salary = button.data('salary');
+    const department = button.data('department');
+    const description = button.data('description');
 
-        const modal = $(this);
-        modal.find('#edit_id').val(id);
-        modal.find('#edit_day').val(day);
-        modal.find('#edit_exit_time').val(exitTime);
-        modal.find('#edit_return_time').val(returnTime);
-        modal.find('#edit_reason').val(description);
+    const modal = $(this);
+    modal.find('#editCertificateId').val(id);
+    modal.find('#editCertificateType').val(type);
+    modal.find('#editCertificateIssuedFor').val(issuedFor);
+    modal.find('#editCertificateSalary').val(salary);
+    modal.find('#editCertificateDepartment').val(department);
+    modal.find('#editCertificateDescription').val(description);
 
-        // Set the form action URL dynamically
-        const formAction = `/delay/${id}`;
-        modal.find('#edit_delay_form').attr('action', formAction);
-    });
+    // Set the form action URL dynamically
+    const formAction = `/certificate/${id}`;
+    modal.find('#editCertificateForm').attr('action', formAction);
 });
+
+    });
 
 </script>
 <style>
@@ -575,6 +572,12 @@ document.addEventListener('DOMContentLoaded', function() {
     width: 100%;
     table-layout: fixed; /* Ensures table cells take up equal width */
 }
+
+.table th, .table td {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap; /* Prevents text wrapping */
+}
 .user-img img {
     width: 35px; /* Adjust as needed */
     height: 30px; /* Adjust as needed */
@@ -582,40 +585,29 @@ document.addEventListener('DOMContentLoaded', function() {
     object-fit: cover; /* Maintains aspect ratio while covering the container */
 }
 
-.table th, .table td {
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap; /* Prevents text wrapping */
-}
-
 .table th:nth-child(1), .table td:nth-child(2) { /* For Date Wish */
-    width: 100px;
+    width: 150px;
 }
 .table th:nth-child(2), .table td:nth-child(3) { /* For Date Wish */
-    width: 130px;
+    width: 150px;
 }
 .table th:nth-child(3), .table td:nth-child(4) { /* For Date Wish */
-    width: 130px;
+    width: 150px;
 }
 .table th:nth-child(4), .table td:nth-child(5) { /* For Date Wish */
-    width: 140px;
+    width: 100  px;
 }
 
 .table th:nth-child(5), .table td:nth-child(6) { /* For Description */
-    width: 100px; /* Increase for longer descriptions */
+    width: 150px; /* Increase for longer descriptions */
 }
 .table th:nth-child(6), .table td:nth-child(7) { /* For Description */
-    width: 180px; /* Increase for longer descriptions */
+    width: 200px; /* Increase for longer descriptions */
 }
 .table th:nth-child(7), .table td:nth-child(8) { /* For Description */
-    width: 120px; /* Increase for longer descriptions */
+    width: 175px; /* Increase for longer descriptions */
 }
-.table th:nth-child(8), .table td:nth-child(9) { /* For Description */
-    width: 120px; /* Increase for longer descriptions */
-}
-.table th:nth-child(9), .table td:nth-child(10) { /* For Description */
-    width: 120px; /* Increase for longer descriptions */
-}
+
 
 .action-icon {
     color: #333; /* Adjust color as needed */
@@ -655,5 +647,5 @@ document.addEventListener('DOMContentLoaded', function() {
   border-color: #d93a3e; /* Border color for active state */
 }
 
-</style>
+</style>    
 @endsection

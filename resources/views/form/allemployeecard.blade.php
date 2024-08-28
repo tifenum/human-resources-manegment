@@ -41,7 +41,7 @@
 
 
 		</div>
-    <div class="sidebar" id="sidebar">
+        <div class="sidebar" id="sidebar">
         <div class="sidebar-inner slimscroll">
             <div id="sidebar-menu" class="sidebar-menu">
                 <ul>
@@ -70,7 +70,7 @@
                             <span>Activity User</span>
                         </a>
                     </li>
-                    @elseif (Auth::user()->role_name=='Employee')
+                    @else
                     <li class="menu-title" style="font-size: 16px; padding: 15px 20px; color: #bdc3c7; text-transform: uppercase;">
                         <span>request demands</span>
                     </li>
@@ -104,34 +104,26 @@
                             <span>Certificate</span>
                         </a>
                     </li>
-                    <li class="menu-title" style="font-size: 16px; padding: 15px 20px; color: #bdc3c7; text-transform: uppercase;">
-                        <span>Profile Management</span>
-                    </li>
-                    <li>
-                        <a href="{{ route('profile_user') }}" class="{{ request()->routeIs('profile_user') ? 'selecting' : '' }}">
-                            <i class="la la-user" style="margin-right: 10px;"></i> 
-                            <span>Profile</span>
-                        </a>
-                    </li>
 
-                    @elseif (Auth::user()->role_name=='Head of department')
+
+                    @if (Auth::user()->role_name=='Head of department')
                     <li class="menu-title" style="font-size: 16px; padding: 15px 20px; color: #bdc3c7; text-transform: uppercase;">
                         <span>consult demands</span>
                     </li>
                     <li>
-                        <a href="{{ route('advance') }}" class="{{ request()->routeIs('advance') ? 'selecting' : '' }}">
+                        <a href="{{ route('advance2') }}" class="{{ request()->routeIs('advance2') ? 'selecting' : '' }}">
                         <i class="la la-money-bill" style="margin-right: 10px;"></i> 
                         <span>advances</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('exits_demands') }}" class="{{ request()->routeIs('exits_demands') ? 'selecting' : '' }}">
+                        <a href="{{ route('exits_demands2') }}" class="{{ request()->routeIs('exits_demands2') ? 'selecting' : '' }}">
                         <i class="la la-door-open" style="margin-right: 10px;"></i> 
                         <span>Exit permission</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('delays') }}" class="{{ request()->routeIs('delays') ? 'selecting' : '' }}">
+                        <a href="{{ route('delays2') }}" class="{{ request()->routeIs('delays2') ? 'selecting' : '' }}">
                         <i class="la la-clock" style="margin-right: 10px;"></i> 
                         <span>delay permission</span>
                         </a>
@@ -148,22 +140,22 @@
 
                     @elseif (Auth::user()->role_name=='Chief of staff')
                     <li class="menu-title" style="font-size: 16px; padding: 15px 20px; color: #bdc3c7; text-transform: uppercase;">
-                        <span>request demands</span>
+                    <span>consult demands</span>
                     </li>
                     <li>
-                        <a href="{{ route('advance') }}" class="{{ request()->routeIs('advance') ? 'selecting' : '' }}">
+                        <a href="{{ route('advance2') }}" class="{{ request()->routeIs('advance2') ? 'selecting' : '' }}">
                         <i class="la la-money-bill" style="margin-right: 10px;"></i> 
                         <span>advances</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('delays') }}" class="{{ request()->routeIs('delays') ? 'selecting' : '' }}">
+                        <a href="{{ route('delays2') }}" class="{{ request()->routeIs('delays2') ? 'selecting' : '' }}">
                         <i class="la la-clock" style="margin-right: 10px;"></i> 
                         <span>delay permission</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('certificates') }}" class="{{ request()->routeIs('certificates') ? 'selecting' : '' }}">
+                        <a href="{{ route('certificates2') }}" class="{{ request()->routeIs('certificates2') ? 'selecting' : '' }}">
                         <i class="la la-certificate" style="margin-right: 10px;"></i> 
                         <span>Certificate</span>
                         </a>
@@ -180,10 +172,10 @@
 
                     @elseif (Auth::user()->role_name=='Financial director')
                     <li class="menu-title" style="font-size: 16px; padding: 15px 20px; color: #bdc3c7; text-transform: uppercase;">
-                        <span>request demands</span>
+                    <span>consult demands</span>
                     </li>
                     <li>
-                        <a href="{{ route('advance') }}" class="{{ request()->routeIs('advance') ? 'selecting' : '' }}">
+                        <a href="{{ route('advance2') }}" class="{{ request()->routeIs('advance2') ? 'selecting' : '' }}">
                         <i class="la la-money-bill" style="margin-right: 10px;"></i> 
                         <span>advances</span>
                         </a>
@@ -201,16 +193,16 @@
 
                     @elseif (Auth::user()->role_name=='Manager director')
                     <li class="menu-title" style="font-size: 16px; padding: 15px 20px; color: #bdc3c7; text-transform: uppercase;">
-                        <span>request demands</span>
+                    <span>consult demands</span>
                     </li>
                     <li>
-                        <a href="{{ route('advance') }}" class="{{ request()->routeIs('advance') ? 'selecting' : '' }}">
+                        <a href="{{ route('advance2') }}" class="{{ request()->routeIs('advance2') ? 'selecting' : '' }}">
                         <i class="la la-money-bill" style="margin-right: 10px;"></i> 
                         <span>advances</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('holiday.index') }}" class="{{ request()->routeIs('holidays') ? 'selecting' : '' }}">
+                        <a href="{{ route('holiday.index2') }}" class="{{ request()->routeIs('holidays2') ? 'selecting' : '' }}">
                         <i class="la la-grin-stars" style="margin-right: 10px;"></i> 
                         <span>holiday</span>
                         </a>
@@ -226,6 +218,9 @@
                         </a>
                     </li>
 
+                    
+                    @endif
+                    
                     @endif
                     <li>
                         <a href="{{ route('forget-password') }}" class="{{ request()->routeIs('forget-password') ? 'selecting' : '' }}">
@@ -289,12 +284,10 @@
                             <li class="breadcrumb-item active">Advances</li>
                         </ul>
                     </div>
-                    @if (Auth::user()->role_name=='Employee')
 
                     <div class="col-auto float-right ml-auto">
                         <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_advance"><i class="fa fa-plus"></i> Request Advance</a>
                     </div>
-                    @endif
                 </div>
             </div>
 
@@ -400,7 +393,7 @@
                     <div style="text-align: center; width: 120%;">
             <i class="fa fa-check-circle" aria-hidden="true" style="color: green; font-size: 24px;" title="Accepted"></i>
         </div>
-                        @elseif(auth()->user()->role_name == 'Employee')
+        @endif
                         <a href="#" data-toggle="modal" data-target="#edit_advance" class="action-icon edit-advance"
                            data-id="{{ $advance->id }}"
                            data-amount="{{ $advance->amount }}"
@@ -416,18 +409,7 @@
                                 <i class="fa fa-trash-o" aria-hidden="true"></i>
                             </button>
                         </form>
-                    @else
-                    <form action="{{ route('advance.updateStatus', $advance->id) }}" method="POST" style="display:inline;">
-    @csrf
-    @method('PATCH')
-    <button type="submit" name="status" value="approve" class="action-icon" style="border: none; background: none; cursor: pointer;">
-        <i class="fa fa-check" aria-hidden="true"></i>
-    </button>
-    <button type="submit" name="status" value="decline" class="action-icon" style="border: none; background: none; cursor: pointer;">
-        <i class="fa fa-times" aria-hidden="true"></i>
-    </button>
-</form>
-                    @endif
+
 </td>
                 </tr>
                 @endforeach

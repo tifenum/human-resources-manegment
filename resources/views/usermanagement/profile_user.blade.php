@@ -45,7 +45,7 @@
 
 
 		</div>
-    <div class="sidebar" id="sidebar">
+        <div class="sidebar" id="sidebar">
         <div class="sidebar-inner slimscroll">
             <div id="sidebar-menu" class="sidebar-menu">
                 <ul>
@@ -74,7 +74,7 @@
                             <span>Activity User</span>
                         </a>
                     </li>
-                    @elseif (Auth::user()->role_name=='Employee')
+                    @else
                     <li class="menu-title" style="font-size: 16px; padding: 15px 20px; color: #bdc3c7; text-transform: uppercase;">
                         <span>request demands</span>
                     </li>
@@ -108,22 +108,14 @@
                             <span>Certificate</span>
                         </a>
                     </li>
-                    <li class="menu-title" style="font-size: 16px; padding: 15px 20px; color: #bdc3c7; text-transform: uppercase;">
-                        <span>Profile Management</span>
-                    </li>
-                    <li>
-                        <a href="{{ route('profile_user') }}" class="{{ request()->routeIs('profile_user') ? 'selecting' : '' }}">
-                            <i class="la la-user" style="margin-right: 10px;"></i> 
-                            <span>Profile</span>
-                        </a>
-                    </li>
 
-                    @elseif (Auth::user()->role_name=='Head of department')
+
+                    @if (Auth::user()->role_name=='Head of department')
                     <li class="menu-title" style="font-size: 16px; padding: 15px 20px; color: #bdc3c7; text-transform: uppercase;">
                         <span>consult demands</span>
                     </li>
                     <li>
-                        <a href="{{ route('advance') }}" class="{{ request()->routeIs('advance') ? 'selecting' : '' }}">
+                        <a href="{{ route('advance2') }}" class="{{ request()->routeIs('advance') ? 'selecting' : '' }}">
                         <i class="la la-money-bill" style="margin-right: 10px;"></i> 
                         <span>advances</span>
                         </a>
@@ -152,10 +144,10 @@
 
                     @elseif (Auth::user()->role_name=='Chief of staff')
                     <li class="menu-title" style="font-size: 16px; padding: 15px 20px; color: #bdc3c7; text-transform: uppercase;">
-                        <span>request demands</span>
+                    <span>consult demands</span>
                     </li>
                     <li>
-                        <a href="{{ route('advance') }}" class="{{ request()->routeIs('advance') ? 'selecting' : '' }}">
+                        <a href="{{ route('advance2') }}" class="{{ request()->routeIs('advance') ? 'selecting' : '' }}">
                         <i class="la la-money-bill" style="margin-right: 10px;"></i> 
                         <span>advances</span>
                         </a>
@@ -184,10 +176,10 @@
 
                     @elseif (Auth::user()->role_name=='Financial director')
                     <li class="menu-title" style="font-size: 16px; padding: 15px 20px; color: #bdc3c7; text-transform: uppercase;">
-                        <span>request demands</span>
+                    <span>consult demands</span>
                     </li>
                     <li>
-                        <a href="{{ route('advance') }}" class="{{ request()->routeIs('advance') ? 'selecting' : '' }}">
+                        <a href="{{ route('advance2') }}" class="{{ request()->routeIs('advance') ? 'selecting' : '' }}">
                         <i class="la la-money-bill" style="margin-right: 10px;"></i> 
                         <span>advances</span>
                         </a>
@@ -205,10 +197,10 @@
 
                     @elseif (Auth::user()->role_name=='Manager director')
                     <li class="menu-title" style="font-size: 16px; padding: 15px 20px; color: #bdc3c7; text-transform: uppercase;">
-                        <span>request demands</span>
+                    <span>consult demands</span>
                     </li>
                     <li>
-                        <a href="{{ route('advance') }}" class="{{ request()->routeIs('advance') ? 'selecting' : '' }}">
+                        <a href="{{ route('advance2') }}" class="{{ request()->routeIs('advance') ? 'selecting' : '' }}">
                         <i class="la la-money-bill" style="margin-right: 10px;"></i> 
                         <span>advances</span>
                         </a>
@@ -230,6 +222,9 @@
                         </a>
                     </li>
 
+                    
+                    @endif
+                    
                     @endif
                     <li>
                         <a href="{{ route('forget-password') }}" class="{{ request()->routeIs('forget-password') ? 'selecting' : '' }}">

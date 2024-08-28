@@ -15,18 +15,26 @@ use Session;
 use Auth;
 use Hash;
 use Illuminate\Support\Facades\Log;
+use App\Models\Department; // Add this line
+
+use App\Models\Setting;
+
+
 class UserManagementController extends Controller
 {
+    
     public function index()
     {
         if (Auth::user()->role_name=='Admin')
         {
+
             $result      = DB::table('users')->get();
             $role_name   = DB::table('role_type_users')->get();
             $position    = DB::table('position_types')->get();
             $department  = DB::table('departments')->get();
             $status_user = DB::table('user_types')->get();
-            return view('usermanagement.user_control',compact('result','role_name','position','department','status_user'));
+
+            return view('usermanagement.user_control',compact('result','role_name','position','department','status_user','department'));
         }
         else
         {
@@ -407,6 +415,31 @@ class UserManagementController extends Controller
     //         return redirect()->back();
     //     }
     // }
+
+    public function toggleRegistrationLink()
+    {
+        // Retrieve the setting from the database
+        $setting = Setting::where('key', 'REGISTRATION_LINK_VISIBLE')->first();
+        $currentValue = $setting ? (int)$setting->value : 1;
+    
+        // Toggle logic
+        $newValue = ($currentValue == 1) ? 0 : 1;
+    
+        // Save the new value
+        if ($setting) {
+            $setting->value = $newValue;
+            $setting->save();
+        } else {
+            Setting::create(['key' => 'REGISTRATION_LINK_VISIBLE', 'value' => $newValue]);
+        }
+    
+        // Display success message
+        Toastr::success('Registration toggled successfully :)', 'Success');
+    
+        // Redirect back with status message
+        return redirect()->back()->with('status', 'Registration link visibility updated.');
+    }
+    
     public function addNewUserSave(Request $request)
 {
     try {

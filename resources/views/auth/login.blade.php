@@ -55,9 +55,16 @@
                             <div class="form-group text-center">
                                 <button class="btn btn-primary account-btn" type="submit">Login</button>
                             </div>
+                            @php
+                                $linkVisible = \App\Models\Setting::where('key', 'REGISTRATION_LINK_VISIBLE')->first()->value ?? 1;
+                            @endphp
+                            
                             <div class="account-footer">
-                                <p>Don't have an account yet? <a href="{{ route('register') }}">Register</a></p>
+                                @if($linkVisible)
+                                    <p>Don't have an account yet? <a href="{{ route('register') }}">Register</a></p>
+                                @endif
                             </div>
+
                         </form>
                         <!-- /Account Form -->
                     </div>

@@ -294,9 +294,7 @@
                         <li class="breadcrumb-item active">Delays</li>
                     </ul>
                 </div>
-                <div class="col-auto float-right ml-auto">
-                    <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_delay"><i class="fa fa-plus"></i> Request Delay</a>
-                </div>
+
             </div>
         </div>
 
@@ -384,24 +382,16 @@
         </td>
         <td class="text-right">
 
-                <a href="#" data-toggle="modal" data-target="#edit_delay"
-                   data-id="{{ $delay->id }}"
-                   data-day="{{ $delay->day }}"
-                   data-exit_time="{{ $delay->exit_time }}"
-                   data-return_time="{{ $delay->return_time }}"
-                   data-description="{{ $delay->reason }}"
-                   class="action-icon edit-exit-demand">
-                   <i class="fa fa-pencil" aria-hidden="true"></i>
-                </a>
-
-                <form action="{{ route('delays.destroy', $delay->id) }}" method="POST" style="display:inline;">
+                <form action="{{ route('delays.updateStatus', $delay->id) }}" method="POST" style="display:inline;">
                     @csrf
-                    @method('DELETE')
-                    <button type="submit" class="action-icon" style="border: none; background: none; cursor: pointer;">
-                        <i class="fa fa-trash-o" aria-hidden="true"></i>
+                    @method('PATCH')
+                    <button type="submit" name="status" value="approve" class="action-icon" style="border: none; background: none; cursor: pointer;">
+                        <i class="fa fa-check" aria-hidden="true"></i>
+                    </button>
+                    <button type="submit" name="status" value="decline" class="action-icon" style="border: none; background: none; cursor: pointer;">
+                        <i class="fa fa-times" aria-hidden="true"></i>
                     </button>
                 </form>
-
         </td>
     </tr>
     @endforeach

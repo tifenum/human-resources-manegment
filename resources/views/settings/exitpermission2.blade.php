@@ -1,16 +1,16 @@
 @extends('layouts.master')
 @section('content')
 
-{{-- @yield('nav') --}}
-<link rel="shortcut icon" type="image/x-icon" href="{{ URL::to('assets/img/photo_defaults.jpg') }}">
+        {{-- @yield('nav') --}}
+        <link rel="shortcut icon" type="image/x-icon" href="{{ URL::to('assets/img/photo_defaults.jpg') }}">
 
 		<div class="header">
 			<!-- Logo -->
 			<div class="header-left">
-				<a href="{{ route('home') }}" class="logo" style="position: relative; top: 9px;"> <img src="{{ URL::to('assets/img/photo_defaults.jpg') }}" style="width: 50px; height: 50px; border-radius: 50%; position: relative; top: -4px;" alt=""> </a>
+				<a href="{{ route('home') }}" class="logo" style="position: relative; top: 9px;"> <img src="{{ URL::to('assets/img/photo_defaults.jpg') }}" style="width: 50px; height: 50px; border-radius: 50%; position: relative; top: -9px;" alt=""> </a>
 			</div>
 			<!-- /Logo -->
-			<a id="toggle_btn" href="javascript:void(0);" style="position: relative; top: 18px;">
+			<a id="toggle_btn" href="javascript:void(0);" style="position: relative; top: -3px;">
 				<span class="bar-icon"><span></span><span></span><span></span></span>
 			</a>
 			<!-- Header Title -->
@@ -242,12 +242,6 @@
 	<!-- /Sidebar -->
 
     <style>
-        .user-img img {
-    width: 35px; /* Adjust as needed */
-    height: 30px; /* Adjust as needed */
-    border-radius: 50%; /* Ensures the image is fully rounded */
-    object-fit: cover; /* Maintains aspect ratio while covering the container */
-}
     .sidebar-menu a {
         display: flex;
         align-items: center;
@@ -264,7 +258,12 @@
         background-color: #2c3e50; /* Slightly different color on hover */
         color: #ecf0f1; /* Light text color on hover */
     }
-
+    .user-img img {
+    width: 35px; /* Adjust as needed */
+    height: 30px; /* Adjust as needed */
+    border-radius: 50%; /* Ensures the image is fully rounded */
+    object-fit: cover; /* Maintains aspect ratio while covering the container */
+}
     .sidebar-menu a.selecting {
         background-color: #34495e; /* Dark background color for selection */
         color: #ecf0f1; /* Light text color */
@@ -277,7 +276,6 @@
     }
 </style>
 
-@section('content')
 <!-- Sidebar -->
 {!! Toastr::message() !!}
 <!-- Page Wrapper -->
@@ -288,23 +286,24 @@
         <div class="page-header">
             <div class="row align-items-center">
                 <div class="col">
-                    <h3 class="page-title">Delays <span id="year"></span></h3>
+                    <h3 class="page-title">Exit Demands <span id="year"></span></h3>
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item">Home</li>
-                        <li class="breadcrumb-item active">Delays</li>
+                        <li class="breadcrumb-item active">Exit Demands</li>
                     </ul>
                 </div>
+
                 <div class="col-auto float-right ml-auto">
-                    <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_delay"><i class="fa fa-plus"></i> Request Delay</a>
+                    <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_exit_demand"><i class="fa fa-plus"></i> Request Exit</a>
                 </div>
+
             </div>
         </div>
 
-        <!-- Delay Statistics -->
+        <!-- Exit Demand Statistics -->
 
-        <!-- /Delay Statistics -->
-<!-- Delay Statistics -->
-<div class="row">
+        <!-- /Exit Demand Statistics -->
+        <div class="row">
     <div class="col-md-12">
         <div class="table-responsive">
             <table class="table table-striped custom-table mb-0">
@@ -312,44 +311,37 @@
                     <tr>
                     <th>Name</th>
 
-                        <th>Delay Day</th>
-                        <th>Exit Time</th>
-                        <th>Return Time</th>
+                        <th>Exit Day</th>
+                        <th>Department</th>
                         <th>Reason</th>
-                        <th>total time</th>
-                        <!-- <th>MD Status</th> -->
-                        <th>Head Dep</th>
-                        <!-- <th>FD Status</th> -->
-                        <th>Cheif</th>
+                        <th>Manager Director</th>
+                        <th>Head Department</th>
+                        <th>Cheif Staff</th>
                         <th>Status</th>
                         <th class="text-right">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-    @foreach($delays as $delay)
+    @foreach($exitdemand as $demand)
     <tr>
-                        <td>{{ $delay->user->name }}</td> <!-- Display the user's name -->
+    <td>{{ $demand->user->name }}</td> <!-- Display the user's name -->
 
-        <td>{{ $delay->day }}</td>
-        <td>{{ $delay->exit_time }}</td>
-        <td>{{ $delay->return_time }}</td>
+        <td>{{ $demand->exit_day }}</td>
+        <td>{{ $demand->department }}</td>
         <td class="text-center">
             <button class="btn btn-info btn-sm btn-rounded custom-btn-info" 
                     data-toggle="modal" 
                     data-target="#reasonModal" 
-                    data-description="{{ $delay->reason }}">
+                    data-description="{{ $demand->reason }}">
                 View
             </button>
         </td>
-        <td>{{ $delay->amount_of_time }}</td>
-
- 
         <td class="text-center">
     <div class="action-label">
         <a class="btn btn-white btn-sm btn-rounded" href="javascript:void(0);">
-            @if(is_null($delay->status_HD))
+            @if(is_null($demand->status_MD))
                 <i class="fa fa-dot-circle-o text-warning"></i> Unchecked
-            @elseif($delay->status_HD)
+            @elseif($demand->status_MD)
                 <i class="fa fa-dot-circle-o text-success"></i> Approved
             @else
                 <i class="fa fa-dot-circle-o text-danger"></i> Declined
@@ -357,12 +349,27 @@
         </a>
     </div>
 </td>
-<td class="text-center">
+
+        <td class="text-center">
     <div class="action-label">
         <a class="btn btn-white btn-sm btn-rounded" href="javascript:void(0);">
-            @if(is_null($delay->status_Ch5))
+            @if(is_null($demand->status_HD))
                 <i class="fa fa-dot-circle-o text-warning"></i> Unchecked
-            @elseif($delay->status_Ch5)
+            @elseif($demand->status_HD)
+                <i class="fa fa-dot-circle-o text-success"></i> Approved
+            @else
+                <i class="fa fa-dot-circle-o text-danger"></i> Declined
+            @endif
+        </a>
+    </div>
+</td>
+
+        <td class="text-center">
+    <div class="action-label">
+        <a class="btn btn-white btn-sm btn-rounded" href="javascript:void(0);">
+            @if(is_null($demand->status_Ch5))
+                <i class="fa fa-dot-circle-o text-warning"></i> Unchecked
+            @elseif($demand->status_Ch5)
                 <i class="fa fa-dot-circle-o text-success"></i> Approved
             @else
                 <i class="fa fa-dot-circle-o text-danger"></i> Declined
@@ -374,7 +381,7 @@
         <td class="text-center">
             <div class="action-label">
                 <a class="btn btn-white btn-sm btn-rounded" href="javascript:void(0);">
-                    @if($delay->confirmed)
+                    @if($demand->confirmed)
                         <i class="fa fa-dot-circle-o text-success"></i> Approved
                     @else
                         <i class="fa fa-dot-circle-o text-danger"></i> Declined
@@ -384,35 +391,25 @@
         </td>
         <td class="text-right">
 
-                <a href="#" data-toggle="modal" data-target="#edit_delay"
-                   data-id="{{ $delay->id }}"
-                   data-day="{{ $delay->day }}"
-                   data-exit_time="{{ $delay->exit_time }}"
-                   data-return_time="{{ $delay->return_time }}"
-                   data-description="{{ $delay->reason }}"
-                   class="action-icon edit-exit-demand">
-                   <i class="fa fa-pencil" aria-hidden="true"></i>
-                </a>
-
-                <form action="{{ route('delays.destroy', $delay->id) }}" method="POST" style="display:inline;">
+                <form action="{{ route('exitdemand.updateStatus', $demand->id) }}" method="POST" style="display:inline;">
                     @csrf
-                    @method('DELETE')
-                    <button type="submit" class="action-icon" style="border: none; background: none; cursor: pointer;">
-                        <i class="fa fa-trash-o" aria-hidden="true"></i>
+                    @method('PATCH')
+                    <button type="submit" name="status" value="approve" class="action-icon" style="border: none; background: none; cursor: pointer;">
+                        <i class="fa fa-check" aria-hidden="true"></i>
+                    </button>
+                    <button type="submit" name="status" value="decline" class="action-icon" style="border: none; background: none; cursor: pointer;">
+                        <i class="fa fa-times" aria-hidden="true"></i>
                     </button>
                 </form>
-
         </td>
     </tr>
     @endforeach
 </tbody>
 
-
             </table>
         </div>
     </div>
 </div>
-
 
         <!-- Reason Modal -->
         <div class="modal fade custom-modal" id="reasonModal" tabindex="-1" role="dialog" aria-labelledby="reasonModalLabel" aria-hidden="true">
@@ -434,92 +431,80 @@
             </div>
         </div>
 
-        <!-- Add Delay Modal -->
-<!-- Add Delay Modal -->
-<div id="add_delay" class="modal custom-modal fade" role="dialog">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Request Delay</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form method="POST" action="{{ route('delays.store') }}">
-                    @csrf
-                    <input type="hidden" name="user_id" value="{{ auth()->id() }}">
+        <!-- Add Exit Demand Modal -->
+        <div id="add_exit_demand" class="modal custom-modal fade" role="dialog">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Request Exit</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="POST" action="{{ route('exitdemand.store') }}">
+                            @csrf
+                            <input type="hidden" name="user_id" value="{{ auth()->id() }}">
 
-                    <div class="form-group">
-                        <label>Delay Day <span class="text-danger">*</span></label>
-                        <input id="day" class="form-control datetimepicker" name="day" type="text" required>
+                            <div class="form-group">
+                                <label>Exit Day <span class="text-danger">*</span></label>
+                                <input id="exit_day" class="form-control datetimepicker" name="exit_day" type="text" required>
+                            </div>
+
+                            <div class="form-group">
+                        <label>Department <span class="text-danger">*</span></label>
+                        <input class="form-control" name="department" type="text" value="{{ auth()->user()->department }}" disabled>
+                        <input type="hidden" name="department" value="{{ auth()->user()->department }}">
                     </div>
 
-                    <div class="form-group">
-                        <label>Exit Time <span class="text-danger">*</span></label>
-                        <input id="exit_time" class="form-control timepicker" name="exit_time" type="time" required>
-                    </div>
+                            <div class="form-group">
+                                <label>Reason</label>
+                                <textarea class="form-control" name="reason" rows="4" placeholder="Add a reason"></textarea>
+                            </div>
 
-                    <div class="form-group">
-                        <label>Return Time <span class="text-danger">*</span></label>
-                        <input id="return_time" class="form-control timepicker" name="return_time" type="time" required>
+                            <div class="submit-section text-center">
+                                <button type="submit" class="btn btn-primary submit-btn">Save</button>
+                            </div>
+                        </form>
                     </div>
-
-                    <div class="form-group">
-                        <label>Reason</label>
-                        <textarea class="form-control" name="reason" rows="4" placeholder="Add a reason"></textarea>
-                    </div>
-
-                    <div class="submit-section text-center">
-                        <button type="submit" class="btn btn-primary submit-btn">Save</button>
-                    </div>
-                </form>
+                </div>
             </div>
         </div>
-    </div>
-</div>
 
-
-        <!-- Edit Delay Modal -->
-<!-- Edit Delay Modal -->
-<div class="modal custom-modal fade" id="edit_delay" tabindex="-1" role="dialog" aria-labelledby="editDelayModalLabel" aria-hidden="true">
+        <!-- Edit Exit Demand Modal -->
+        <div class="modal custom-modal fade" id="edit_exit_demand" tabindex="-1" role="dialog" aria-labelledby="editExitDemandModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editDelayModalLabel">Edit Delay</h5>
+                <h5 class="modal-title" id="editExitDemandModalLabel">Edit Exit Demand</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-            <form id="edit_delay_form" method="POST" action="">
-            @csrf
+                <form id="edit_exit_demand_form" method="POST" action="">
+                    @csrf
                     @method('PUT')
                     
                     <input type="hidden" name="id" id="edit_id">
 
                     <div class="form-group">
-                        <label>Delay Day <span class="text-danger">*</span></label>
-                        <input id="edit_day" class="form-control datetimepicker" name="day" type="text" required>
+                        <label>Exit Day <span class="text-danger">*</span></label>
+                        <input id="edit_exit_day" class="form-control datetimepicker" name="exit_day" type="text" required>
                     </div>
 
                     <div class="form-group">
-                        <label>Exit Time <span class="text-danger">*</span></label>
-                        <input id="edit_exit_time" class="form-control timepicker" name="exit_time" type="time" required>
+                        <label>Department <span class="text-danger">*</span></label>
+                        <input class="form-control" name="department" type="text" value="{{ auth()->user()->department }}" disabled>
+                        <input type="hidden" name="department" value="{{ auth()->user()->department }}">
                     </div>
-
                     <div class="form-group">
-                        <label>Return Time <span class="text-danger">*</span></label>
-                        <input id="edit_return_time" class="form-control timepicker" name="return_time" type="time" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Reason</label>
-                        <textarea class="form-control" name="reason" id="edit_reason" rows="4" placeholder="Add a reason"></textarea>
+                        <label>Reason<span class="text-danger">*</span></label>
+                        <textarea id="edit_reason" class="form-control" name="reason" rows="4" placeholder="Add a reason"></textarea>
                     </div>
 
                     <div class="submit-section text-center">
-                        <button type="submit" class="btn btn-primary submit-btn">Save</button>
+                        <button type="submit" class="btn btn-primary submit-btn">Update</button>
                     </div>
                 </form>
             </div>
@@ -527,44 +512,9 @@
     </div>
 </div>
 
+
     </div>
-    <!-- /Page Content -->
 </div>
-<!-- /Page Wrapper -->
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const reasonModal = document.getElementById('reasonModal');
-    const modalDescription = reasonModal.querySelector('#modalDescription');
-
-    $('#reasonModal').on('show.bs.modal', function(event) {
-        const button = $(event.relatedTarget);
-        const description = button.data('description');
-        modalDescription.textContent = description;
-    });
-
-    $('#edit_delay').on('show.bs.modal', function(event) {
-        const button = $(event.relatedTarget);
-        const id = button.data('id');
-        const day = button.data('day');
-        const exitTime = button.data('exit_time');
-        const returnTime = button.data('return_time');
-        const description = button.data('description');
-
-        const modal = $(this);
-        modal.find('#edit_id').val(id);
-        modal.find('#edit_day').val(day);
-        modal.find('#edit_exit_time').val(exitTime);
-        modal.find('#edit_return_time').val(returnTime);
-        modal.find('#edit_reason').val(description);
-
-        // Set the form action URL dynamically
-        const formAction = `/delay/${id}`;
-        modal.find('#edit_delay_form').attr('action', formAction);
-    });
-});
-
-</script>
 <style>
 
 .table-responsive {
@@ -574,47 +524,50 @@ document.addEventListener('DOMContentLoaded', function() {
 .table {
     width: 100%;
     table-layout: fixed; /* Ensures table cells take up equal width */
-}
-.user-img img {
-    width: 35px; /* Adjust as needed */
-    height: 30px; /* Adjust as needed */
-    border-radius: 50%; /* Ensures the image is fully rounded */
-    object-fit: cover; /* Maintains aspect ratio while covering the container */
+    border-collapse: collapse; /* Ensures borders are collapsed into a single border */
 }
 
 .table th, .table td {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap; /* Prevents text wrapping */
+    padding: 8px; /* Add padding for better spacing */
 }
 
-.table th:nth-child(1), .table td:nth-child(2) { /* For Date Wish */
-    width: 100px;
-}
-.table th:nth-child(2), .table td:nth-child(3) { /* For Date Wish */
-    width: 130px;
-}
-.table th:nth-child(3), .table td:nth-child(4) { /* For Date Wish */
-    width: 130px;
-}
-.table th:nth-child(4), .table td:nth-child(5) { /* For Date Wish */
-    width: 140px;
+.table th {
+    background-color: #f8f9fa; /* Background color for header */
 }
 
-.table th:nth-child(5), .table td:nth-child(6) { /* For Description */
-    width: 100px; /* Increase for longer descriptions */
+.table th:nth-child(1), .table td:nth-child(1) {
+    width: 100px; /* Adjusted width */
 }
-.table th:nth-child(6), .table td:nth-child(7) { /* For Description */
-    width: 180px; /* Increase for longer descriptions */
+
+.table th:nth-child(2), .table td:nth-child(2) {
+    width: 150px; /* Adjusted width */
 }
-.table th:nth-child(7), .table td:nth-child(8) { /* For Description */
-    width: 120px; /* Increase for longer descriptions */
+
+.table th:nth-child(3), .table td:nth-child(3) {
+    width: 150px; /* Adjusted width */
 }
-.table th:nth-child(8), .table td:nth-child(9) { /* For Description */
-    width: 120px; /* Increase for longer descriptions */
+
+.table th:nth-child(4), .table td:nth-child(4) {
+    width: 100px; /* Adjusted width */
 }
-.table th:nth-child(9), .table td:nth-child(10) { /* For Description */
-    width: 120px; /* Increase for longer descriptions */
+
+.table th:nth-child(5), .table td:nth-child(5) {
+    width: 190px; /* Adjusted width */
+}
+
+.table th:nth-child(6), .table td:nth-child(6) {
+    width: 180px; /* Adjusted width */
+}
+
+.table th:nth-child(7), .table td:nth-child(7) {
+    width: 150px; /* Adjusted width */
+}
+
+.table th:nth-child(8), .table td:nth-child(8) {
+    width: 120px; /* Adjusted width */
 }
 
 .action-icon {
@@ -632,28 +585,76 @@ document.addEventListener('DOMContentLoaded', function() {
 }
 
 .table td {
-    max-width: 400px; /* Increase if needed */
+    max-width: 200px; /* Adjusted to fit content */
+    word-wrap: break-word; /* Allows breaking long words */
 }
 
 .custom-btn-info {
-  background-color: #f43b48; /* Button background color */
-  border-color: #f43b48; /* Button border color */
-  color: white; /* Text color */
+    background-color: #f43b48; /* Button background color */
+    border-color: #f43b48; /* Button border color */
+    color: white; /* Text color */
 }
 
 .custom-btn-info:hover,
 .custom-btn-info:focus,
 .custom-btn-info:active {
-  background-color: #e03a44; /* Darker color for hover and focus */
-  border-color: #e03a44; /* Border color for hover and focus */
-  color: white; /* Text color on hover and focus */
-  box-shadow: none; /* Remove any box shadow */
+    background-color: #e03a44; /* Darker color for hover and focus */
+    border-color: #e03a44; /* Border color for hover and focus */
+    color: white; /* Text color on hover and focus */
+    box-shadow: none; /* Remove any box shadow */
 }
 
 .custom-btn-info:active {
-  background-color: #d93a3e; /* Even darker color for active state */
-  border-color: #d93a3e; /* Border color for active state */
+    background-color: #d93a3e; /* Even darker color for active state */
+    border-color: #d93a3e; /* Border color for active state */
+}
+.user-img img {
+    width: 35px; /* Adjust as needed */
+    height: 30px; /* Adjust as needed */
+    border-radius: 50%; /* Ensures the image is fully rounded */
+    object-fit: cover; /* Maintains aspect ratio while covering the container */
 }
 
 </style>
+<script>
+$(document).ready(function() {
+    $('#edit_exit_demand').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // Button that triggered the modal
+        var id = button.data('id'); // Extract info from data-* attributes
+
+        // Construct the action URL dynamically
+        var actionUrl = '/exit_demand/update/' + id;
+
+        var modal = $(this);
+        modal.find('form').attr('action', actionUrl); // Set the action URL
+        modal.find('#edit_id').val(id);
+
+        // Set other form fields
+        modal.find('#edit_exit_day').val(button.data('exit_day'));
+        modal.find('#edit_department').val(button.data('department'));
+        modal.find('#edit_reason').val(button.data('description')); // Ensure consistency here
+    });
+
+    // On form submit, convert the date to the correct format
+    $('#edit_exit_demand_form').on('submit', function(event) {
+        var exitDayInput = $('#edit_exit_day');
+        var exitDay = exitDayInput.val(); // Get the value from the input
+        var formattedDate = moment(exitDay, 'DD-MM-YYYY').format('YYYY-MM-DD'); // Convert to 'YYYY-MM-DD'
+        
+        // Set the formatted date to the hidden input field
+        exitDayInput.val(formattedDate);
+    });
+
+    $('#reasonModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var description = button.data('description');
+        
+        var modal = $(this);
+        modal.find('#modalDescription').text(description);
+    });
+});
+</script>
+
+
+
 @endsection

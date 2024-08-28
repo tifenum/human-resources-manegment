@@ -52,20 +52,34 @@ Auth::routes();
 // ----------------------------- main dashboard ------------------------------//
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('em/dashboard', [App\Http\Controllers\HomeController::class, 'emDashboard'])->name('em/dashboard');
-
+Route::post('/admin/toggle-registration-link', [App\Http\Controllers\UserManagementController::class, 'toggleRegistrationLink'])->name('admin.toggleRegistrationLink');
 // -----------------------------settings----------------------------------------//
 Route::get('company/settings/page', [App\Http\Controllers\SettingController::class, 'companySettings'])->middleware('auth')->name('company/settings/page');
 Route::get('holidays', [App\Http\Controllers\HolidayController::class, 'index'])->middleware('auth')->name('holidays');
 Route::get('exits_demands', [App\Http\Controllers\ExitDemandController::class, 'index'])->middleware('auth')->name('exits_demands');
+Route::get('exits_demands2', [App\Http\Controllers\ExitDemandController::class, 'index2'])->middleware('auth')->name('exits_demands2');
+
 Route::get('delays', [App\Http\Controllers\DelayController::class, 'index'])->middleware('auth')->name('delays');
+Route::get('delays2', [App\Http\Controllers\DelayController::class, 'index2'])->middleware('auth')->name('delays2');
+
 Route::get('certificates', [App\Http\Controllers\CertificateController::class, 'index'])->middleware('auth')->name('certificates');
+Route::get('certificates2', [App\Http\Controllers\CertificateController::class, 'index2'])->middleware('auth')->name('certificates2');
 
 Route::post('/advance/store', [App\Http\Controllers\AdvanceController::class, 'store'])->name('advance.store');
 Route::get('/advance/create', [App\Http\Controllers\AdvanceController::class, 'create'])->name('advance.create');
 Route::get('/holiday-request', [App\Http\Controllers\HolidayController::class, 'index'])->name('holiday.index');
+Route::get('/holiday-request2', [App\Http\Controllers\HolidayController::class, 'index2'])->name('holiday.index2');
 Route::post('/holiday-request/store', [App\Http\Controllers\HolidayController::class, 'store'])->name('holiday.store');
 Route::get('/holidays', [App\Http\Controllers\HolidayController::class, 'index'])->middleware('auth')->name('holiday.index');
+Route::get('/holidays2', [App\Http\Controllers\HolidayController::class, 'index2'])->middleware('auth')->name('holiday.index2');
+
 // In routes/web.php
+
+// web.php
+Route::post('/departments', [App\Http\Controllers\DepartmentController::class, 'store'])->name('departments.store');
+Route::delete('/departments/{id}', [App\Http\Controllers\DepartmentController::class, 'destroy'])->name('departments.destroy');
+
+
 
 Route::delete('/holidays/{id}', [App\Http\Controllers\HolidayController::class, 'destroy'])->name('holiday.destroy');
 Route::put('/holiday/{id}', [App\Http\Controllers\HolidayController::class, 'update'])->name('holiday.update');
@@ -178,6 +192,7 @@ Route::get('form/job/view', [App\Http\Controllers\JobController::class, 'jobView
 
 // ----------------------------- form employee ------------------------------//
 Route::get('advance', [App\Http\Controllers\AdvanceController::class, 'index'])->middleware('auth')->name('advance');
+Route::get('advance2', [App\Http\Controllers\AdvanceController::class, 'index2'])->middleware('auth')->name('advance2');
 Route::get('all/employee/list', [App\Http\Controllers\EmployeeController::class, 'listAllEmployee'])->middleware('auth')->name('all/employee/list');
 Route::post('all/employee/save', [App\Http\Controllers\EmployeeController::class, 'saveRecord'])->middleware('auth')->name('all/employee/save');
 Route::get('all/employee/view/edit/{employee_id}', [App\Http\Controllers\EmployeeController::class, 'viewRecord'])->middleware('auth');

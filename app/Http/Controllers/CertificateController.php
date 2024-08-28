@@ -152,15 +152,19 @@ class CertificateController extends Controller
     {
         $user = Auth::user();
     
-        if ($user->role_name === 'Employee') {
-            $certificates = Certificate::where('user_id', $user->id)->with('user')->get();
-        } else {
-            $certificates = Certificate::with('user')->get();
-        }
-    
+        $certificates = Certificate::where('user_id', $user->id)->with('user')->get();
+
         return view('settings.certificatedemand', compact('certificates'));
 }
+public function index2()
+{
+    $user = Auth::user();
 
+    $certificates = Certificate::with('user')->get();
+
+
+    return view('settings.certificatedemand2', compact('certificates'));
+}
     public function edit($id)
     {
         $certificate = Certificate::findOrFail($id);

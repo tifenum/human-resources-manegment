@@ -1,16 +1,15 @@
+
 @extends('layouts.master')
 @section('content')
 
-{{-- @yield('nav') --}}
-<link rel="shortcut icon" type="image/x-icon" href="{{ URL::to('assets/img/photo_defaults.jpg') }}">
-
+        {{-- @yield('nav') --}}
 		<div class="header">
 			<!-- Logo -->
 			<div class="header-left">
-				<a href="{{ route('home') }}" class="logo" style="position: relative; top: 9px;"> <img src="{{ URL::to('assets/img/photo_defaults.jpg') }}" style="width: 50px; height: 50px; border-radius: 50%; position: relative; top: -4px;" alt=""> </a>
+				<a href="{{ route('home') }}" class="logo" style="position: relative; top: 9px;"> <img src="{{ URL::to('assets/img/photo_defaults.jpg') }}" style="width: 50px; height: 50px; border-radius: 50%; position: relative; top: -9px;" alt=""> </a>
 			</div>
 			<!-- /Logo -->
-			<a id="toggle_btn" href="javascript:void(0);" style="position: relative; top: 18px;">
+			<a id="toggle_btn" href="javascript:void(0);" style="position: relative; top: -3px;">
 				<span class="bar-icon"><span></span><span></span><span></span></span>
 			</a>
 			<!-- Header Title -->
@@ -239,34 +238,26 @@
             </div>
         </div>
     </div>
-	<!-- /Sidebar -->
-
     <style>
-        .user-img img {
-    width: 35px; /* Adjust as needed */
-    height: 30px; /* Adjust as needed */
-    border-radius: 50%; /* Ensures the image is fully rounded */
-    object-fit: cover; /* Maintains aspect ratio while covering the container */
-}
     .sidebar-menu a {
         display: flex;
         align-items: center;
         padding: 10px 20px;
         color: #ecf0f1;
         font-size: 15px;
-        text-decoration: none; /* Remove underline */
-        border-radius: 8px; /* More curvy corners */
-        transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
-        margin: 5px 0; /* Space between menu items */
+        text-decoration: none; 
+        border-radius: 8px;
+        transition: background-color 0.3s ease, color 0.3s ease;
+        margin: 5px 0;
     }
 
     .sidebar-menu a:hover {
-        background-color: #2c3e50; /* Slightly different color on hover */
-        color: #ecf0f1; /* Light text color on hover */
+        background-color: #2c3e50; 
+        color: #ecf0f1; 
     }
 
     .sidebar-menu a.selecting {
-        background-color: #34495e; /* Dark background color for selection */
+        background-color: #34495e; 
         color: #ecf0f1; /* Light text color */
         font-weight: bold; /* Bold text for emphasis */
         border-radius: 8px; /* Match rounded corners for selection */
@@ -276,80 +267,66 @@
         color: #ecf0f1; /* Match icon color with text */
     }
 </style>
+    <!-- /Sidebar -->
+    {{-- message --}}
+    {!! Toastr::message() !!}
+    <!-- Page Wrapper -->
+    <div class="page-wrapper">
+        <!-- Page Content -->
+        <div class="content container-fluid">
+            <!-- Page Header -->
+            <div class="page-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h3 class="page-title">Advances <span id="year"></span></h3>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item">Home</a></li>
+                            <li class="breadcrumb-item active">Advances</li>
+                        </ul>
+                    </div>
 
-@section('content')
-<!-- Sidebar -->
-{!! Toastr::message() !!}
-<!-- Page Wrapper -->
-<div class="page-wrapper">
-    <!-- Page Content -->
-    <div class="content container-fluid">
-        <!-- Page Header -->
-        <div class="page-header">
-            <div class="row align-items-center">
-                <div class="col">
-                    <h3 class="page-title">Delays <span id="year"></span></h3>
-                    <ul class="breadcrumb">
-                        <li class="breadcrumb-item">Home</li>
-                        <li class="breadcrumb-item active">Delays</li>
-                    </ul>
-                </div>
-                <div class="col-auto float-right ml-auto">
-                    <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_delay"><i class="fa fa-plus"></i> Request Delay</a>
                 </div>
             </div>
-        </div>
 
-        <!-- Delay Statistics -->
 
-        <!-- /Delay Statistics -->
-<!-- Delay Statistics -->
-<div class="row">
-    <div class="col-md-12">
-        <div class="table-responsive">
-            <table class="table table-striped custom-table mb-0">
-                <thead>
-                    <tr>
-                    <th>Name</th>
 
-                        <th>Delay Day</th>
-                        <th>Exit Time</th>
-                        <th>Return Time</th>
-                        <th>Reason</th>
-                        <th>total time</th>
-                        <!-- <th>MD Status</th> -->
-                        <th>Head Dep</th>
-                        <!-- <th>FD Status</th> -->
-                        <th>Cheif</th>
-                        <th>Status</th>
-                        <th class="text-right">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-    @foreach($delays as $delay)
-    <tr>
-                        <td>{{ $delay->user->name }}</td> <!-- Display the user's name -->
+            <div class="row">
+            <div class="col-md-12">
+    <div class="table-responsive">
+        <table class="table table-striped custom-table mb-0">
+            <thead>
+                <tr>
+                <th>Name</th>
+                    <th>Amount</th>
+                    <th>Date</th>
+                    <th>Reason</th>
+                    <th>Chief</th>
+                    <th>Depatment Head</th>
+                    <th>Finatial Director</th>
+                    <th>Manager</th>
+                    <th>Status</th>
+                    <th class="text-right">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($advances as $advance)
 
-        <td>{{ $delay->day }}</td>
-        <td>{{ $delay->exit_time }}</td>
-        <td>{{ $delay->return_time }}</td>
-        <td class="text-center">
-            <button class="btn btn-info btn-sm btn-rounded custom-btn-info" 
-                    data-toggle="modal" 
-                    data-target="#reasonModal" 
-                    data-description="{{ $delay->reason }}">
-                View
-            </button>
-        </td>
-        <td>{{ $delay->amount_of_time }}</td>
+                <tr>
+                <td>{{ $advance->user->name }}</td> <!-- Display the user's name -->
 
- 
-        <td class="text-center">
+                    <td>{{ $advance->amount }} dt</td>
+                    <td>{{ $advance->date_wish }}</td>
+                    <td class="text-center">
+    <button class="btn btn-info btn-sm btn-rounded custom-btn-info" data-toggle="modal" data-target="#reasonModal" data-description="{{ $advance->description }}">
+        View
+    </button>
+</td>
+                    <td class="text-center">
     <div class="action-label">
         <a class="btn btn-white btn-sm btn-rounded" href="javascript:void(0);">
-            @if(is_null($delay->status_HD))
+            @if(is_null($advance->chief_staff_status))
                 <i class="fa fa-dot-circle-o text-warning"></i> Unchecked
-            @elseif($delay->status_HD)
+            @elseif($advance->chief_staff_status)
                 <i class="fa fa-dot-circle-o text-success"></i> Approved
             @else
                 <i class="fa fa-dot-circle-o text-danger"></i> Declined
@@ -360,9 +337,35 @@
 <td class="text-center">
     <div class="action-label">
         <a class="btn btn-white btn-sm btn-rounded" href="javascript:void(0);">
-            @if(is_null($delay->status_Ch5))
+            @if(is_null($advance->head_department_status))
                 <i class="fa fa-dot-circle-o text-warning"></i> Unchecked
-            @elseif($delay->status_Ch5)
+            @elseif($advance->head_department_status)
+                <i class="fa fa-dot-circle-o text-success"></i> Approved
+            @else
+                <i class="fa fa-dot-circle-o text-danger"></i> Declined
+            @endif
+        </a>
+    </div>
+</td>
+<td class="text-center">
+    <div class="action-label">
+        <a class="btn btn-white btn-sm btn-rounded" href="javascript:void(0);">
+            @if(is_null($advance->financial_director_status))
+                <i class="fa fa-dot-circle-o text-warning"></i> Unchecked
+            @elseif($advance->financial_director_status)
+                <i class="fa fa-dot-circle-o text-success"></i> Approved
+            @else
+                <i class="fa fa-dot-circle-o text-danger"></i> Declined
+            @endif
+        </a>
+    </div>
+</td>
+<td class="text-center">
+    <div class="action-label">
+        <a class="btn btn-white btn-sm btn-rounded" href="javascript:void(0);">
+            @if(is_null($advance->manager_director_status))
+                <i class="fa fa-dot-circle-o text-warning"></i> Unchecked
+            @elseif($advance->manager_director_status)
                 <i class="fa fa-dot-circle-o text-success"></i> Approved
             @else
                 <i class="fa fa-dot-circle-o text-danger"></i> Declined
@@ -371,202 +374,43 @@
     </div>
 </td>
 
-        <td class="text-center">
-            <div class="action-label">
-                <a class="btn btn-white btn-sm btn-rounded" href="javascript:void(0);">
-                    @if($delay->confirmed)
-                        <i class="fa fa-dot-circle-o text-success"></i> Approved
-                    @else
-                        <i class="fa fa-dot-circle-o text-danger"></i> Declined
-                    @endif
-                </a>
-            </div>
-        </td>
-        <td class="text-right">
-
-                <a href="#" data-toggle="modal" data-target="#edit_delay"
-                   data-id="{{ $delay->id }}"
-                   data-day="{{ $delay->day }}"
-                   data-exit_time="{{ $delay->exit_time }}"
-                   data-return_time="{{ $delay->return_time }}"
-                   data-description="{{ $delay->reason }}"
-                   class="action-icon edit-exit-demand">
-                   <i class="fa fa-pencil" aria-hidden="true"></i>
-                </a>
-
-                <form action="{{ route('delays.destroy', $delay->id) }}" method="POST" style="display:inline;">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="action-icon" style="border: none; background: none; cursor: pointer;">
-                        <i class="fa fa-trash-o" aria-hidden="true"></i>
-                    </button>
-                </form>
-
-        </td>
-    </tr>
-    @endforeach
-</tbody>
-
-
-            </table>
+                    <td class="text-center">
+                        <div class="action-label">
+                            <a class="btn btn-white btn-sm btn-rounded" href="javascript:void(0);">
+                                @if($advance->accepted)
+                                    <i class="fa fa-dot-circle-o text-success"></i> Approved
+                                @else
+                                    <i class="fa fa-dot-circle-o text-danger"></i> Declined
+                                @endif
+                            </a>
+                        </div>
+                    </td>
+                    <td class="text-right">
+                    @if($advance->accepted)
+                    <div style="text-align: center; width: 120%;">
+            <i class="fa fa-check-circle" aria-hidden="true" style="color: green; font-size: 24px;" title="Accepted"></i>
         </div>
+        @endif
+                    <form action="{{ route('advance.updateStatus', $advance->id) }}" method="POST" style="display:inline;">
+    @csrf
+    @method('PATCH')
+    <button type="submit" name="status" value="approve" class="action-icon" style="border: none; background: none; cursor: pointer;">
+        <i class="fa fa-check" aria-hidden="true"></i>
+    </button>
+    <button type="submit" name="status" value="decline" class="action-icon" style="border: none; background: none; cursor: pointer;">
+        <i class="fa fa-times" aria-hidden="true"></i>
+    </button>
+</form>
+</td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
     </div>
 </div>
+<!-- Reason Modal -->
 
-
-        <!-- Reason Modal -->
-        <div class="modal fade custom-modal" id="reasonModal" tabindex="-1" role="dialog" aria-labelledby="reasonModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="reasonModalLabel">Description</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body text-center">
-                        <p id="modalDescription">Your description goes here.</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary submit-btn" data-dismiss="modal">OK</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Add Delay Modal -->
-<!-- Add Delay Modal -->
-<div id="add_delay" class="modal custom-modal fade" role="dialog">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Request Delay</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form method="POST" action="{{ route('delays.store') }}">
-                    @csrf
-                    <input type="hidden" name="user_id" value="{{ auth()->id() }}">
-
-                    <div class="form-group">
-                        <label>Delay Day <span class="text-danger">*</span></label>
-                        <input id="day" class="form-control datetimepicker" name="day" type="text" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Exit Time <span class="text-danger">*</span></label>
-                        <input id="exit_time" class="form-control timepicker" name="exit_time" type="time" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Return Time <span class="text-danger">*</span></label>
-                        <input id="return_time" class="form-control timepicker" name="return_time" type="time" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Reason</label>
-                        <textarea class="form-control" name="reason" rows="4" placeholder="Add a reason"></textarea>
-                    </div>
-
-                    <div class="submit-section text-center">
-                        <button type="submit" class="btn btn-primary submit-btn">Save</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-        <!-- Edit Delay Modal -->
-<!-- Edit Delay Modal -->
-<div class="modal custom-modal fade" id="edit_delay" tabindex="-1" role="dialog" aria-labelledby="editDelayModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editDelayModalLabel">Edit Delay</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-            <form id="edit_delay_form" method="POST" action="">
-            @csrf
-                    @method('PUT')
-                    
-                    <input type="hidden" name="id" id="edit_id">
-
-                    <div class="form-group">
-                        <label>Delay Day <span class="text-danger">*</span></label>
-                        <input id="edit_day" class="form-control datetimepicker" name="day" type="text" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Exit Time <span class="text-danger">*</span></label>
-                        <input id="edit_exit_time" class="form-control timepicker" name="exit_time" type="time" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Return Time <span class="text-danger">*</span></label>
-                        <input id="edit_return_time" class="form-control timepicker" name="return_time" type="time" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Reason</label>
-                        <textarea class="form-control" name="reason" id="edit_reason" rows="4" placeholder="Add a reason"></textarea>
-                    </div>
-
-                    <div class="submit-section text-center">
-                        <button type="submit" class="btn btn-primary submit-btn">Save</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-    </div>
-    <!-- /Page Content -->
-</div>
-<!-- /Page Wrapper -->
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const reasonModal = document.getElementById('reasonModal');
-    const modalDescription = reasonModal.querySelector('#modalDescription');
-
-    $('#reasonModal').on('show.bs.modal', function(event) {
-        const button = $(event.relatedTarget);
-        const description = button.data('description');
-        modalDescription.textContent = description;
-    });
-
-    $('#edit_delay').on('show.bs.modal', function(event) {
-        const button = $(event.relatedTarget);
-        const id = button.data('id');
-        const day = button.data('day');
-        const exitTime = button.data('exit_time');
-        const returnTime = button.data('return_time');
-        const description = button.data('description');
-
-        const modal = $(this);
-        modal.find('#edit_id').val(id);
-        modal.find('#edit_day').val(day);
-        modal.find('#edit_exit_time').val(exitTime);
-        modal.find('#edit_return_time').val(returnTime);
-        modal.find('#edit_reason').val(description);
-
-        // Set the form action URL dynamically
-        const formAction = `/delay/${id}`;
-        modal.find('#edit_delay_form').attr('action', formAction);
-    });
-});
-
-</script>
 <style>
-
 .table-responsive {
     overflow-x: auto;
 }
@@ -574,12 +418,6 @@ document.addEventListener('DOMContentLoaded', function() {
 .table {
     width: 100%;
     table-layout: fixed; /* Ensures table cells take up equal width */
-}
-.user-img img {
-    width: 35px; /* Adjust as needed */
-    height: 30px; /* Adjust as needed */
-    border-radius: 50%; /* Ensures the image is fully rounded */
-    object-fit: cover; /* Maintains aspect ratio while covering the container */
 }
 
 .table th, .table td {
@@ -589,34 +427,36 @@ document.addEventListener('DOMContentLoaded', function() {
 }
 
 .table th:nth-child(1), .table td:nth-child(2) { /* For Date Wish */
-    width: 100px;
+    width: 75px;
 }
 .table th:nth-child(2), .table td:nth-child(3) { /* For Date Wish */
-    width: 130px;
+    width: 80px;
 }
 .table th:nth-child(3), .table td:nth-child(4) { /* For Date Wish */
-    width: 130px;
+    width: 90px;
 }
 .table th:nth-child(4), .table td:nth-child(5) { /* For Date Wish */
-    width: 140px;
+    width: 75px;
 }
 
 .table th:nth-child(5), .table td:nth-child(6) { /* For Description */
-    width: 100px; /* Increase for longer descriptions */
+    width: 90px; /* Increase for longer descriptions */
 }
 .table th:nth-child(6), .table td:nth-child(7) { /* For Description */
-    width: 180px; /* Increase for longer descriptions */
+    width: 130px; /* Increase for longer descriptions */
 }
 .table th:nth-child(7), .table td:nth-child(8) { /* For Description */
-    width: 120px; /* Increase for longer descriptions */
+    width: 130px; /* Increase for longer descriptions */
 }
 .table th:nth-child(8), .table td:nth-child(9) { /* For Description */
-    width: 120px; /* Increase for longer descriptions */
+    width: 90px; /* Increase for longer descriptions */
 }
 .table th:nth-child(9), .table td:nth-child(10) { /* For Description */
-    width: 120px; /* Increase for longer descriptions */
+    width: 90px; /* Increase for longer descriptions */
 }
-
+.table th:nth-child(10), .table td:nth-child(11) { /* For Description */
+    width: 80px; /* Increase for longer descriptions */
+}
 .action-icon {
     color: #333; /* Adjust color as needed */
     font-size: 20px; /* Adjust size as needed */
@@ -640,6 +480,12 @@ document.addEventListener('DOMContentLoaded', function() {
   border-color: #f43b48; /* Button border color */
   color: white; /* Text color */
 }
+.user-img img {
+    width: 35px; /* Adjust as needed */
+    height: 30px; /* Adjust as needed */
+    border-radius: 50%; /* Ensures the image is fully rounded */
+    object-fit: cover; /* Maintains aspect ratio while covering the container */
+}
 
 .custom-btn-info:hover,
 .custom-btn-info:focus,
@@ -656,4 +502,158 @@ document.addEventListener('DOMContentLoaded', function() {
 }
 
 </style>
+        <!-- /Page Content -->
+<!-- Reason Modal -->
+<div class="modal fade custom-modal" id="reasonModal" tabindex="-1" role="dialog" aria-labelledby="reasonModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="reasonModalLabel">Description</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                <p id="modalDescription">Your description goes here.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary submit-btn" data-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+		<!-- Add Leave Modal -->
+<!-- Add Advance Modal -->
+<div id="add_advance" class="modal custom-modal fade" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Demand of Advance</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="{{ route('advance.store') }}">
+                    @csrf
+                    <input type="hidden" name="user_id" value="{{ auth()->id() }}">
+
+                    <div class="form-group">
+                        <label>Amount <span class="text-danger">*</span></label>
+                        <input class="form-control" name="amount" type="number" step="0.01" placeholder="Enter the amount" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Date Wish <span class="text-danger">*</span></label>
+                        <div class="cal-icon">
+                                    <input class="form-control datetimepicker" type="text" name="date_wish" placeholder="Enter the date">
+                                </div>                    </div>
+
+                    <div class="form-group">
+                        <label>Department</label>
+                        <input class="form-control" name="department" type="text" value="{{ auth()->user()->department }}" disabled>
+                        <input type="hidden" name="department" value="{{ auth()->user()->department }}">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Reason</label>
+                        <textarea class="form-control" name="description" rows="4" placeholder="Add a description"></textarea>
+                    </div>
+
+                    <div class="submit-section text-center">
+                        <button type="submit" class="btn btn-primary submit-btn">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Advance Modal -->
+<!-- Edit Advance Modal -->
+<div class="modal fade custom-modal" id="edit_advance" tabindex="-1" role="dialog" aria-labelledby="editAdvanceModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editAdvanceModalLabel">Edit Advance</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="editAdvanceForm" method="POST" action="">
+                    @csrf
+                    @method('PUT')
+                    <input type="hidden" name="id" id="edit_id">
+                    <div class="form-group">
+                        <label for="edit_amount">Amount <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="edit_amount" name="amount" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit_date_wish">Date Whish <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control datetimepicker" id="edit_date_wish" name="date_wish" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit_department">Department</label>
+                        <input type="text" class="form-control" id="edit_department" name="department" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="edit_description">Reason</label>
+                        <textarea class="form-control" id="edit_description" rows="4" name="description" required></textarea>
+                    </div>
+                    <div class="submit-section text-center">
+                        <button type="submit" class="btn btn-primary submit-btn">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+    // When a button is clicked
+    $('button[data-target="#reasonModal"]').on('click', function() {
+        // Get the description from the button's data attribute
+        var description = $(this).data('description');
+        
+        // Set the description in the modal
+        $('#modalDescription').text(description);
+    });
+    
+});
+document.querySelectorAll('.action-icon').forEach(button => {
+    button.addEventListener('click', function(event) {
+
+    });
+});
+$(document).ready(function() {
+    // Event listener for Edit buttons
+    $('.edit-advance').on('click', function() {
+        var id = $(this).data('id');
+        var amount = $(this).data('amount');
+        var dateWish = $(this).data('date_wish');
+        var department = $(this).data('department');
+        var description = $(this).data('description');
+
+        // Populate the modal fields
+        $('#editAdvanceForm').attr('action', '/advance/' + id);
+        $('#edit_id').val(id);
+        $('#edit_amount').val(amount);
+        $('#edit_date_wish').val(dateWish);
+        $('#edit_department').val(department);
+        $('#edit_description').val(description);
+    });
+
+    // Event listener for View Reason buttons
+    $('[data-toggle="modal"][data-target="#reasonModal"]').on('click', function(){
+        var description = $(this).data('description');
+        $('#reasonModalBody').text(description);
+    });
+});
+
+</script>
+    <!-- /Page Wrapper -->
 @endsection

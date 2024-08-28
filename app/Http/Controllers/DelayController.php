@@ -180,13 +180,18 @@ class DelayController extends Controller
     {
         $user = Auth::user();
     
-        if ($user->role_name === 'Employee') {
-            $delays = Delay::where('user_id', $user->id)->with('user')->get();
-        } else {
-            $delays = Delay::with('user')->get();
-        }
+        $delays = Delay::where('user_id', $user->id)->with('user')->get();
+
     
         return view('settings.delaydemand', compact('delays'));
+}
+public function index2()
+{
+    $user = Auth::user();
+
+    $delays = Delay::with('user')->get();
+
+    return view('settings.delaydemand2', compact('delays'));
 }
     // Add update function
     public function update(Request $request, $id)

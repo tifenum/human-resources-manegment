@@ -191,13 +191,18 @@ public function updateStatus(Request $request, $id)
     {
         $user = Auth::user();
     
-        if ($user->role_name === 'Employee') {
-            $holidays = Holiday::where('user_id', $user->id)->with('user')->get();
-        } else {
-            $holidays = Holiday::with('user')->get();
-        }
-    
+        $holidays = Holiday::where('user_id', $user->id)->with('user')->get();
+
          return view('settings.holidaydemand', compact('holidays'));
+}
+public function index2()
+{
+    $user = Auth::user();
+
+    $holidays = Holiday::with('user')->get();
+
+
+     return view('settings.holidaydemand2', compact('holidays'));
 }
     public function destroy($id)
     {

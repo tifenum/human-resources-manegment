@@ -156,15 +156,19 @@
         public function index()
         {
             $user = Auth::user();
-        
-            if ($user->role_name === 'Employee') {
-                $exitdemand = ExitDemand::where('user_id', $user->id)->with('user')->get();
-            } else {
-                $exitdemand = ExitDemand::with('user')->get();
-            }
-        
+            $exitdemand = ExitDemand::where('user_id', $user->id)->with('user')->get();
+
              return view('settings.exitpermission', compact('exitdemand'));
     }
+    public function index2()
+    {
+        $user = Auth::user();
+    
+        $exitdemand = ExitDemand::with('user')->get();
+
+    
+         return view('settings.exitpermission2', compact('exitdemand'));
+}
         // Add update function
         public function update(Request $request, $id)
         {

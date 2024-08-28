@@ -100,15 +100,19 @@
 {
     $user = Auth::user();
 
-    if ($user->role_name === 'Employee') {
         $advances = Advance::where('user_id', $user->id)->with('user')->get();
-    } else {
-        $advances = Advance::with('user')->get();
-    }
+
 
     return view('form.allemployeecard', compact('advances'));
 }
+public function index2()
+{
+    $user = Auth::user();
+    $advances = Advance::with('user')->get();
 
+
+    return view('form.allemployeecard2', compact('advances'));
+}
         // public function index()
         // {
         //     $user = Auth::user(); // Get the currently authenticated user

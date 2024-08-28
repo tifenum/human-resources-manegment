@@ -78,7 +78,7 @@
                         <span>consult demands</span>
                     </li>
                     <li>
-                        <a href="{{ route('advance') }}" class="{{ request()->routeIs('advance') ? 'selecting' : '' }}">
+                        <a href="{{ route('advance2') }}" class="{{ request()->routeIs('advance') ? 'selecting' : '' }}">
                             <i class="la la-money-bill" style="margin-right: 10px;"></i> 
                             <span>advances</span>
                         </a>
