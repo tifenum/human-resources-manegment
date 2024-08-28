@@ -43,48 +43,439 @@
 
 
             </div>
-        <div class="sidebar" id="sidebar">
+            <div class="sidebar" id="sidebar">
         <div class="sidebar-inner slimscroll">
             <div id="sidebar-menu" class="sidebar-menu">
                 <ul>
-                    @if (Auth::user()->role_name == 'Admin')
-                        <li class="menu-title" style="font-size: 16px; padding: 15px 20px; color: #bdc3c7; text-transform: uppercase;">
-                            <span>Authentication</span>
-                        </li>
-                        
-                        <li>
-                            <a href="{{ route('userManagement') }}" class="{{ request()->routeIs('userManagement') ? 'selecting' : '' }}">
-                                <i class="la la-user-secret" style="margin-right: 10px;"></i> 
-                                <span>All Users</span>
-                            </a>
-                        </li>
-                        
-                        <li>
-                            <a href="{{ route('activity/log') }}" class="{{ request()->routeIs('activity/log') ? 'selecting' : '' }}">
-                                <i class="la la-list-alt" style="margin-right: 10px;"></i> 
-                                <span>Activity Log</span>
-                            </a>
-                        </li>
-                        
-                        <li>
-                            <a href="{{ route('activity/login/logout') }}" class="{{ request()->routeIs('activity/login/logout') ? 'selecting' : '' }}">
-                                <i class="la la-sign-in" style="margin-right: 10px;"></i> 
-                                <span>Activity User</span>
-                            </a>
-                        </li>
-                    @endif
+                @if (Auth::user()->role_name=='Admin')
+                    <li class="menu-title" style="font-size: 16px; padding: 15px 20px; color: #bdc3c7; text-transform: uppercase;">
+                        <span>Management</span>
+                    </li>
+                    
                     <li>
-                            <a href="{{ route('forget-password') }}" class="{{ request()->routeIs('forget-password') ? 'selecting' : '' }}">
-                                <i class="la la-key" style="margin-right: 10px;"></i> 
-                                <span>forget password</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('logout') }}" class="{{ request()->routeIs('forget-password') ? 'selecting' : '' }}">
-                                <i class="la la-sign-out" style="margin-right: 10px;"></i> 
-                                <span>Logout</span>
-                            </a>
-                        </li>
+                        <a href="{{ route('userManagement') }}" class="{{ request()->routeIs('userManagement') ? 'selecting' : '' }}">
+                            <i class="la la-users" style="margin-right: 10px;"></i> 
+                            <span>All Users</span>
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a href="{{ route('activity/log') }}" class="{{ request()->routeIs('activity/log') ? 'selecting' : '' }}">
+                            <i class="la la-list-alt" style="margin-right: 10px;"></i> 
+                            <span>Activity Log</span>
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a href="{{ route('activity/login/logout') }}" class="{{ request()->routeIs('activity/login/logout') ? 'selecting' : '' }}">
+                            <i class="la la-sign-in-alt" style="margin-right: 10px;"></i> 
+                            <span>Activity User</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('forget-password') }}" class="{{ request()->routeIs('forget-password') ? 'selecting' : '' }}">
+                            <i class="la la-key" style="margin-right: 10px;"></i> 
+                            <span>forget password</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('logout') }}" class="{{ request()->routeIs('forget-password') ? 'selecting' : '' }}">
+                            <i class="la la-sign-out" style="margin-right: 10px;"></i> 
+                            <span>Logout</span>
+                        </a>
+                    </li>
+                    @elseif (Auth::user()->role_name=='Employee')
+                    <li class="menu-title" style="font-size: 16px; padding: 15px 20px; color: #bdc3c7; text-transform: uppercase;">
+                        <span>request demands</span>
+                    </li>
+                    <li>
+                        <a href="{{ route('advance') }}" class="{{ request()->routeIs('advance') ? 'selecting' : '' }}">
+                        <i class="la la-money-bill" style="margin-right: 10px;"></i> 
+                        <span>advances</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('holiday.index') }}" class="{{ request()->routeIs('holidays') ? 'selecting' : '' }}">
+                            <i class="la la-grin-stars" style="margin-right: 10px;"></i> 
+                            <span>holiday</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('exits_demands') }}" class="{{ request()->routeIs('exits_demands') ? 'selecting' : '' }}">
+                            <i class="la la-door-open" style="margin-right: 10px;"></i> 
+                            <span>Exit permission</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('delays') }}" class="{{ request()->routeIs('delays') ? 'selecting' : '' }}">
+                            <i class="la la-clock" style="margin-right: 10px;"></i> 
+                            <span>delay permission</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('certificates') }}" class="{{ request()->routeIs('certificates') ? 'selecting' : '' }}">
+                            <i class="la la-certificate" style="margin-right: 10px;"></i> 
+                            <span>Certificate</span>
+                        </a>
+                    </li>
+                    <li class="menu-title" style="font-size: 16px; padding: 15px 20px; color: #bdc3c7; text-transform: uppercase;">
+                        <span>profile managment</span>
+                    </li>
+                    <li>
+                        <a href="{{ route('profile_user') }}" class="{{ request()->routeIs('profile_user') ? 'selecting' : '' }}">
+                            <i class="la la-user" style="margin-right: 10px;"></i> 
+                            <span>Profile</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('forget-password') }}" class="{{ request()->routeIs('forget-password') ? 'selecting' : '' }}">
+                            <i class="la la-key" style="margin-right: 10px;"></i> 
+                            <span>forget password</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('logout') }}" class="{{ request()->routeIs('forget-password') ? 'selecting' : '' }}">
+                            <i class="la la-sign-out" style="margin-right: 10px;"></i> 
+                            <span>Logout</span>
+                        </a>
+                    </li>
+                    @elseif (Auth::user()->role_name=='Head of department')
+                    <li class="menu-title" style="font-size: 16px; padding: 15px 20px; color: #bdc3c7; text-transform: uppercase;">
+                        <span>request demands</span>
+                    </li>
+                    <li>
+                        <a href="{{ route('advance') }}" class="{{ request()->routeIs('advance') ? 'selecting' : '' }}">
+                        <i class="la la-money-bill" style="margin-right: 10px;"></i> 
+                        <span>advances</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('holiday.index') }}" class="{{ request()->routeIs('holidays') ? 'selecting' : '' }}">
+                            <i class="la la-grin-stars" style="margin-right: 10px;"></i> 
+                            <span>holiday</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('exits_demands') }}" class="{{ request()->routeIs('exits_demands') ? 'selecting' : '' }}">
+                            <i class="la la-door-open" style="margin-right: 10px;"></i> 
+                            <span>Exit permission</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('delays') }}" class="{{ request()->routeIs('delays') ? 'selecting' : '' }}">
+                            <i class="la la-clock" style="margin-right: 10px;"></i> 
+                            <span>delay permission</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('certificates') }}" class="{{ request()->routeIs('certificates') ? 'selecting' : '' }}">
+                            <i class="la la-certificate" style="margin-right: 10px;"></i> 
+                            <span>Certificate</span>
+                        </a>
+                    </li>
+                    <li class="menu-title" style="font-size: 16px; padding: 15px 20px; color: #bdc3c7; text-transform: uppercase;">
+                        <span>consult demands</span>
+                    </li>
+                    <li>
+                        <a href="{{ route('advance2') }}" class="{{ request()->routeIs('advance2') ? 'selecting' : '' }}">
+                        <i class="la la-money-bill" style="margin-right: 10px;"></i> 
+                        <span>advances</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('exits_demands2') }}" class="{{ request()->routeIs('exits_demands2') ? 'selecting' : '' }}">
+                        <i class="la la-door-open" style="margin-right: 10px;"></i> 
+                        <span>Exit permission</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('delays2') }}" class="{{ request()->routeIs('delays2') ? 'selecting' : '' }}">
+                        <i class="la la-clock" style="margin-right: 10px;"></i> 
+                        <span>delay permission</span>
+                        </a>
+                    </li>
+                    @if (Auth::user()->department=='HR')
+                    <li class="menu-title" style="font-size: 16px; padding: 15px 20px; color: #bdc3c7; text-transform: uppercase;">
+                        <span>human resources</span>
+                    </li>
+                    <li>
+                        <a href="{{ route('userManagement') }}" class="{{ request()->routeIs('userManagement') ? 'selecting' : '' }}">
+                            <i class="la la-users" style="margin-right: 10px;"></i> 
+                            <span>All Users</span>
+                        </a>
+                    </li>
+                    @endif
+                    <li class="menu-title" style="font-size: 16px; padding: 15px 20px; color: #bdc3c7; text-transform: uppercase;">
+                        <span>Profile Management</span>
+                    </li>
+                    <li>
+                        <a href="{{ route('profile_user') }}" class="{{ request()->routeIs('profile_user') ? 'selecting' : '' }}">
+                            <i class="la la-user" style="margin-right: 10px;"></i> 
+                            <span>Profile</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('forget-password') }}" class="{{ request()->routeIs('forget-password') ? 'selecting' : '' }}">
+                            <i class="la la-key" style="margin-right: 10px;"></i> 
+                            <span>forget password</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('logout') }}" class="{{ request()->routeIs('forget-password') ? 'selecting' : '' }}">
+                            <i class="la la-sign-out" style="margin-right: 10px;"></i> 
+                            <span>Logout</span>
+                        </a>
+                    </li>
+                    @elseif (Auth::user()->role_name=='Chief of staff')
+                    <li class="menu-title" style="font-size: 16px; padding: 15px 20px; color: #bdc3c7; text-transform: uppercase;">
+                        <span>request demands</span>
+                    </li>
+                    <li>
+                        <a href="{{ route('advance') }}" class="{{ request()->routeIs('advance') ? 'selecting' : '' }}">
+                        <i class="la la-money-bill" style="margin-right: 10px;"></i> 
+                        <span>advances</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('holiday.index') }}" class="{{ request()->routeIs('holidays') ? 'selecting' : '' }}">
+                            <i class="la la-grin-stars" style="margin-right: 10px;"></i> 
+                            <span>holiday</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('exits_demands') }}" class="{{ request()->routeIs('exits_demands') ? 'selecting' : '' }}">
+                            <i class="la la-door-open" style="margin-right: 10px;"></i> 
+                            <span>Exit permission</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('delays') }}" class="{{ request()->routeIs('delays') ? 'selecting' : '' }}">
+                            <i class="la la-clock" style="margin-right: 10px;"></i> 
+                            <span>delay permission</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('certificates') }}" class="{{ request()->routeIs('certificates') ? 'selecting' : '' }}">
+                            <i class="la la-certificate" style="margin-right: 10px;"></i> 
+                            <span>Certificate</span>
+                        </a>
+                    </li>
+                    <li class="menu-title" style="font-size: 16px; padding: 15px 20px; color: #bdc3c7; text-transform: uppercase;">
+                    <span>consult demands</span>
+                    </li>
+                    <li>
+                        <a href="{{ route('advance2') }}" class="{{ request()->routeIs('advance2') ? 'selecting' : '' }}">
+                        <i class="la la-money-bill" style="margin-right: 10px;"></i> 
+                        <span>advances</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('delays2') }}" class="{{ request()->routeIs('delays2') ? 'selecting' : '' }}">
+                        <i class="la la-clock" style="margin-right: 10px;"></i> 
+                        <span>delay permission</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('certificates2') }}" class="{{ request()->routeIs('certificates2') ? 'selecting' : '' }}">
+                        <i class="la la-certificate" style="margin-right: 10px;"></i> 
+                        <span>Certificate</span>
+                        </a>
+                    </li>
+                    
+                    @if (Auth::user()->department=='HR')
+                    <li class="menu-title" style="font-size: 16px; padding: 15px 20px; color: #bdc3c7; text-transform: uppercase;">
+                        <span>human resources</span>
+                    </li>
+                    <li>
+                        <a href="{{ route('userManagement') }}" class="{{ request()->routeIs('userManagement') ? 'selecting' : '' }}">
+                            <i class="la la-users" style="margin-right: 10px;"></i> 
+                            <span>All Users</span>
+                        </a>
+                    </li>
+                    @endif
+                    <li class="menu-title" style="font-size: 16px; padding: 15px 20px; color: #bdc3c7; text-transform: uppercase;">
+                        <span>Profile Management</span>
+                    </li>
+                    <li>
+                        <a href="{{ route('profile_user') }}" class="{{ request()->routeIs('profile_user') ? 'selecting' : '' }}">
+                            <i class="la la-user" style="margin-right: 10px;"></i> 
+                            <span>Profile</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('forget-password') }}" class="{{ request()->routeIs('forget-password') ? 'selecting' : '' }}">
+                            <i class="la la-key" style="margin-right: 10px;"></i> 
+                            <span>forget password</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('logout') }}" class="{{ request()->routeIs('forget-password') ? 'selecting' : '' }}">
+                            <i class="la la-sign-out" style="margin-right: 10px;"></i> 
+                            <span>Logout</span>
+                        </a>
+                    </li>
+                    @elseif (Auth::user()->role_name=='Financial director')
+                    <li class="menu-title" style="font-size: 16px; padding: 15px 20px; color: #bdc3c7; text-transform: uppercase;">
+                        <span>request demands</span>
+                    </li>
+                    <li>
+                        <a href="{{ route('advance') }}" class="{{ request()->routeIs('advance') ? 'selecting' : '' }}">
+                        <i class="la la-money-bill" style="margin-right: 10px;"></i> 
+                        <span>advances</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('holiday.index') }}" class="{{ request()->routeIs('holidays') ? 'selecting' : '' }}">
+                            <i class="la la-grin-stars" style="margin-right: 10px;"></i> 
+                            <span>holiday</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('exits_demands') }}" class="{{ request()->routeIs('exits_demands') ? 'selecting' : '' }}">
+                            <i class="la la-door-open" style="margin-right: 10px;"></i> 
+                            <span>Exit permission</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('delays') }}" class="{{ request()->routeIs('delays') ? 'selecting' : '' }}">
+                            <i class="la la-clock" style="margin-right: 10px;"></i> 
+                            <span>delay permission</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('certificates') }}" class="{{ request()->routeIs('certificates') ? 'selecting' : '' }}">
+                            <i class="la la-certificate" style="margin-right: 10px;"></i> 
+                            <span>Certificate</span>
+                        </a>
+                    </li>
+                    <li class="menu-title" style="font-size: 16px; padding: 15px 20px; color: #bdc3c7; text-transform: uppercase;">
+                    <span>consult demands</span>
+                    </li>
+                    <li>
+                        <a href="{{ route('advance2') }}" class="{{ request()->routeIs('advance2') ? 'selecting' : '' }}">
+                        <i class="la la-money-bill" style="margin-right: 10px;"></i> 
+                        <span>advances</span>
+                        </a>
+                    </li>
+                    @if (Auth::user()->department=='HR')
+                    <li class="menu-title" style="font-size: 16px; padding: 15px 20px; color: #bdc3c7; text-transform: uppercase;">
+                        <span>human resources</span>
+                    </li>
+                    <li>
+                        <a href="{{ route('userManagement') }}" class="{{ request()->routeIs('userManagement') ? 'selecting' : '' }}">
+                            <i class="la la-users" style="margin-right: 10px;"></i> 
+                            <span>All Users</span>
+                        </a>
+                    </li>
+                    @endif
+                    <li class="menu-title" style="font-size: 16px; padding: 15px 20px; color: #bdc3c7; text-transform: uppercase;">
+                        <span>Profile Management</span>
+                    </li>
+                    <li>
+                        <a href="{{ route('profile_user') }}" class="{{ request()->routeIs('profile_user') ? 'selecting' : '' }}">
+                            <i class="la la-user" style="margin-right: 10px;"></i> 
+                            <span>Profile</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('forget-password') }}" class="{{ request()->routeIs('forget-password') ? 'selecting' : '' }}">
+                            <i class="la la-key" style="margin-right: 10px;"></i> 
+                            <span>forget password</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('logout') }}" class="{{ request()->routeIs('forget-password') ? 'selecting' : '' }}">
+                            <i class="la la-sign-out" style="margin-right: 10px;"></i> 
+                            <span>Logout</span>
+                        </a>
+                    </li>
+                    @elseif (Auth::user()->role_name=='Manager director')
+                    <li class="menu-title" style="font-size: 16px; padding: 15px 20px; color: #bdc3c7; text-transform: uppercase;">
+                        <span>request demands</span>
+                    </li>
+                    <li>
+                        <a href="{{ route('advance') }}" class="{{ request()->routeIs('advance') ? 'selecting' : '' }}">
+                        <i class="la la-money-bill" style="margin-right: 10px;"></i> 
+                        <span>advances</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('holiday.index') }}" class="{{ request()->routeIs('holidays') ? 'selecting' : '' }}">
+                            <i class="la la-grin-stars" style="margin-right: 10px;"></i> 
+                            <span>holiday</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('exits_demands') }}" class="{{ request()->routeIs('exits_demands') ? 'selecting' : '' }}">
+                            <i class="la la-door-open" style="margin-right: 10px;"></i> 
+                            <span>Exit permission</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('delays') }}" class="{{ request()->routeIs('delays') ? 'selecting' : '' }}">
+                            <i class="la la-clock" style="margin-right: 10px;"></i> 
+                            <span>delay permission</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('certificates') }}" class="{{ request()->routeIs('certificates') ? 'selecting' : '' }}">
+                            <i class="la la-certificate" style="margin-right: 10px;"></i> 
+                            <span>Certificate</span>
+                        </a>
+                    </li>
+                    <li class="menu-title" style="font-size: 16px; padding: 15px 20px; color: #bdc3c7; text-transform: uppercase;">
+                    <span>consult demands</span>
+                    </li>
+                    <li>
+                        <a href="{{ route('advance2') }}" class="{{ request()->routeIs('advance2') ? 'selecting' : '' }}">
+                        <i class="la la-money-bill" style="margin-right: 10px;"></i> 
+                        <span>advances</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('holiday.index2') }}" class="{{ request()->routeIs('holidays2') ? 'selecting' : '' }}">
+                        <i class="la la-grin-stars" style="margin-right: 10px;"></i> 
+                        <span>holiday</span>
+                        </a>
+                    </li>
+                    @if (Auth::user()->department=='HR')
+                    <li class="menu-title" style="font-size: 16px; padding: 15px 20px; color: #bdc3c7; text-transform: uppercase;">
+                        <span>human resources</span>
+                    </li>
+                    <li>
+                        <a href="{{ route('userManagement') }}" class="{{ request()->routeIs('userManagement') ? 'selecting' : '' }}">
+                            <i class="la la-users" style="margin-right: 10px;"></i> 
+                            <span>All Users</span>
+                        </a>
+                    </li>
+                    @endif
+                    <li class="menu-title" style="font-size: 16px; padding: 15px 20px; color: #bdc3c7; text-transform: uppercase;">
+                        <span>profile mangment</span>
+                    </li>
+                    <li>
+                        <a href="{{ route('profile_user') }}" class="{{ request()->routeIs('profile_user') ? 'selecting' : '' }}">
+                            <i class="la la-user" style="margin-right: 10px;"></i> 
+                            <span>Profile</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('forget-password') }}" class="{{ request()->routeIs('forget-password') ? 'selecting' : '' }}">
+                            <i class="la la-key" style="margin-right: 10px;"></i> 
+                            <span>forget password</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('logout') }}" class="{{ request()->routeIs('forget-password') ? 'selecting' : '' }}">
+                            <i class="la la-sign-out" style="margin-right: 10px;"></i> 
+                            <span>Logout</span>
+                        </a>
+                    </li>
+
+
+                    
+                    
+                    @endif
+
                 </ul>
             </div>
         </div>
@@ -151,9 +542,10 @@
                                 <li class="breadcrumb-item active">User</li>
                             </ul>
                         </div>
-                        <button type="button" class="btn add-btn" data-toggle="modal" data-target="#manageDepartmentsModal"><i class="fa fa-plus"></i>
-                    Manage Departments
-                </button>
+                        <button type="button" class="btn add-btn" data-toggle="modal" data-target="#manageDepartmentsModal">
+    <i class="fa fa-cogs"></i> Manage Departments
+</button>
+
                         <div class="col-auto float-right ml-auto">
                             <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_user"><i class="fa fa-plus"></i> Add User</a>
                         </div>
@@ -163,11 +555,13 @@
                     @endphp
 
                     <form method="POST" action="{{ route('admin.toggleRegistrationLink') }}">
-                        @csrf
-                        <button type="submit" class="btn add-btn"><i class="fa fa-plus"></i>
-                            {{ $isRegistrationVisible ? 'Deactivate Registration Link' : 'Activate Registration Link' }}
-                        </button>
-                    </form>
+    @csrf
+    <button type="submit" class="btn add-btn">
+        <i class="fa {{ $isRegistrationVisible ? 'fa-lock' : 'fa-unlock' }}"></i>
+        {{ $isRegistrationVisible ? 'Deactivate Registration Link' : 'Activate Registration Link' }}
+    </button>
+</form>
+
 
                     </div>
                 </div>

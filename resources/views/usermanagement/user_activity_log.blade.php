@@ -51,7 +51,7 @@
             <ul>
                 @if (Auth::user()->role_name == 'Admin')
                     <li class="menu-title" style="font-size: 16px; padding: 15px 20px; color: #bdc3c7; text-transform: uppercase;">
-                        <span>Authentication</span>
+                        <span>management</span>
                     </li>
                     
                     <li>

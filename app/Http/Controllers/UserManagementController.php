@@ -25,7 +25,7 @@ class UserManagementController extends Controller
     
     public function index()
     {
-        if (Auth::user()->role_name=='Admin')
+        if (Auth::user()->role_name=='Admin' ||( Auth::user()->department=='HR' && Auth::user()->role_name!='Employee'))
         {
 
             $result      = DB::table('users')->get();
@@ -45,7 +45,7 @@ class UserManagementController extends Controller
     // search user
     public function searchUser(Request $request)
     {
-        if (Auth::user()->role_name=='Admin')
+        if (Auth::user()->role_name=='Admin' ||( Auth::user()->department=='HR' && Auth::user()->role_name!='Employee'))
         {
             $users      = DB::table('users')->get();
             $result     = DB::table('users')->get();

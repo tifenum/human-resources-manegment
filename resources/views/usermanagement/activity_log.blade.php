@@ -47,7 +47,7 @@
             <ul>
                 @if (Auth::user()->role_name == 'Admin')
                     <li class="menu-title" style="font-size: 16px; padding: 15px 20px; color: #bdc3c7; text-transform: uppercase;">
-                        <span>Authentication</span>
+                        <span>Management</span>
                     </li>
                     
                     <li>
@@ -75,6 +75,12 @@
                         <a href="{{ route('forget-password') }}" class="{{ request()->routeIs('forget-password') ? 'selecting' : '' }}">
                             <i class="la la-key" style="margin-right: 10px;"></i> 
                             <span>forget password</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('logout') }}" class="{{ request()->routeIs('forget-password') ? 'selecting' : '' }}">
+                            <i class="la la-sign-out" style="margin-right: 10px;"></i> 
+                            <span>Logout</span>
                         </a>
                     </li>
             </ul>
