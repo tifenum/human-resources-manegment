@@ -79,6 +79,9 @@ Route::get('/holidays2', [App\Http\Controllers\HolidayController::class, 'index2
 Route::post('/departments', [App\Http\Controllers\DepartmentController::class, 'store'])->name('departments.store');
 Route::delete('/departments/{id}', [App\Http\Controllers\DepartmentController::class, 'destroy'])->name('departments.destroy');
 
+Route::post('/positions', [App\Http\Controllers\PositionController::class, 'store'])->name('positions.store');
+Route::delete('/positions/{id}', [App\Http\Controllers\PositionController::class, 'destroy'])->name('positions.destroy');
+
 
 
 Route::delete('/holidays/{id}', [App\Http\Controllers\HolidayController::class, 'destroy'])->name('holiday.destroy');

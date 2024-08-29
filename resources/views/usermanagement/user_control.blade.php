@@ -545,7 +545,9 @@
                         <button type="button" class="btn add-btn" data-toggle="modal" data-target="#manageDepartmentsModal">
     <i class="fa fa-cogs"></i> Manage Departments
 </button>
-
+<button type="button" class="btn add-btn" data-toggle="modal" data-target="#PositionsModal">
+    <i class="fa fa-cogs"></i> Manage Positions
+</button>
                         <div class="col-auto float-right ml-auto">
                             <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_user"><i class="fa fa-plus"></i> Add User</a>
                         </div>
@@ -809,9 +811,14 @@
                                     </div>
                                     <div class="col-sm-6"> 
                                         <label>Position</label>
-                                        <input type="text" class="form-control" name="position" placeholder="assign position">
-
+                                        <select class="select" name="position" id="position">
+                                            <option selected disabled> --Select --</option>
+                                            @foreach ($position as $positions )
+                                            <option value="{{ $positions->position }}">{{ $positions->position }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
+
                                     <!-- <div class="col-sm-6"> 
                                         <label>Repeat Password</label>
                                         <input type="password" class="form-control" name="password_confirmation" placeholder="Choose Repeat Password">
@@ -832,6 +839,54 @@
                 </div>
             </div>
         </div>
+        
+        <div class="modal custom-modal fade" id="PositionsModal" tabindex="-1" role="dialog" aria-labelledby="PositionsModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="PositionsModalLabel">Manage Positions</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- Add New Department Form -->
+                            <form id="addPositionForm" method="POST" action="{{ route('positions.store') }}">
+                                @csrf
+                                <div class="form-group">
+                                    <label for="newPosition">Add a New Position</label>
+                                    <input type="text" id="newPosition" name="position" class="form-control" placeholder="New Position">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Add Position</button>
+                            </form>
+
+                            <hr>
+
+                            <!-- List of Departments -->
+<!-- List of Departments -->
+<h6>Current Positions</h6>
+<ul class="list-group" id="positionsList">
+    @foreach ($position as $positions) <!-- Loop through each department -->
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            {{ $positions->position }} <!-- Access the department name -->
+            <form action="{{ route('positions.destroy', $positions->id) }}" method="POST"> <!-- Access the department ID -->
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-danger btn-sm">
+                    <i class="fa fa-trash"></i>
+                </button>
+            </form>
+        </li>
+    @endforeach
+</ul>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         <div class="modal custom-modal fade" id="manageDepartmentsModal" tabindex="-1" role="dialog" aria-labelledby="manageDepartmentsModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -983,10 +1038,17 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Position</label>
-                                <input class="form-control" type="text" name="position" id="e_position" placeholder="Enter Position">
-                            </div>
+                                <select class="form-control select" name="position" id="e_position">
+                                    <option disabled selected>{{ old('position', $user->position ?? '--Select--') }}</option>
+                                    @foreach ($position as $positions)
+                                        <option value="{{ $positions->position }}" {{ old('position', $user->position) == $positions->position ? 'selected' : '' }}>
+                                            {{ $positions->position }}
+                                        </option>
+                                    @endforeach
+                                </select>                            </div>
                         </div>
                     </div>
+
                     <div class="submit-section">
                         <button type="submit" class="btn btn-primary submit-btn">Update</button>
                     </div>
