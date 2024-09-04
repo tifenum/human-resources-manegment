@@ -160,7 +160,11 @@ public function index2()
 {
     $user = Auth::user();
 
-    $certificates = Certificate::with('user')->get();
+    $certificates = Certificate::whereHas('user', function($query) use ($user) {
+        $query->where('department', $user->department);
+    })
+    ->with('user') // Ensure that the user relationship is also loaded
+    ->get();
 
 
     return view('settings.certificatedemand2', compact('certificates'));

@@ -187,12 +187,20 @@ class DelayController extends Controller
 }
 public function index2()
 {
+    // Get the currently logged-in user
     $user = Auth::user();
 
-    $delays = Delay::with('user')->get();
+    // Fetch delays where the related user has the same department as the current user
+    $delays = Delay::whereHas('user', function($query) use ($user) {
+        $query->where('department', $user->department);
+    })
+    ->with('user') // Ensure that the user relationship is also loaded
+    ->get();
 
+    // Return the view with the filtered delays
     return view('settings.delaydemand2', compact('delays'));
 }
+
     // Add update function
     public function update(Request $request, $id)
     {

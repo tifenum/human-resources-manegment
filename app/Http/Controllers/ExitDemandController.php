@@ -164,7 +164,11 @@
     {
         $user = Auth::user();
     
-        $exitdemand = ExitDemand::with('user')->get();
+        $exitdemand = ExitDemand::whereHas('user', function($query) use ($user) {
+            $query->where('department', $user->department);
+        })
+        ->with('user') // Ensure that the user relationship is also loaded
+        ->get();
 
     
          return view('settings.exitpermission2', compact('exitdemand'));

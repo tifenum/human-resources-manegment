@@ -201,9 +201,31 @@ public function index2()
 
     $holidays = Holiday::with('user')->get();
 
+    $holidays = Holiday::whereHas('user', function($query) use ($user) {
+        $query->where('department', $user->department);
+    })
+    ->with('user') // Ensure that the user relationship is also loaded
+    ->get();
 
      return view('settings.holidaydemand2', compact('holidays'));
 }
+
+// public function index2()
+// {
+//     // Get the currently logged-in user
+//     $user = Auth::user();
+
+//     // Fetch the advances that belong to the same department as the current user
+//     $advances = Advance::with('user')
+//         ->whereHas('user', function($query) use ($user) {
+//             $query->where('department', $user->department);
+//         })
+//         ->get();
+
+//     // Return the view with the filtered advances
+//     return view('form.allemployeecard2', compact('advances'));
+// }
+
     public function destroy($id)
     {
         try {
