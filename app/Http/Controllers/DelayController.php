@@ -91,7 +91,7 @@ class DelayController extends Controller
             
             if ($user) {
                 Mail::send('emails.delay_accepted', ['user' => $user, 'delay' => $delay], function($message) use ($user) {
-                    $message->from('boukadidahbib@gmail.com');
+                    $message->from('it.yasmine@houdahotelstunisia.com');
                     $message->to($user->email);
                     $message->subject('Your delay Demand Has Been Accepted');
                 });

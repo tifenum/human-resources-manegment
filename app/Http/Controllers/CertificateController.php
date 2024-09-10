@@ -85,7 +85,7 @@ class CertificateController extends Controller
             
             if ($user) {
                 Mail::send('emails.certificate_accepted', ['user' => $user, 'certificate' => $certificate], function($message) use ($user) {
-                    $message->from('boukadidahbib@gmail.com');
+                    $message->from('it.yasmine@houdahotelstunisia.com');
                     $message->to($user->email);
                     $message->subject('Your Certificate Demand Has Been Accepted');
                 });

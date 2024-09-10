@@ -32,7 +32,7 @@ use App\Http\Controllers\CertificateController;
 */
 
 Route::get('/', function () {
-    return view('auth.login');
+    return view('auth.hotel');
 });
 
 Route::group(['middleware'=>'auth'],function()
@@ -50,6 +50,8 @@ Route::group(['middleware'=>'auth'],function()
 Auth::routes();
 
 // ----------------------------- main dashboard ------------------------------//
+// Route::get('/login1', [App\Http\Controllers\HomeController::class, 'index1'])->name('login1');
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('em/dashboard', [App\Http\Controllers\HomeController::class, 'emDashboard'])->name('em/dashboard');
 Route::post('/admin/toggle-registration-link', [App\Http\Controllers\UserManagementController::class, 'toggleRegistrationLink'])->name('admin.toggleRegistrationLink');
@@ -94,8 +96,8 @@ Route::post('/exit_demand/store', [App\Http\Controllers\ExitDemandController::cl
 Route::get('/exit_demands', [App\Http\Controllers\ExitDemandController::class, 'index'])->middleware('auth')->name('exitdemand.index');
 Route::put('/exit_demand/update/{id}', [App\Http\Controllers\ExitDemandController::class, 'update'])->name('exitdemand.update');
 Route::delete('/exit_demand/destroy/{id}', [App\Http\Controllers\ExitDemandController::class, 'destroy'])->name('exitdemand.destroy');
-Route::get('certificate/create', [CertificateController::class, 'create'])->name('certificate.create');
-Route::post('certificate', [CertificateController::class, 'store'])->name('certificate.store');
+Route::get('certificate/create', [App\Http\Controllers\CertificateController::class, 'create'])->name('certificate.create');
+Route::post('certificate', [App\Http\Controllers\CertificateController::class, 'store'])->name('certificate.store');
 Route::get('advances', [App\Http\Controllers\AdvanceController::class, 'index'])->middleware('auth')->name('advance.index');
 Route::get('certificate', [App\Http\Controllers\CertificateController::class, 'index'])->name('certificate.index');
 Route::get('delay', [App\Http\Controllers\DelayController::class, 'index'])->name('delay.index');

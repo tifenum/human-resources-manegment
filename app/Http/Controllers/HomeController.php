@@ -39,6 +39,10 @@ class HomeController extends Controller
             return redirect()->route('advance'); // Define this route in your web.php
         }
     }
+    public function index1()
+    {
+        return view('auth.login'); // Update with your view name
+    }
     // employee dashboard
     public function emDashboard()
     {

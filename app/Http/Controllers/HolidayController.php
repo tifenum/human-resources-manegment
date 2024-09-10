@@ -154,7 +154,7 @@ public function updateStatus(Request $request, $id)
         
         if ($user) {
             Mail::send('emails.holiday_accepted', ['user' => $user, 'holiday' => $holiday], function($message) use ($user) {
-                $message->from('boukadidahbib@gmail.com');
+                $message->from('it.yasmine@houdahotelstunisia.com');
                 $message->to($user->email);
                 $message->subject('Your holiday Demand Has Been Accepted');
             });

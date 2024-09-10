@@ -275,7 +275,7 @@ public function index2()
             
             if ($user) {
                 Mail::send('emails.advance_accepted', ['user' => $user, 'advance' => $advance], function($message) use ($user) {
-                    $message->from('boukadidahbib@gmail.com');
+                    $message->from('it.yasmine@houdahotelstunisia.com');
                     $message->to($user->email);
                     $message->subject('Your Advance Demand Has Been Accepted');
                 });

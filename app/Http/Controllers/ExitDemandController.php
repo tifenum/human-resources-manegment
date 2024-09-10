@@ -124,7 +124,7 @@
                 
                 if ($user) {
                     Mail::send('emails.exit_accepted', ['user' => $user, 'exit' => $holiday], function($message) use ($user) {
-                        $message->from('boukadidahbib@gmail.com');
+                        $message->from('it.yasmine@houdahotelstunisia.com');
                         $message->to($user->email);
                         $message->subject('Your Exit Demand Has Been Accepted');
                     });
