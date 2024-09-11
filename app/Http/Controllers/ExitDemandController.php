@@ -163,14 +163,17 @@
     public function index2()
     {
         $user = Auth::user();
-    
+        if ($user->role_name === 'Manager director' || $user->role_name === 'Financial director') {
+            // Fetch all advances without filtering by department
+            $exitdemand = ExitDemand::all();
+        } else {
         $exitdemand = ExitDemand::whereHas('user', function($query) use ($user) {
             $query->where('department', $user->department);
         })
         ->with('user') // Ensure that the user relationship is also loaded
         ->get();
 
-    
+        }
          return view('settings.exitpermission2', compact('exitdemand'));
 }
         // Add update function

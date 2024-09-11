@@ -198,7 +198,9 @@ public function updateStatus(Request $request, $id)
 public function index2()
 {
     $user = Auth::user();
-
+    if ($user->role_name === 'Manager director' || $user->role_name === 'Financial director') {
+        $holidays = Holiday::all();
+    } else {
     $holidays = Holiday::with('user')->get();
 
     $holidays = Holiday::whereHas('user', function($query) use ($user) {
@@ -206,11 +208,21 @@ public function index2()
     })
     ->with('user') // Ensure that the user relationship is also loaded
     ->get();
-
+    }
      return view('settings.holidaydemand2', compact('holidays'));
 }
 
+
+
+
 // public function index2()
+
+
+// if ($user->role_name === 'Manager drector' || $user->role_name === 'Financial director') {
+//     // Fetch all advances without filtering by department
+//     $advances = Advance::all();
+// } else {
+
 // {
 //     // Get the currently logged-in user
 //     $user = Auth::user();

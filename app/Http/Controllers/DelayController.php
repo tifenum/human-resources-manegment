@@ -189,14 +189,17 @@ public function index2()
 {
     // Get the currently logged-in user
     $user = Auth::user();
-
+    if ($user->role_name === 'Manager director' || $user->role_name === 'Financial director') {
+        // Fetch all advances without filtering by department
+        $delays = Delay::all();
+    } else {
     // Fetch delays where the related user has the same department as the current user
     $delays = Delay::whereHas('user', function($query) use ($user) {
         $query->where('department', $user->department);
     })
     ->with('user') // Ensure that the user relationship is also loaded
     ->get();
-
+    }
     // Return the view with the filtered delays
     return view('settings.delaydemand2', compact('delays'));
 }

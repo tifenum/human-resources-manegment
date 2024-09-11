@@ -159,13 +159,16 @@ class CertificateController extends Controller
 public function index2()
 {
     $user = Auth::user();
-
+    if ($user->role_name === 'Manager director' || $user->role_name === 'Financial director') {
+        // Fetch all advances without filtering by department
+        $certificates = Certificate::all();
+    } else {
     $certificates = Certificate::whereHas('user', function($query) use ($user) {
         $query->where('department', $user->department);
     })
     ->with('user') // Ensure that the user relationship is also loaded
     ->get();
-
+    }
 
     return view('settings.certificatedemand2', compact('certificates'));
 }

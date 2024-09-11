@@ -105,21 +105,28 @@
 
     return view('form.allemployeecard', compact('advances'));
 }
+
 public function index2()
 {
     // Get the currently logged-in user
     $user = Auth::user();
-
-    // Fetch the advances that belong to the same department as the current user
-    $advances = Advance::whereHas('user', function($query) use ($user) {
-        $query->where('department', $user->department);
-    })
-    ->with('user') // Ensure that the user relationship is also loaded
-    ->get();
+    // Check if the user has a 'manager director' or 'financial director' role
+    if ($user->role_name === 'Manager director' || $user->role_name === 'Financial director') {
+        // Fetch all advances without filtering by department
+        $advances = Advance::all();
+    } else {
+        // Fetch the advances that belong to the same department as the current user
+        $advances = Advance::whereHas('user', function($query) use ($user) {
+            $query->where('department', $user->department);
+        })
+        ->with('user') // Ensure that the user relationship is also loaded
+        ->get();
+    }
 
     // Return the view with the filtered advances
     return view('form.allemployeecard2', compact('advances'));
 }
+
 
         // public function index()
         // {
